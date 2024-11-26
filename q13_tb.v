@@ -215,6 +215,14 @@ always @(AgeData or NxtAgeData or Age) $display($time," NxtAge_2d=%x->NxtAgeData
 endmodule
 */
 
+// RCLK_PgenAgeData_AR gated clocks : DFFCNT(=120) GATER_SPLIT_SIZE=4?
+// UniqNetlist.v.gz: bit-66,28,6,0;
+// OptCts.v.gz:      bit-68,30,8,2;
+
+// df_mid_tcdx1_df_mid_lsdc_age_cg1_17_0 AccuratePgenGater_I_RCLK_PgenGaterSplitAge_AR_2_(.gclk(RCLK_PgenAgeData_AR_30_),.clk(FxCts_ctosc_gls_45),.en(PgenGaterSplitAge[2]) ,.SSE(FxPlace_HFSNET_1),.optlc_5513(optlc_5513 ) ) ;
+// df_mid_tcdx1_df_mid_lsdc_age_cg1_18_0 AccuratePgenGater_I_RCLK_PgenGaterSplitAge_AR_1_(.gclk(RCLK_PgenAgeData_AR_8_ ),.clk(FxCts_ZCTSNET_0 ) , .en(PgenGaterSplitAge[1]) ,.SSE(SSE ) ,     .optlc_1076 ( optlc_1076 ) ) ;
+// df_mid_tcdx1_df_mid_lsdc_age_cg1_19_0 AccuratePgenGater_I_RCLK_PgenGaterSplitAge_AR_0_(.gclk(RCLK_PgenAgeData_AR_2_ ),.clk(FxCts_ZCTSNET_0 ) , .en(PgenGaterSplitAge[0]) ,.SSE(SSE ) ,     .optlc_5111 ( optlc_5111 ) ) ;
+//
 //module df_mid_tcdx1_df_mid_lsdc_matrixcvtgater1_SIZE16_EQUALITY0_ALLOC4_GATER_SPLIT_SIZE4_ACCURATE_GATER_EN1_3_0 ( 
 
 `timescale 1ns / 1ns
@@ -254,17 +262,18 @@ begin
 
 #37 NxtAge = 1; 
     PgenAgeMatrix='hff; 
-#21217 $finish;
+#30217 $finish;
 end
-//always @(df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge ) $display($time," PgenGaterSplitAge=%b", df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge);
-//always @(df_mid_lsdc_matrixcvtgater13_001.AgeOrRedColGater ) $display($time," AgeOrRedColGater=%b", df_mid_lsdc_matrixcvtgater13_001.AgeOrRedColGater);
-//always @(df_mid_lsdc_matrixcvtgater13_001.PgenAgeData) $display($time," AgeOrRedColGater=%b", df_mid_lsdc_matrixcvtgater13_001.PgenAgeData);
-always @(AllocEn or df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge or df_mid_lsdc_matrixcvtgater13_001.PgenAgeData) $display($time,"  PgenGaterSplitAge=%x, PgenAgeData=%x", df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge, df_mid_lsdc_matrixcvtgater13_001.PgenAgeData);
+//always @(df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge ) $display($time," PgenGaterSplitAge=%b",df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge);
+//always @(df_mid_lsdc_matrixcvtgater13_001.AgeOrRedColGater )  $display($time," AgeOrRedColGater=%b", df_mid_lsdc_matrixcvtgater13_001.AgeOrRedColGater);
+//always @(df_mid_lsdc_matrixcvtgater13_001.PgenAgeData)        $display($time," PgenAgeData=%b",      df_mid_lsdc_matrixcvtgater13_001.PgenAgeData);
+// always @(AllocEn or PgenAgeMatrix)
+always @(df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge or df_mid_lsdc_matrixcvtgater13_001.PgenAgeData) $display($time," PgenAgeMatrix=%x, PgenAgeData=%b,PgenGaterSplitAge=%b", PgenAgeMatrix, df_mid_lsdc_matrixcvtgater13_001.PgenAgeData, df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge);
 
 
 always #3 NxtAge = NxtAge+1'b1;  
 //always #7 AllocVal=AllocVal +1'b1;  
-always #2 PgenAgeMatrix=PgenAgeMatrix+7'b10101;  
+always #2 PgenAgeMatrix=PgenAgeMatrix+'b1;  
 always #359 AllocEn=AllocEn +1'b1;  
 always @(posedge KCLK_AR)  AgeData = #0 NxtAgeData;  // NxtAge_2d => NxtAgeData_1d =(gated_clock_dff)=> AgeData_1d => Age_2d
 //always @(posedge KCLK_AR)  AgeData = #0 AgeData+1'b1;  // NxtAge_2d => NxtAgeData_1d =(gated_clock_dff)=> AgeData_1d => Age_2d
@@ -273,7 +282,7 @@ always #5 KCLK_AR = ~KCLK_AR;
 
 always @(KCLK_AR)
 begin
-    $display($time," KCLK_AR=%b,SSE=%b,AllocVal=%b,AllocEn=%b,PgenAgeMatrix=%x,  RCLK_PgenAgeData_AR=%x, AgeData_1d=%x -->Age_2d=%x",KCLK_AR,SSE,AllocVal,AllocEn,PgenAgeMatrix,RCLK_PgenAgeData_AR,AgeData,Age);
+    // $display($time," KCLK_AR=%b,SSE=%b,AllocVal=%b,AllocEn=%b,PgenAgeMatrix=%x,  RCLK_PgenAgeData_AR=%x, AgeData_1d=%x -->Age_2d=%x",KCLK_AR,SSE,AllocVal,AllocEn,PgenAgeMatrix,RCLK_PgenAgeData_AR,AgeData,Age);
 
 end
 
