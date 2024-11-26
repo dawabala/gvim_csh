@@ -13,4 +13,7 @@ git commit -m "update readme";
 
 git push origin main;
 
+git config --global --edit; # user: Dong  email: dong;
+
+
 
