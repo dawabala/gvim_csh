@@ -30,6 +30,12 @@ git fetch;
 git pull;
 git add; git commit;
 
-# git restore *;
+# undo when add & commit unnecessary files;
+git reset <filename>; 
+git reset;
+git status;
+
+# discard changes, revert to last commit;
+git restore *;
 
 
