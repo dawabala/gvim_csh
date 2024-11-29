@@ -78,30 +78,37 @@ end
 endmodule
 
 */
+//module df_mid_tcdx1_df_mid_tdatq_q1_4_2_3_0_0_43_16_1_1_1_1_136334_4_0 
+//module df_mid_tcdx1_df_mid_tdatq_q1_4_2_3_0_0_43_16_1_1_1_1_136334_0_0 
+// output [687:0] QVect ; output [15:0] Oldest ; output [15:0] OldestM1 ; output [15:0] Valid ; output [15:0] PickItem0 ;
+// input  [2:0] GrpUpdEn ; input  [128:0] GrpUpdMskVect ; input  [3:0] QAllocEn ;
+// input  [171:0] QAllocVect ; input  [15:0] QUpdIx ; input  [687:0] QUpdVect ; input  [15:0] DelValid ; input  [15:0] Pickable ;
+// input  Clk ; input  Reset ;
 
-/*
+// df_mid_tcdx1_df_mid_lsdc_age1_SIZE16_ALLOC4_PICK1_MULTIPICK0_ALLOCAGE1_ALLOCMULTIHOT0_GATER_SPLIT_EN1_GATER_SPLIT_SIZE4_NO_INVALID_CHECK0_ACCURATE_GATER_EN1_CHK_MODE0_3_0
+
+`timescale 1ns / 1ns
 module df_mid_lsdc_age13_tb;
-parameter SIZE=8, ALLOC = 1, PICK = 1, MULTIPICK  = 0, ALLOCAGE = 0, ALLOCMULTIHOT = 0, NO_INVALID_CHECK = 0, ACCURATE_GATER_EN = 0, CHK_MODE=1;
-parameter GATER_SPLIT_EN = 1, GATER_SPLIT_SIZE = 11; 
+parameter SIZE=8, ALLOC = 4, PICK = 1, MULTIPICK  = 0, ALLOCAGE = 1, ALLOCMULTIHOT = 0, NO_INVALID_CHECK = 0, ACCURATE_GATER_EN = 1, CHK_MODE=0;
+parameter GATER_SPLIT_EN = 1, GATER_SPLIT_SIZE = 4; 
 
-  reg                                 KCLK_AR,               //Coarse gated clock for this domain
-  reg                                 SSE,                   //Scan shift enable
-  reg                      [SIZE-1:0] Valid,                 //Valid bit for the entry
-  reg           [ALLOC-1:0][SIZE-1:0] AllocIdx,              //Decoded alloc indices
-  reg                     [ALLOC-1:0] AllocVal,              //Alloc valid, can allocate many at once, age order 0->top same cycle
-  reg            [PICK-1:0][SIZE-1:0] Pickable,              //Per pick mask, for example by thread
+  reg                                 KCLK_AR;               
+  reg                                 SSE;                   
+  reg                      [SIZE-1:0] Valid;                 //Valid bit for the entry
+  reg           [ALLOC-1:0][SIZE-1:0] AllocIdx;              //Decoded alloc indices
+  reg                     [ALLOC-1:0] AllocVal;              //Alloc valid, can allocate many at once, age order 0->top same cycle
+  reg            [PICK-1:0][SIZE-1:0] Pickable;              //Per pick mask, for example by thread
 
-  wire  [PICK-1:0][SIZE-1:0] Oldest,                //Decoded oldest entry, 0 oldest, 1 2nd oldest, etc
-  wire  [PICK-1:0][SIZE-1:0] Youngest,  
-  wire  [SIZE-1:0][SIZE-1:0] Age
+  wire  [PICK-1:0][SIZE-1:0] Oldest;                //Decoded oldest entry, 0 oldest, 1 2nd oldest, etc
+  wire  [PICK-1:0][SIZE-1:0] Youngest;  
+  wire  [SIZE-1:0][SIZE-1:0] Age;
 
-df_mid_lsdc_age13 #(SIZE=8,ALLOC=1,PICK=1,MULTIPICK=0,ALLOCAGE=0,ALLOCMULTIHOT=0,GATER_SPLIT_EN=1,GATER_SPLIT_SIZE=11,NO_INVALID_CHECK=0,ACCURATE_GATER_EN=0,CHK_MODE=1)
- df_mid_lsdc_age13_001(.KCLK_AR(KCLK_AR), .SSE(SSE), .Valid(Valid), .AllocIdx(AllocIdx), .AllocVal(AllocVal), .Pickable(Pickable), .Oldest(Oldest, .Youngest(Youngest), .Age(Age));
+df_mid_lsdc_age13 #(.SIZE(8),.ALLOC(4),.PICK(1),.MULTIPICK(0),.ALLOCAGE(1),.ALLOCMULTIHOT(0),.GATER_SPLIT_EN(1),.GATER_SPLIT_SIZE(4),.NO_INVALID_CHECK(0),.ACCURATE_GATER_EN(1),.CHK_MODE(0))
+     age_001(.KCLK_AR(KCLK_AR), .SSE(SSE), .Valid(Valid), .AllocIdx(AllocIdx), .AllocVal(AllocVal), .Pickable(Pickable), .Oldest(Oldest), .Youngest(Youngest), .Age(Age));
 
 // NxtAge_2d => NxtAgeData_1d (gated_clock_dff) => AgeData_1d => Age_2d
 
-initial
-begin
+initial begin
 	$recordfile("rtl_df_mid_lsdc_age13");  //for ncverilog simulation
 	$recordvars();                         //for ncverilog simulation
 end
@@ -109,8 +116,7 @@ end
 
 initial
 begin
-#0
-    KCLK_AR = 0; 
+#0 KCLK_AR = 0; 
     SSE = 0; 
     Valid = 0; 
     AllocIdx = 0; 
@@ -119,101 +125,20 @@ begin
 #370 $finish;
 end
 
-initial
-begin
-always @(posedge KCLK_AR)
-    $monitor($time,"in: KCLK_AR=%b SSE=%b Valid=%b AllocIdx=%b AllocVal=%b Pickable=%b ", KCLK_AR,SSE,Valid,AllocIdx,AllocVal,Pickable); 
-    $monitor(,"out: Oldest=%x Youngest=%x Age=%x ", Oldest, Youngest,Age); 
+always @(KCLK_AR)  $display($time, "PgenAgeMatrix=%x, RCLK_PgenAgeData_AR=%x,RCLK_PgenAge_AR=%b,NxtAge=%x,AgeX=%x ",age_001.PgenAgeMatrix, age_001.RCLK_PgenAgeData_AR, age_001.RCLK_PgenAge_AR, age_001.NxtAge, age_001.AgeX);
 
+always @(posedge KCLK_AR) begin
+    $display($time," in: KCLK_AR=%b SSE=%b Valid=%b AllocIdx=%b AllocVal=%b Pickable=%b ", KCLK_AR,SSE,Valid,AllocIdx,AllocVal,Pickable); 
+    $display($time," out: Oldest=%x Youngest=%x Age=%x ", Oldest, Youngest,Age); 
 end
 
-begin #10  KCLK_AR= ~KCLK_AR; 
+always #10  KCLK_AR= ~KCLK_AR; 
 
 endmodule
 
 
-initial
-begin
-	$recordfile("rtl_df_mid_tdatq_q13");  //for ncverilog simulation
-	$recordvars();                //for ncverilog simulation
-end
-
-
-initial
-begin
-#0
-    [NUM_GRPS-1:0]GrpUpdEn = 0; 
-    [NUM_GRPS*WIDTH-1:0]GrpUpdMskVect = 0; 
-    [NUM_ALLOC-1:0]QAllocEn = 0; 
-    [NUM_ALLOC*WIDTH-1:0]QAllocVect = 0; 
-    [DEPTH-1:0]QUpdIx = 0; 
-    [DEPTH*WIDTH-1:0]QUpdVect = 0; 
-    [DEPTH-1:0]DelValid = 0; 
-    [DEPTH-1:0]Pickable = 0; 
-    Clk = 0; 
-    Reset = 0; 
-    KCLK_AR = 0; 
-    SSE = 0; 
-    //Scanshiftenable = 0; 
-    [SIZE-1:0]Valid = 0; 
-    [ALLOC-1:0][SIZE-1:0]AllocIdx = 0; 
-    [ALLOC-1:0]AllocVal = 0; 
-    canallocatemanyatonce = 0; 
-    ageorder0->topsamecycle = 0; 
-    [PICK-1:0][SIZE-1:0]Pickable = 0; 
-    //Perpickmask = 0; 
-    [SIZE-1:0][SIZE-1:0]NxtAge = 0; 
-    [(SIZE*SIZE-SIZE)/2-1:0]AgeData = 0; 
-    outputlogic[(SIZE*SIZE-SIZE)/2-1:0]NxtAgeData = 0; 
-    outputlogic[SIZE-1:0][SIZE-1:0]Age = 0; 
-#2000 $finish;
-end
-
-initial
-begin
-    $monitor($time," ");
-end
-
-
-always 
-begin #10  = ~; 
- end 
-
-endmodule
-`timescale 1ns / 1ns
-
-*/
 
 /*
-`timescale 1ns / 1ns
-module df_mid_lsdc_matrixcvt13_tb;
-parameter SIZE=4, EQUALITY=0;
-  reg  [SIZE-1:0][SIZE-1:0]     NxtAge;
-  reg  [(SIZE*SIZE-SIZE)/2-1:0] AgeData;
-
-  wire [(SIZE*SIZE-SIZE)/2-1:0] NxtAgeData;
-  wire [SIZE-1:0][SIZE-1:0]     Age;
-
-
-df_mid_lsdc_matrixcvt13 #(.SIZE(4), .EQUALITY(0)) df_mid_lsdc_matrixcvt13_001  (.NxtAge(NxtAge), .AgeData(AgeData), .NxtAgeData(NxtAgeData), .Age(Age));
-
-initial
-begin
-#0
-    NxtAge = 0; 
-#3970 $finish;
-end
-
-
-always #3 NxtAge = NxtAge+1'b1;      // NxtAge_2d => NxtAgeData_1d (gated_clock_dff) => AgeData_1d => Age_2d
-always  AgeData = #11 NxtAgeData;     // NxtAge_2d => NxtAgeData_1d (gated_clock_dff) => AgeData_1d => Age_2d
-
-// always @(*) $display($time,"########## agedata_1d->age_2d:  AgeData=%x,Age=%x",AgeData,Age);
-
-always @(AgeData or NxtAgeData or Age) $display($time," NxtAge_2d=%x->NxtAgeData_1d=%x, AgeData_1d=%x->Age_2d=%x ", NxtAge,NxtAgeData, AgeData, Age );
-
-endmodule
-*/
 
 // RCLK_PgenAgeData_AR gated clocks : DFFCNT(=120) GATER_SPLIT_SIZE=4?
 // UniqNetlist.v.gz: bit-66,28,6,0;
@@ -242,62 +167,76 @@ parameter SIZE=4, EQUALITY=0, ALLOC=1, GATE_SPLIT_SIZE=SIZE/2, ACCURATE_GATER_EN
   wire [(SIZE*SIZE-SIZE)/2-1:0] RCLK_PgenAgeData_AR;
 
 df_mid_lsdc_matrixcvtgater13 #(.SIZE(4),.EQUALITY(0),.ALLOC(1),.GATER_SPLIT_SIZE(2),.ACCURATE_GATER_EN(1)) 
-                        df_mid_lsdc_matrixcvtgater13_001  (.NxtAge(NxtAge), .AgeData(AgeData), .PgenAgeMatrix(PgenAgeMatrix), .AllocVal(AllocVal), .AllocEn(AllocEn), .KCLK_AR(KCLK_AR), .SSE(SSE),
+                        matrixcvtgater13_001  (.NxtAge(NxtAge), .AgeData(AgeData), .PgenAgeMatrix(PgenAgeMatrix), .AllocVal(AllocVal), .AllocEn(AllocEn), .KCLK_AR(KCLK_AR), .SSE(SSE),
                                                            .NxtAgeData(NxtAgeData), .Age(Age), .RCLK_PgenAgeData_AR(RCLK_PgenAgeData_AR) );
 
 initial
 begin
-#0
-    KCLK_AR = 0; 
+#0  KCLK_AR = 0; 
     AllocVal = 0; 
     AllocEn = 0; 
     PgenAgeMatrix = 0; 
-
     NxtAge = 0; 
     AgeData = 0; 
     
-#1 SSE = 0; 
-#7 SSE = 1; 
-#7 SSE = 0; 
-
-#37 NxtAge = 1; 
-    PgenAgeMatrix='hff; 
-#30217 $finish;
+#1  SSE = 0; #7 SSE = 1; #7 SSE = 0; 
+#297 AllocVal=1; AllocEn=0; //PgenAgeMatrix=0;
+#390 $finish;
 end
-//always @(df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge ) $display($time," PgenGaterSplitAge=%b",df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge);
-//always @(df_mid_lsdc_matrixcvtgater13_001.AgeOrRedColGater )  $display($time," AgeOrRedColGater=%b", df_mid_lsdc_matrixcvtgater13_001.AgeOrRedColGater);
-//always @(df_mid_lsdc_matrixcvtgater13_001.PgenAgeData)        $display($time," PgenAgeData=%b",      df_mid_lsdc_matrixcvtgater13_001.PgenAgeData);
-// always @(AllocEn or PgenAgeMatrix)
-always @(df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge or df_mid_lsdc_matrixcvtgater13_001.PgenAgeData) $display($time," PgenAgeMatrix=%x, PgenAgeData=%b,PgenGaterSplitAge=%b", PgenAgeMatrix, df_mid_lsdc_matrixcvtgater13_001.PgenAgeData, df_mid_lsdc_matrixcvtgater13_001.PgenGaterSplitAge);
 
+//always @(matrixcvtgater13_001.AgeOrRedColGater )  $display($time," AgeOrRedColGater=%b", matrixcvtgater13_001.AgeOrRedColGater);
+//always @(AllocEn or PgenAgeMatrix)
+// always @(matrixcvtgater13_001.PgenGaterSplitAge or matrixcvtgater13_001.PgenAgeData) $display($time," PgenAgeMatrix=%x, PgenAgeData=%b,PgenGaterSplitAge=%b", PgenAgeMatrix, matrixcvtgater13_001.PgenAgeData, matrixcvtgater13_001.PgenGaterSplitAge);
+
+always @(RCLK_PgenAgeData_AR ) begin
+     $display($time,"RCLK_PgenGaterSplitAge_AR[gater_idx]=%b --> RCLK_PgenAgeDataGSize_AR[dff_cnt_indx]=%b, RCLK_PgenAgeData_AR=%b ", matrixcvtgater13_001.RCLK_PgenGaterSplitAge_AR,matrixcvtgater13_001.RCLK_PgenAgeDataGSize_AR,RCLK_PgenAgeData_AR); //matrixcvtgater13_001. ,matrixcvtgater13_001. );
+end
 
 always #3 NxtAge = NxtAge+1'b1;  
-//always #7 AllocVal=AllocVal +1'b1;  
-always #2 PgenAgeMatrix=PgenAgeMatrix+'b1;  
+always #23 PgenAgeMatrix=PgenAgeMatrix+'b10101;  
 always #359 AllocEn=AllocEn +1'b1;  
 always @(posedge KCLK_AR)  AgeData = #0 NxtAgeData;  // NxtAge_2d => NxtAgeData_1d =(gated_clock_dff)=> AgeData_1d => Age_2d
-//always @(posedge KCLK_AR)  AgeData = #0 AgeData+1'b1;  // NxtAge_2d => NxtAgeData_1d =(gated_clock_dff)=> AgeData_1d => Age_2d
-
 always #5 KCLK_AR = ~KCLK_AR; 
 
-always @(KCLK_AR)
-begin
-    // $display($time," KCLK_AR=%b,SSE=%b,AllocVal=%b,AllocEn=%b,PgenAgeMatrix=%x,  RCLK_PgenAgeData_AR=%x, AgeData_1d=%x -->Age_2d=%x",KCLK_AR,SSE,AllocVal,AllocEn,PgenAgeMatrix,RCLK_PgenAgeData_AR,AgeData,Age);
-
-end
-
+//always @(KCLK_AR)
+always @(AgeData or Age) $display($time," KCLK_AR=%b,SSE=%b,AllocVal=%b,AllocEn=%b,PgenAgeMatrix=%x,  RCLK_PgenAgeData_AR=%x, AgeData_1d=%x -->Age_2d=%x",KCLK_AR,SSE,AllocVal,AllocEn,PgenAgeMatrix,RCLK_PgenAgeData_AR,AgeData,Age);
 // always @(AgeData or NxtAgeData or Age) $display($time," NxtAge=%x, NxtAgeData=%x, AgeData=%x, Age=%x ", NxtAge,NxtAgeData, AgeData, Age );
 
 
-// display inside q13.v;
-// genvar cannot be displayed // $display($time,"RCLK_PgenAgeDataGSize_AR=%b,dff_cnt_indx=%b,gater_indx=%b ",PgenGaterSplitAge,RCLK_PgenAgeDataGSize_AR,dff_cnt_indx,gater_indx);
-// always @(posedge KCLK_AR) $display($time,"PgenGaterSplitAge=%b,RCLK_PgenGaterSplitAge_AR=%b,ACCURATE_GATER_EN=%b ",PgenGaterSplitAge,RCLK_PgenGaterSplitAge_AR,ACCURATE_GATER_EN);
 
 endmodule
-
+*/
 
 /*
- 
+`timescale 1ns / 1ns
+module df_mid_lsdc_matrixcvt13_tb;
+parameter SIZE=4, EQUALITY=0;
+  reg  [SIZE-1:0][SIZE-1:0]     NxtAge;
+  reg  [(SIZE*SIZE-SIZE)/2-1:0] AgeData;
+
+  wire [(SIZE*SIZE-SIZE)/2-1:0] NxtAgeData;
+  wire [SIZE-1:0][SIZE-1:0]     Age;
+
+
+df_mid_lsdc_matrixcvt13 #(.SIZE(4), .EQUALITY(0)) df_mid_lsdc_matrixcvt13_001  (.NxtAge(NxtAge), .AgeData(AgeData), .NxtAgeData(NxtAgeData), .Age(Age));
+
+initial begin
+#0    NxtAge = 0; 
+#3970 $finish;
+end
+
+
+always #3 NxtAge = NxtAge+1'b1;      // NxtAge_2d => NxtAgeData_1d (gated_clock_dff) => AgeData_1d => Age_2d
+always  AgeData = #11 NxtAgeData;     // NxtAge_2d => NxtAgeData_1d (gated_clock_dff) => AgeData_1d => Age_2d
+
+// always @(*) $display($time,"########## agedata_1d->age_2d:  AgeData=%x,Age=%x",AgeData,Age);
+
+always @(AgeData or NxtAgeData or Age) $display($time," NxtAge_2d=%x->NxtAgeData_1d=%x, AgeData_1d=%x->Age_2d=%x ", NxtAge,NxtAgeData, AgeData, Age );
+
+endmodule
+*/
+
+/*
 // #############################################################################################################
 `timescale 1ns / 1ns
 module df_mid_lsdc_chkcg13_tb;
@@ -388,6 +327,4 @@ always @(posedge clk) $display($time, "in: clk=%b,SSE=%b,d=%x;  out: q=%x;",clk,
 
 endmodule
 */
-
-
 
