@@ -26,9 +26,10 @@ git config --list
 
 # sync, merge;
 git status;
-git fetch;
+# git fetch; # not always update latest files; 
 git pull;
-git add; git commit;
+git add; 
+git commit -m " " ;
 
 # undo when add & commit unnecessary files;
 git reset <filename>; 
