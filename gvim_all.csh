@@ -62,11 +62,25 @@ guu; gUU; # lowercase/uppercase of current line;
 sorting lines in editors
 vi: :.,+3!sort
 
-### replace 
-:%s//86/g  ; # replace current search patterns(e.g, `NUM_GRP) into 86;
-:,$s//86/g ; # replace pattern, from current line to last line;
+### for every defines/params in header.h, replace it in tdatq.v;  
+:%s/`NUM_GRP`/86/g  ; # replace current search patterns(e.g, `NUM_GRP) into 86;
+:,$s//86/g ;          # replace pattern, from current line to last line;
+# header file "`define WIDTH = 16", save as mapping.mid_def.txt; gvim ":%s#define #150,$s/#g", ":%s# #/#g", ":%s#$#/g#g" ; mapping.vim.txt: ":150,$ s/WIDTH/16/g";
+# params file "parameter DEPTH=43", save as mapping.txt; gvim ":%s#^#150,$s/#g",   
+gvim tdatq.v;
+gvim> :source mapping.vim.txt;
+# if gvim pauses for every 25 lines, :set nomore (:set more otherwise)
+gvim> set nomore
 
 ### vertical select and increment/decrement numbers;
+ctrl-v to select vertically; 
+g ctrl-a to increment;  g ctrl-x to decrement;
+1
+1
+1
+1
+
+###
 
 
 

@@ -15,7 +15,7 @@ git commit -m "update readme";
 
 git push origin main;
 
-git pull origin main; # get latest changes from remove repository;
+
 
 # config username, emails
 git config --global --edit; # user: Dong  email: dong;
@@ -30,6 +30,9 @@ git status;
 git pull;
 git add; 
 git commit -m " " ;
+
+####
+git pull origin main; # get latest changes from remove repository;
 
 # undo when add & commit unnecessary files;
 git reset <filename>; 
