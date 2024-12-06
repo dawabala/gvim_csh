@@ -1,0 +1,70 @@
+# git win64 
+https://github.com/git-for-windows/git/releases/download/v2.14.1.windows.1/Git-2.14.1-64-bit.exe
+https://git-scm.com/downloads/win/Git-2.47.0.2-64-bit.exe
+
+# git commands
+git clone https://github.com/dawabala/gvim_csh
+git checkout main -- README.md
+gvim README.md
+git status
+git add README.md; # git add .
+git commit -m "update README.md"
+git push origin main
+# sync & merge
+git fetch;
+git pull;
+# undo add & commit;
+git reset <filename>
+git reset;
+# discard changes, revert to last commit;
+git restore *;
+
+
+#### Linux image viewer
+csh> display
+csh> eog; # dconf Error, no write permission;
+
+#### wget  xargs urls
+cat url-list.txt | xargs wget –c
+
+#### exec/xargs
+find ./*[2-4][0-9]* -name '*pdf' -exec cp {} pdfs \;
+find ./*[0-1][0-9]* -name '*pdf' | xargs -i cp {} pdfs
+find ./*11* -iname '*PDF' -exec md5sum {} \;
+
+
+#### awk=a+w+k, sed=super editor;
+awk -F, '{print $2}' pdbooks.txt;
+awk '{print $2 $N3}' df_mid_features.vh | sed 's/$2/$d/g' rtl_df_mid_tdatq13_noparams.v
+sed 's/abc/xyz/g' pdbooks.txt;
+set -i 's/abc/xyz/g' pdbooks.txt; # replace inplace, no bak file;
+
+# awk:  column 3-10 same as colum 14-21 ?  if the same, print line;
+awk '$3$4$5==$14$15$16' <file_name>
+
+
+# mid.h: "parameter WIDTH=16," mapping.txt: "WIDTH 16"  tdatq13.v: "[WIDTH-1:0] queue;" changed into [16-1:0] queue";    
+foreach line ( `cat mapping.txt` )
+    set key   = `echo $line | awk '{print $1}'`
+    set value = `echo $line | awk '{print $2}'`
+    sed -i "s/\b$key\b/$value/g" rtl_df_mid_tdatq13_noparams.v
+end
+
+#### foreach
+# foreach(linux), for(win)
+ win: for %%file in * do ...  
+ linux: foreach i in *
+           do 
+
+# chmod: recursively set dir/file access mot as 755/644 for website security;
+find /path -type f -exec chmod 644 {} \;
+find /path -type d -exec chmod 755 {} \;
+
+
+#### get list of unique imported java packages 
+grep '^import ' *.java | sed -e 's/.*import *//' -e 's/;.*$//' | sort -u > list
+
+#### emacs
+sorting lines
+emacs: M-x sort-lines
+
