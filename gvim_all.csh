@@ -90,12 +90,16 @@ gvim> :source mapping.vim.txt;
 gvim> set nomore; # set more;
 
 ### vertical select and increment/decrement numbers;
-ctrl-v to select vertically; 
-g ctrl-a to increment;  g ctrl-x to decrement;
+ctrl-v  select vertically; 
+ctrl-a:  1/1/1/1 to 2/2/2/2;   
+g ctrl-a: increment 1/1/1/1 to 2/3/4/5;  
+g ctrl-x: decrement 2/2/2/2 to 1/0/-1/-2;
 1
 1
 1
 1
+
+
 
 ### auto_function_name    
 ctrl-N: 
@@ -210,6 +214,37 @@ nmap <A-l> <C-W>l
 nmap <C-TAB> :tabnext<CR>
 nmap <C-S-TAB> :tabpre<CR>
  
+#### vim systemverilog pack
+git clone https://github.com/nachumk/systemverilog.vim ~/.vim/pack/systemverilog.vim
+# verilog syntax highlighting and indenting, and additional features (if enabled via .vimrc):
+# matchit - Using shift-5 (%) to hop between starting and ending tokens,e.g, 
+# begin → end → begin; module → endmodule → module ; ( → ) → ( ; function → endfunction → function
+# folding - Using zc and zo to hide portions of text based on indented sections
+# Replacing tabs with spaces by re-indenting the complete file
 
 
+#### vim colorscheme
+download github.com/sickill/vim-monokai/monokai.vim
+save monokai.vim into ~/.vim/colors/monokai.vim
+:color monokai
 
+### random colors
+random_color ={ 'kanagawa', 'gruvbox', 'nord', 'neon','leaf','adwaita','melange','onedark','monokai'}
+math.randomseed(os.time())
+local mycolor= random_color[math.random(10)]
+vim.cmd('colorscheme',..mycolor)
+neodark
+everforest
+sonokai
+aurora
+everblush
+zephyrium
+substrata
+vscode
+
+### vim legacy colors
+:color darkblue
+:color koehler
+:color murphy
+:color elflord
+:color evening; # Warning info will be light-yellow, hard to recognize; 
