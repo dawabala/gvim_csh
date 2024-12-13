@@ -75,3 +75,6 @@ grep '^import ' *.java | sed -e 's/.*import *//' -e 's/;.*$//' | sort -u > list
 sorting lines
 emacs: M-x sort-lines
 
+#### ETX
+#  mouse do not respond properly : suspend xfce_nveu; start fvwm_nveu, terminate  fvwm_nveu; reload xfce_nveu;
+
