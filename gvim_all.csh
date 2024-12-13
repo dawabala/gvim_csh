@@ -224,8 +224,8 @@ git clone https://github.com/nachumk/systemverilog.vim ~/.vim/pack/systemverilog
 
 
 #### vim colorscheme
-download github.com/sickill/vim-monokai/monokai.vim
-save monokai.vim into ~/.vim/colors/monokai.vim
+download github.com/sickill/vim-monokai/colors/monokai.vim
+save monokai.vim into ~/.vim/colors/monokai.vim (for win, into vim\colors\monokai,vim)
 :color monokai
 
 ### random colors
