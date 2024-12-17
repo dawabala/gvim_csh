@@ -1,0 +1,287 @@
+alias src     'source ~/.cshrc'
+alias a       'source ~/.aliases'
+
+alias cpd    'source /tools/aticad/1.0/src/sysadmin/cpd.cshrc'
+alias at2    'source /tools/aticad/1.0/src/sysadmin/cpd.cshrc; setenv FAMILY supra; setprj at2gmd'
+
+alias d       'display'
+alias e       'eog'
+alias f       'firefox'
+alias k       'Konqueror'
+
+alias ..      'cd ..'
+alias ...     'cd ../..'
+alias cd3     'cd ../../..'
+alias cd4     'cd ../../../..'
+
+alias gvim    '/usr/bin/gvim'
+alias g        gvim
+alias v        gvim
+alias vi       gvim
+alias gv       gvim
+alias loc     'setenv LC_ALL en_US.utf8; locale'
+alias locale8 'setenv LC_ALL en_US.utf8; locale'
+alias locutf8 'setenv LC_ALL en_US.utf8; locale'
+alias gb      'gvim --cmd "set fileencodings=utf-8,gbk"'
+alias gbk     'gvim --cmd "set fileencodings=utf-8,gbk"'
+alias g5      'gvim --cmd "set fileencodings=utf-8,big5"'
+alias gb5     'gvim --cmd "set fileencodings=utf-8,big5"'
+alias gbig5   'gvim --cmd "set fileencodings=utf-8,big5"'
+
+alias du1      du -h --max-depth=1
+alias du2      du -h --max-depth=2
+alias du3      du -h -d 3
+alias du4      du -h -d 4
+alias du5      du -h -d 5
+
+alias fn       find . -name 
+alias fnl      find . -name 
+alias fi       find . -iname
+
+# alias f20  echo $fn20 # py3 \!$  sleep 29 end
+# alias f3 echo 0 1 2 3 py3 \!$
+
+alias f20   "echo 'foreach n (0 1 2 2 3 3 3 4 4 4 4 4 5 5 5 5 5 6 6 6 6 6 6 ) py3 ; sleep 29; end'"
+alias f50   "echo 'foreach n (0 1 2 2 3 3 3 4 4 4 4 4 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9) py3 ; sleep 59; end'"
+setenv n100 '0 1 2 2 3 3 3 4 4 4 4 4 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9 9 1 2 2 3 3 3 4 4 4 4 4 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 8 8 8 9 9 9 9 9 9 9 9 9'
+alias f100  "echo foreach n ($n100) py3 pyeda.py sha256.v; sleep 119; end"
+#  \!:1 \!:2 \ # \!:0 being the name of the alias. if no argument, will get a cryptic error message.
+
+#### active python aliases, NA 
+# alias venv "python \!:1 ; source \!:1/bin/activate.csh"
+# alias venv "python -m venv \!:1 ; source \!:1/bin/activate.csh"
+# alias funcargs "echo first \!:1 ; echo second \!:2"
+# color_term py3
+# /tool/pandora64/bin/python3
+# alias srcpy3 'source ~/.aliases_py3'
+# moved py3 env/alias from .cshrc  to .aliases_py3, for color_term
+# alias py36       $HOME/.pyenv/versions/activepython-3.6.0/bin/python3
+# alias pip36      $HOME/.pyenv/versions/activepython-3.6.0/bin/pip3
+
+#### pyenv
+setenv PATH      $HOME/local/py39/bin:$HOME/local/:$PATH
+alias  python3   'setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH; setenv C_INCLUDE_PATH /home/zhzhongl/local/include; $HOME/local/py39/bin/python3'
+alias  pip3      $HOME/local/py39/bin/pip3
+alias  python    $HOME/local/py39/bin/python3
+setenv PATH      $HOME/local/py39/bin/:$PATH
+
+# setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH 
+# echo $LD_LIBRARY_PATH 
+
+alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_64]" -J term6 xterm'
+
+#### module load aliases; module list;
+# alias module '/tool/pandora/bin/modulecmd tcsh !*'
+
+# module avail verdi; module unload verdi; module unload verdi;
+# verdi -sv -f /proj/at2_til22_nobackup/doudouye/at2_code/data/SynRtl/SynRtl.vf;
+# ncverilog *.v; # whatos ; # k310_g217_64
+# dc_shell -f rundc.tcl; 
+# which fc_shell; /tool/cbar_ec/apps_k310_g217_64/fusioncompiler/2024.09-SP3-DEV-20240827-ec/bin/fc_shell; evince /tool/cbar_ec/apps_k310_g217_64/fusioncompiler/2024.09-SP3-DEV-20240827-ec/doc/FC/*.pdf &; 
+# which pt_shell;
+# which fm_shell;
+
+alias load_verdi 'module load verdi/2024.09 ';  
+alias load_nc    'module load cadenceIUS/9.2-e218'; 
+alias load_fx    'module load fusioncompiler'
+alias load_dc    'module unload synopsys; module load   synopsys/2019.12-SP4' ; # dc_shell -f rundc.tcl;
+alias load_pt    'module load primetime'
+alias load_fm    'module load formality'
+
+# #### load modules 
+# # module load mktree
+# # module load vim/7.2
+# # module load perl/5.20.0
+# module load verdi/2019.06-SP1-1
+# module load fusioncompiler/2022.03-SP5-T-20240111
+# module load synopsys/2017.09-SP5
+# module load formality/2016.03-SP2
+# module load primetime/2023.12-SP5
+# # module load vc_static/2016.06-SP2-6-T-20170628
+# # module load vcs/2017.03-SP2
+# # module load leda/2011.09
+# # module load 0in/10.1d_1
+# # module load VirageLogic/2011.09
+# # module load lec/13.10-s180
+
+# module unload primetime/2021.06-SP5-1
+# module unload fusioncompiler/2020.09-SP6-T-20210916
+# module unload verdi/2019.06-SP1-1
+# module unload primetime/2021.06-SP5-1
+ 
+
+#### tb aliases
+alias tbc    'TileBuilderConsole'
+alias tbt    'TileBuilderTerm'
+alias tbg    'TileBuilderGenParams'
+alias tbm    'TileBuilderMake'
+alias tbgm   'TileBuilderGenParams; TileBuilderMake'
+alias tbo    'TileBuilderOverwriteCommand'
+alias tbgrep 'TileBuilderGenParamsGrep'
+# tb intactive commands
+alias intfm 'TileBuilderIntFM';  # TileBuilderIntFM FmEqvPwrEcoSynthesizeVsSynRtl, to open *failed.fss; # FmEqvPwrAllUpfSuppliesOnPrePhysicalVsSynthesize FmEqvPwrAllUpfSuppliesOnSynthesizeVsSynRtl
+alias intpt 'TileBuilderIntPT';  # TileBuilderIntPT/TileBuilderIntPrimetime cmds/PtFcGenFULLCHIPTIMINGVminSlowTopSdc.cmd
+alias intfx 'TileBuilderIntFX';  # TileBuilderIntFX data/PreEco/Synthesize.nlib
+alias intdc 'TileBuilderIntDC';  # cTileBuilderIntDC mds/DgSynthesize.cmd
+alias fxsyn    'TileBuilderIntFX data/PreEco/Synthesize.nlib';  
+
+alias fxmacro  'TileBuilderIntFX data/FpPlaceMacros.nlib';  
+
+alias fxcell   'TileBuilderIntFX data/FpInsertPhysicalCells.nlib';  
+alias fxgrid   'TileBuilderIntFX data/FpGenInternalPowerGrid.nlib';  
+alias fxpower  'TileBuilderIntFX data/FpFinishPower.nlib';  
+
+alias fxpostfp 'TileBuilderIntFX data/PostFloorPlan.nlib';  
+alias fxplace  'TileBuilderIntFX data/Place.nlib';  
+alias fxcts    'TileBuilderIntFX data/Cts.nlib';  
+alias fxoptcts 'TileBuilderIntFX data/OptCts.nlib';  
+alias fxroute  'TileBuilderIntFX data/Route.nlib';  
+
+
+### tbs tbb
+# TileBuilderStart
+# TileBuilderBranch --startfrom FmEqvPwrAllUpfSuppliesOnSynthesizeVsSynRtl,FmEqvPwrSynthesizeVsSynRtl,FmEqvPwrAllUpfSuppliesOnPrePhysicalVsSynthesize,FmEqvPwrPrePhysicalVsSynthesize --params branch.params
+# TileBuilderBranch --startfrom GenerateAllCommands --params zhzhongl.params
+### tbclean destroy
+# TileBuilderClean      --destroy; rm !*;
+# TileBuilderDeleteFlow --destroy ./;
+
+#### vov commands
+# TileBuilderRestartVovproject; 
+# vovproject list  
+# vovproject start TileBuilder_May08_0541_3962_const_postNLD_0508_spef
+# vovproject enable TileBuilder_May18_2322_13367_rel_eco_0519 
+# vovproject destroy 
+### cannot run *0519 targets? list, stop, restart, enable, rerun;
+# vovproject list; 
+# vovproject stop *0519_pt; vovproject restart *0519_pt;  vovproject enable *0519_pt;
+
+### mouse do not respond properly : suspend xfce_nveu; start fvwm_nveu, terminate  fvwm_nveu; reload xfce_nveu;
+
+#### itb aliases
+
+alias itbfc  '~/python/itbfc.csh -tiles usb -step step_fcc -action sr -p '
+alias itbnb  '~/python/itb.csh   -tile nbio -step step_fcc -action sr -p '
+alias usb3   '~/python/itb.csh -tiles usb3 -step step_usb3 -action sr  -p  _regr_3_1_TileBuilder_Mar02_0053_57228_regr_3_1'
+
+alias itbusb3eco '~/python/itb.csh -tiles usb3 -step step_usb3eco -action sr -p usb0_phy_t -p usb1_phy_t -p usb1_s5_t'
+alias itbusb '~/python/itb.csh -tiles usb -step step_fcc -action sr -p usb0_phy_t -p usb0_s0_t -p usb0_s5_t -p usb0_vdci_t'
+alias itb0   '~/python/itb.csh -tiles usb -step step_fcc -action sr -p usb0_phy_t -p usb0_s0_t -p usb0_s5_t -p usb0_vdci_t'
+alias itb2   '~/python/itb.csh -tiles usb -step step_fcc -action sr -p usb0_s5_t_eco2021 -p usb0_vdci_t_eco2104'
+alias itb1   '~/python/itb.csh -tiles usb -step step_fcc -action sr -p usb0_phy_t_eco2005a36a37 -p usb0_phy_t_eco2062'
+alias itb3   '~/python/itb.csh -tiles usb -step step_fcc -action sr -p usb0_phy_t_eco2005a36a37 -p usb0_phy_t_eco2062 -p usb0_s5_t_eco2021 -p usb0_vdci_t_eco2104'
+alias itbnb  '~/python/itb.csh -tile nbif -step step_fcc -action sr -p _MECO_LAB1_zhzhongl_TileBuilder_Jul21_2309_61661_work'
+
+alias trim   'python3 ~/python/py/trimlog.py'
+
+alias ls	  'ls -CFA'
+alias ll	  'ls -alF'
+alias lt      'ls -alt'
+alias lss     'ls -lS'
+alias lsize   'll -S'
+
+alias l       'less'
+alias hp      'echo ######## $cwd ######### >> ~/cmdhist.csh'
+alias h100    'hh 300 >> ~/cmdhist.csh'
+alias h200    'hh 300 >> ~/cmdhist.csh'
+alias h300    'hh 300 >> ~/cmdhist.csh'
+alias h		  'history'
+alias hh      'history \!:1 | cut -c 13-'
+alias hh2     'history \!:1 | cut -c 14-'; # 
+alias hhh     'history $1   | cut -c 13-'
+# !:0: Retrieves the command name from the last command.
+# !:1: first argument of last command;  
+# !:2: second argument, and so on.
+# !* : all arguments 
+# !$ : last argument 
+alias j		  'jobs'
+alias a-x	  'chmod a-x \!*'
+alias a+x	  'chmod a+x \!*'
+alias pu	  'ci -u \!*'
+alias ge	  'co -l \!*'
+alias gi	  'co -l \!* ; vi \!*'
+alias gzcat	  'gzip -d -c'
+alias zxv	  'gzcat \!:1 | xv -'
+alias ziprtl  'tar -zcvf LAST_SYN_RTL.tgz LAST_SYN_RTL/; tar -zcvf SynRtl.tgz SynRtl/;'
+alias rmrtl   'rm -rf LAST_SYN_RTL SynRtl'
+alias tgz     'tar -zcvf $1.tgz $1/*;'
+alias lnu0    'ln -s usb0_s0_t_regr* u0s0 ; ln -s usb0_s5_t_regr* u0s5 ; ln -s usb0_phy_t_regr* u0phy ; ln -s usb0_vdci_t_regr* u0vdci ;'
+alias lnu1    'ln -s usb1_s0_t_regr* u1s0 ; ln -s usb1_s5_t_regr* u1s5 ; ln -s usb1_phy_t_regr* u1phy ; ln -s usb1_vdci_t_regr* u1vdci ;'
+alias lnusb1  'ln -s usb1_s0_t_regr* u1s0 ; ln -s usb1_s5_t_regr* u1s5 ; ln -s usb1_phy_t_regr* u1phy ; ln -s usb1_vdci_t_regr* u1vdci ;'
+alias lnu1all 'ln -s usb1_s0_t_regr* u1s0 ; ln -s usb1_s5_t_regr* u1s5 ; ln -s usb1_phy_t_regr* u1phy ; ln -s usb1_vdci_t_regr* u1vdci ;'
+
+alias chip	'setenv EmanonVer \!:1;setenv chipDir /home/emanon/chip\!:1;setenv EMANON_REV REV_\!:1;echo $chipDir;echo EMANON_REV=$EMANON_REV;echo $EmanonVer'
+alias qcd	'cd `~$USER/bin/qcd.pl \!*`;pwd'
+alias push	'echo `pwd` > $TMP/push.tmp'
+alias tpush	'echo `pwd` > $TMP/tpush.tmp'
+alias pop	'cd `cat $TMP/push.tmp`;echo `pwd`'
+alias tpop	'cd `cat $TMP/tpush.tmp`;echo `pwd`'
+alias bjob	'lsf_bsub -J test -Ip -q normal -R "select[(type==RHEL4_64)&&(gb32|| gb64||gb128) && (mem >= 50000)]"'
+alias bjob6	'lsf_bsub -J test -Ip -q regr_high -P sandstone-fe -R "select[(type==RHEL6_64)&&(csbatch||gb32||gb64||gb128||gb256) && (mem >= 50000)] rusage[mem=20000]"'
+alias bjob7	'lsf_bsub -J test -Ip -q regr_high -P sbio-fe -R "select[(type==RHEL7_64)&&(csbatch||gb32||gb64||gb128||gb256) && (mem >= 50000)] rusage[mem=20000]"'
+#alias bjob5	'lsf_bsub -J test -Ip -q regr_high -P kn-fe -G kn-fe -R "select[(type==RHEL5_64)&&(gb32|| gb64||gb128) && (mem >= 5000)] rusage[mem=2000]"'
+alias bjobr	  'lsf_bsub -J test -Ip -q regr_high -m oshcsc12b2'
+alias bjobx	  'lsf_bsub -q normal -m oshcsc12b2 -Ip xterm'
+alias fct_exp 'lsf_bsub -Ip -P cz-pd -q regr_high -R " rusage[mem=15000]" "fct_explorer ./"'
+alias pl	'p4 filelog'
+alias plm	'p4 filelog -m 10'
+alias p4u	'p4 reopen -c default ./...;p4 -u `whoami` reopen -c default ./...;p4 -u `whoami` submit'
+alias p4cur 'p4 changes -m 1 -s submitted @$P4CLIENT'
+alias po    'p4 opened -u `whoami` '
+
+# alias phone grep -i \!$ ~/phonelist
+# alias precmd	'echo -n "${HOST}:$cwd "'
+# alias cwd	'echo -n "${HOST}:${cwd}>"'
+alias cwd	'setprompt'
+alias cd	'cd \!*;setprompt'
+alias setprompt 'set prompt="${HOST}:${cwd}>"'
+alias promptc2  'set prompt = "%C3 %"'
+alias promptc3  'set prompt="${hostname}: %C3 % "'
+alias promptc4  'set prompt="../%C4 % "'
+
+alias taillog	'tail -f ~$USER/emanon/hw/run/compile.log'
+alias runfiles	'find . -type f -print | grep -v \.o | grep -v \.daidb'
+
+alias DEBUGLIBS		"setenv LD_DEBUG libs;setenv LD_DEBUG_OUTPUT ~/LD_DEBUG"
+alias NODEBUGLIBS	"unsetenv LD_DEBUG;unsetenv LD_DEBUG_OUTPUT"
+
+# alias vi	'vim  -c ":set nowrapscan;set noic" \!*'
+# alias vi   '$PTT_VIM \!*'
+# alias view '$PTT_VIM -n \!*'
+alias vi     'vim \!*'
+alias view   'vim -n \!*'
+
+if ( "$OSTYPE" == "linux" ) then
+    alias DEBUGLIBSDETAIL	"setenv LD_DEBUG bindings,files,libs,reloc,statistics,symbols,versions ; setenv LD_DEBUG_OUTPUT ~/LD_DEBUG"
+else
+    alias DEBUGLIBSDETAIL	"setenv LD_DEBUG libs,bindings,symbols,detail ; setenv LD_DEBUG_OUTPUT ~/LD_DEBUG"
+endif
+
+alias words	"/usr/bin/tr -s ' \011' '\n'"
+alias cb 	"indent -i4 -bli0 -cli4 -nbc -psl -npcs -lp \!*"
+
+alias print	"a2ps -2 -f 7 --highlight-level=none \!*"
+
+alias allenv    "(set;env)"
+
+alias dtrel     'cd /proj/dt/release/REL_4.0.0/post_layout/'
+alias dtrel_sj  'cd /proj/dt.sj/release/REL_4.0.0/post_layout/'
+alias dtprenl   'cd $GO/parts_lib/syn/netlist/'
+alias dteco     'cd $GO/pd_lib/ECO/'
+alias dyt       'cd /proj/yuntai_feint/yunsoc/fccheck/'
+
+alias yb        'cd $GO/parts_lib/'
+alias ybrel     'cd /proj/yb/release/'
+alias ybsyn     'cd $GO/parts_lib/syn/netlist/'
+alias p4syncd   'source ~/p4syncd.tsh'
+
+
+#### trees
+\rm -f ~$USER/.trees.aliases
+
+# ~$USER/.trees generate_aliases > ~$USER/.trees.aliases
+
+if (-r ~$USER/.trees.aliases) then
+    source ~$USER/.trees.aliases
+endif
+
