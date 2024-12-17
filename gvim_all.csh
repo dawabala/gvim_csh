@@ -44,8 +44,11 @@ vim> :loadview v1.vim;    # load view;
 csh> ctags -R 1.txt;  gvim 1.txt;
 gvim> ctrl-]; ctrl-T; ctrl-6; <mouse_double_click>; g<mouse_right>;
 
-## setup, 
-:syn on;   # syntax on/off
+## setup, syntax, highlight search; 
+:syn on/off; # syntax on/off
+:syntax  on; # syntax on/off
+:set syntax=csh  ; # gvim .aliases, manually set syntax as csh;
+:set syntax=verilog
 :set hls;  # hl search on;
 :set hls!; # hl search off;
 :help vimrc;
@@ -111,6 +114,44 @@ qa<...>q
 @a;
 6@a;
 
+### search 
+:/`\U.*\d ; # search "`MID_DEF_*=18"; "
+\cwarning ; # ignorecase search; WARNING, warning, Warning ...
+
+\d # digital number    
+\a; [a-zA-Z]*;                # alphabet letter 
+\w; [a-zA-Z0-9_]* ; [\a\d_]*; # word of any alphanumeric character or underscore
+\W; [^a-zA-Z0-9_];            # non-word character 
+\h; [\a_]*;                   # head of word character (a,b,c...z,A,B,C...Z,_) 
+\D \W \A \H ; # non-digit|word|alphabet|head
+/\(X|Y\)
+
+
+/\d\{2}            # 2+ digits  # :g /\d\{3}//d; /d\{2}        
+/\d\@<!\d\{2}\d\@! # 2 and 2 only digits; see also :help /\@!  :help /\@<!
+/\v^(2021)@!       # all lines with no 2021 begin  
+\v                 # use magic search,see also :h \v;  
+^                  # matches start of line; 
+(2021)@!           # @! is negative look ahead, after start of line; pattern shouldn't be 2021, parentheses here means a regex group.
+:g!/^2021/-j       #  ^2021 is your pattern;  -j first sets the address to the line above and then joins it with the following one.
+:g/^\_$\n\_^$/d   # merge 2+ blank lines into 1 line; dont touch 1 blank line; merge 2+ empty lines into 1 empty line;
+:% s/^\s*$\n//g   # remove empty lines;
+:%s/.*/& &/       # duplicate every line;
+/feint\|supra  /feint\&.*supra # logic or/and
+10,20g/^/mo 10    # revert lines between line 10 and line 20
+g/^/m 0           # revert all lines;
+
+
+### search & replace
+# sub search range pattern replace regexp current digits
+
+:% s/\v(\a{1,2})\w*_\w*(\w)\//\1_\2\//g
+:% s/\(\a*\)er /more \1 /g   # taller man -> more tall man
+:1,20  s///g    
+:1,$   s///g
+:%     s///g        
+:.,$   s///g
+:.,+10 s///g
 ###  replace
 :% s/four/4/g
 :% s/\<four/4/g
@@ -145,15 +186,21 @@ g  ctrl-G
 ### find words
 csh> vim `grep -l XYZ *.c`
 
-### search 
-:/`\U.*\d ; # search "`MID_DEF_*=18"; "
-
-
 # find every line
 :grep XYZ *.c
 :cn 
 :clist
 :cp
+
+# folding - Using zc and zo to hide portions of text based on indented sections
+:set foldmethod ; # default is manual;
+:set foldmethod =manual;
+:set foldmethod =syntax; # fold by syntax, e.g, python: indent, c/cpp: {}; verilog: module/endmodule, begin/end, 
+:1,100 fold;     # fold line1 to 100;
+:1,100 foldopen; # unfold line1 to 100;
+:za; # cursor on folded line, ":za" will toggle between fold/unfold; zo: fold on; zc: fold close;
+:foldclose;
+:foldopen;
 
 ### orthodox vim
 c/d/v    # correct/delete/visual_select
@@ -219,32 +266,46 @@ git clone https://github.com/nachumk/systemverilog.vim ~/.vim/pack/systemverilog
 # verilog syntax highlighting and indenting, and additional features (if enabled via .vimrc):
 # matchit - Using shift-5 (%) to hop between starting and ending tokens,e.g, 
 # begin → end → begin; module → endmodule → module ; ( → ) → ( ; function → endfunction → function
-# folding - Using zc and zo to hide portions of text based on indented sections
 # Replacing tabs with spaces by re-indenting the complete file
 
 
 #### vim colorscheme
-download github.com/sickill/vim-monokai/colors/monokai.vim
-save monokai.vim into ~/.vim/colors/monokai.vim (for win, into vim\colors\monokai,vim)
-:color monokai
+# download github.com/sickill/vim-monokai/colors/monokai.vim
+# save monokai.vim into ~/.vim/colors/monokai.vim (for win, into vim\colors\monokai,vim)
+:colors monokai; colors default;
 
-### random colors
+:colorscheme blue|darkblue|delek|desert|elflord|everning|morning
+# https://github.com/chriskempson/tomorrow-theme/tree/master/vim/colors
+# https://github.com/chriskempson/tomorrow-theme/blob/master/vim/colors/Tomorrow-Night-Blue.vim
+:colorscheme Tomorrow-Night
+# Tomorrow-Night-Bright.vim Tomorrow-Night-Eighties.vim Tomorrow-Night.vim TomorrowNight.vim
+
+# random colors
 random_color ={ 'kanagawa', 'gruvbox', 'nord', 'neon','leaf','adwaita','melange','onedark','monokai'}
 math.randomseed(os.time())
 local mycolor= random_color[math.random(10)]
 vim.cmd('colorscheme',..mycolor)
-neodark
-everforest
-sonokai
-aurora
-everblush
-zephyrium
-substrata
-vscode
+# neodark
+# everforest
+# sonokai
+# aurora
+# everblush
+# zephyrium
+# substrata
+# vscode
 
-### vim legacy colors
+## vim legacy colors
 :color darkblue
 :color koehler
 :color murphy
 :color elflord
 :color evening; # Warning info will be light-yellow, hard to recognize; 
+
+#### colorscheme 256_noir
+highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=233 guifg=NONE guibg=#121212
+autocmd InsertEnter * highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=234 guifg=NONE guibg=#1c1c1c
+autocmd InsertLeave * highlight CursorLine cterm=NONE ctermfg=NONE ctermbg=233 guifg=NONE guibg=#121212
+
+
+
+

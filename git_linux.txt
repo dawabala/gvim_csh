@@ -71,6 +71,22 @@ find /path -type d -exec chmod 755 {} \;
 #### get list of unique imported java packages 
 grep '^import ' *.java | sed -e 's/.*import *//' -e 's/;.*$//' | sort -u > list
 
+#### sort
+# search & sort files by modification date
+find . -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-
+foreach file (`find .  -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-`)
+        set mod_date = `date -r "$file" +"%Y-%m-%d"`
+
+# Files are copied from the source directory ($1) to the destination directory ($2).  Any differences, such as new or modified files, are updated in the destination.
+# -a: archive, -v: verbose --delete: if source file removed, destination file also be removed.
+echo "Syncing $1 to $2"
+rsync -avh --delete "$1" "$2"
+
+find "$1" -type f -printf '%T@ %p\n' | sort -n | tail -1
+
+#
+sort -k1.4 -n f.txt
+
 #### emacs
 sorting lines
 emacs: M-x sort-lines
@@ -78,3 +94,18 @@ emacs: M-x sort-lines
 #### ETX
 #  mouse do not respond properly : suspend xfce_nveu; start fvwm_nveu, terminate  fvwm_nveu; reload xfce_nveu;
 
+#### nfs lsof
+fuser -v .nfs000000 
+lsof .nfs0000000057
+kill/bkill <PID>
+
+#### ps 
+ps --help all | grep id
+ps -p 5888 -all
+ps -p 5888 -l
+ps -p 5888 -detail
+ps -f -p 35389 -p 35471
+ps -f -p 35389 -p 35471 -p 35562 -p 35563 -u
+ps -u zhzhongl | grep vov
+
+####
