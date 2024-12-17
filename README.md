@@ -1,4 +1,9 @@
+# mail: j**@***.com 
+#     : S*T*;
+# user:dawabala
+
 # gvim_csh
+
 git_win64, gvim,csh,python,dumptb;
 
 git clone https://github.com/dawabala/gvim_csh;
