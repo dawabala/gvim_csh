@@ -57,19 +57,35 @@ foreach line ( `cat mapping.txt` )
     sed -i "s/\b$key\b/$value/g" rtl_df_mid_tdatq13_noparams.v
 end
 
-#### foreach
+#### foreach  -e -r 
 # foreach(linux), for(win)
  win: for %%file in * do ...  
  linux: foreach i in *
            do 
+        end
+foreach ftxt (`ls *.txt`)
+    grep case $ftxt
+end
+
+foreach fname ( `seq 1 2 30` )
+   if ($fname > 19 )   break
+   if ($fname == '11') continue
+   echo $fname
+end
+
+if (!-e drop2.csh) echo "drop2.csh not exist"
+
 
 # chmod: recursively set dir/file access mot as 755/644 for website security;
 find /path -type f -exec chmod 644 {} \;
 find /path -type d -exec chmod 755 {} \;
 
 
-#### get list of unique imported java packages 
+#### grep/zgrep
+# get list of unique imported java packages 
 grep '^import ' *.java | sed -e 's/.*import *//' -e 's/;.*$//' | sort -u > list
+zgrep -a -E '*pattern1*|*pattern2*|...' *file*
+
 
 #### sort
 # search & sort files by modification date

@@ -114,6 +114,29 @@ qa<...>q
 @a;
 6@a;
 
+### insert/append/newline/cut/substitute/delete/yank
+iIaAoOxs
+dd yy p
+f / * g* n N
+0 ^ B b h <> l e w E W $
+gg Ctrl-b Ctrl-u k j Ctrl-d Ctrl-f G
+### visual_select
+ctrl-v  vap vi( 
+
+ggVG u|U  select text change into lowercase/uppercase
+gf; 
+d/Data # delete until Data;
+y2fE   # yank before 2nd E in line;
+
+# gvim remove un-matched words;
+:g!/<string_to_keep>/d
+
+:split
+:vsplit
+
+:set nu;  :set nonu;  :set number;  :set nonumber;
+
+
 ### search 
 :/`\U.*\d ; # search "`MID_DEF_*=18"; "
 \cwarning ; # ignorecase search; WARNING, warning, Warning ...
@@ -161,6 +184,9 @@ g/^/m 0           # revert all lines;
 ## exchange 
 :% s/\([^,]*\),\(.*\)/\2\1/
 
+### record/replay
+qaq, @a, 20@a;
+
 ## replace for multiple files
 vim *.cpp;
 qa 
@@ -196,9 +222,14 @@ csh> vim `grep -l XYZ *.c`
 :set foldmethod ; # default is manual;
 :set foldmethod =manual;
 :set foldmethod =syntax; # fold by syntax, e.g, python: indent, c/cpp: {}; verilog: module/endmodule, begin/end, 
+:zfap;  # fold current paragraph;
+:zf7j;  # fold next 7 lines;
+:zfn;   # fold until next matched word; 
+:zi/za; # toggle between fold/unfold; 
+:zo/zc; # fold on; zc: fold close;
 :1,100 fold;     # fold line1 to 100;
+:.,+200 fold;    # fold following 200 lines;
 :1,100 foldopen; # unfold line1 to 100;
-:za; # cursor on folded line, ":za" will toggle between fold/unfold; zo: fold on; zc: fold close;
 :foldclose;
 :foldopen;
 
