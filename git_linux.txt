@@ -30,6 +30,9 @@ git push origin main
 #### Linux image viewer
 csh> display
 csh> eog; # dconf Error, no write permission;
+csh> gimp *.jpg;
+csh> imginfo floorplan_image.png;
+
 
 #### wget  xargs urls
 cat url-list.txt | xargs wget –c
@@ -38,6 +41,19 @@ cat url-list.txt | xargs wget –c
 find ./*[2-4][0-9]* -name '*pdf' -exec cp {} pdfs \;
 find ./*[0-1][0-9]* -name '*pdf' | xargs -i cp {} pdfs
 find ./*11* -iname '*PDF' -exec md5sum {} \;
+
+#### make awk sed
+# gnu make sed grep awk sed cut
+set tar_list     = (`echo $target | sed -e 's/_/ /g'`)
+set suffix       = `echo $tgt | sed 's/\w\+_//' | tr 'A-Z' 'a-z'`
+set tilenickname = ` grep "^NICKNAME\b" $dir_name/tile.params | grep -v "#" | cut -d "=" -f2 | sed 's/ //g'`
+set runlog       = (`vsr -nowait -cb -force $job|sed -e 's/Nothing to do/ \\\\033\[0;31mNothing to do\\\\033\[0m /g'`)
+sed -i 's/hier/hcdc/g'
+grep meta * | awk '{print $1}' | sed 's/:<meta//g' | cut -c-100,200
+
+wget http://ftp.gnu.org/gnu/make/make-4.3.tar.gz
+wget https://git.savannah.gnu.org/cgit/sed.git/snapshot/sed-4.8.tar.gz
+wget https://ftp.gnu.org/gnu/grep/grep-3.6.tar.gz 
 
 
 #### awk=a+w+k, sed=super editor;
@@ -84,10 +100,11 @@ find /path -type d -exec chmod 755 {} \;
 #### grep/zgrep
 # get list of unique imported java packages 
 grep '^import ' *.java | sed -e 's/.*import *//' -e 's/;.*$//' | sort -u > list
+
 zgrep -a -E '*pattern1*|*pattern2*|...' *file*
 
 
-#### sort
+#### sort by time, check *_deleted *copied files;
 # search & sort files by modification date
 find . -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-
 foreach file (`find .  -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-`)
@@ -124,4 +141,29 @@ ps -f -p 35389 -p 35471
 ps -f -p 35389 -p 35471 -p 35562 -p 35563 -u
 ps -u zhzhongl | grep vov
 
-####
+#### cpu, perf
+## cpu
+cat /proc/meminfo /proc/cpuinfo /proc/driver/*
+uname -a; lsb_release -a; lspci; lsusb;  redhat> sudo yum install pciutils
+hostname = atletx7-neu013
+uname -a = Linux atletx7-neu023 3.10.0-1160.66.1.el7.x86_64 #1 SMP Wed Apr 27 20:34:34 UTC 2022 x86_64 GNU/Linux
+uname -s = Linux
+uname -n = atletx7-neu023
+uname -m = x86_64
+uname -r = 3.10.0-1160.62.1.el7.x86_64
+uname -v = #1 SMP Wed Mar 23 09:04:02 UTC 2022
+uname -p = x86_64
+uname -X = unknown
+uname -i = unknown
+uname -o = GNU/Linux
+
+lshw lspci lsmem ususb atitool glxinfo  glxgears 
+free -h
+lsati/lsamd 
+## perf : profile c++ regexp performance
+perf mem; perf stat; 
+raw events, 
+uprobes kprobes lttng ebpf bcc perf pmu 
+su; perf stat -a --per-socket -I 1000
+
+

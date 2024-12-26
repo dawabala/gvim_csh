@@ -184,6 +184,10 @@ g/^/m 0           # revert all lines;
 ## exchange 
 :% s/\([^,]*\),\(.*\)/\2\1/
 
+# count number of matches of a pattern
+:%s/<pattern>/ng
+:%s///ng; # search first match, then count all matched pattern;
+
 ### record/replay
 qaq, @a, 20@a;
 
@@ -196,6 +200,7 @@ qa
 q
 @a
 999@a
+
 
 ### delete blanks of line ends
 :%s/\s\t$//   / n
@@ -218,20 +223,24 @@ csh> vim `grep -l XYZ *.c`
 :clist
 :cp
 
-# folding - Using zc and zo to hide portions of text based on indented sections
+#### fold :  Using zc and zo to hide portions of text based on indented sections
+:help usr_28;  # 
 :set foldmethod ; # default is manual;
 :set foldmethod =manual;
 :set foldmethod =syntax; # fold by syntax, e.g, python: indent, c/cpp: {}; verilog: module/endmodule, begin/end, 
 :zfap;  # fold current paragraph;
 :zf7j;  # fold next 7 lines;
 :zfn;   # fold until next matched word; 
-:zi/za; # toggle between fold/unfold; 
+vj zf;  # visual select and move down, fold selected line;
+:za;    # toggle between fold/unfold;   
+nnoremap <space> za ; # map za to space;
 :zo/zc; # fold on; zc: fold close;
 :1,100 fold;     # fold line1 to 100;
 :.,+200 fold;    # fold following 200 lines;
 :1,100 foldopen; # unfold line1 to 100;
 :foldclose;
 :foldopen;
+:zM,zR; # open/close all folds
 
 ### orthodox vim
 c/d/v    # correct/delete/visual_select
