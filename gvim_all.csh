@@ -41,7 +41,7 @@ vim> source v1.vim;       # load view;
 vim> :loadview v1.vim;    # load view;
 
 #### ctags
-csh> ctags -R 1.txt;  gvim 1.txt;
+csh> ctags -R 1.txt *.txt;  gvim 1.txt;
 gvim> ctrl-]; ctrl-T; ctrl-6; <mouse_double_click>; g<mouse_right>;
 
 ## setup, syntax, highlight search; 
