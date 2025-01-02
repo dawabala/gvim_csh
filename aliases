@@ -69,20 +69,23 @@ setenv PATH      $HOME/local/py39/bin/:$PATH
 # echo $LD_LIBRARY_PATH 
 
 alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_64]" -J term6 xterm'
+alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
+alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
 
 #### module load aliases; module list;
 # alias module '/tool/pandora/bin/modulecmd tcsh !*'
 
-# module avail verdi; module unload verdi; module unload verdi;
-# verdi -sv -f /proj/at2_til22_nobackup/doudouye/at2_code/data/SynRtl/SynRtl.vf;
+# module avail verdi; module unload verdi; 
+#        csh> verdi -sv -f /proj/at2_til22_nobackup/doudouye/at2_code/data/SynRtl/SynRtl.vf;
 # ncverilog *.v; # whatos ; # k310_g217_64
+#         csh> ncverilog +timescale=1ps/1ps -sv q13_tb.v rtl_df_mid_tdatq_q13.v ati_clock_gate.v +indir+/home/jdon/mid_tq/1030/inc ; sleep 98 ;
 # dc_shell -f rundc.tcl; 
 # which fc_shell; /tool/cbar_ec/apps_k310_g217_64/fusioncompiler/2024.09-SP3-DEV-20240827-ec/bin/fc_shell; evince /tool/cbar_ec/apps_k310_g217_64/fusioncompiler/2024.09-SP3-DEV-20240827-ec/doc/FC/*.pdf &; 
 # which pt_shell;
 # which fm_shell;
 
-alias load_verdi 'module load verdi/2024.09 ';  
-alias load_nc    'module load cadenceIUS/9.2-e218'; 
+alias load_verdi 'module unload verdi;      module load verdi/2024.09 ';  
+alias load_nc    'module unload cadenceIUS; module load cadenceIUS/9.2-e218'; 
 alias load_fx    'module load fusioncompiler'
 alias load_dc    'module unload synopsys; module load   synopsys/2019.12-SP4' ; # dc_shell -f rundc.tcl;
 alias load_pt    'module load primetime'
@@ -109,16 +112,7 @@ alias load_fm    'module load formality'
 # module unload verdi/2019.06-SP1-1
 # module unload primetime/2021.06-SP5-1
  
-
-#### tb aliases
-alias tbc    'TileBuilderConsole'
-alias tbt    'TileBuilderTerm'
-alias tbg    'TileBuilderGenParams'
-alias tbm    'TileBuilderMake'
-alias tbgm   'TileBuilderGenParams; TileBuilderMake'
-alias tbo    'TileBuilderOverwriteCommand'
-alias tbgrep 'TileBuilderGenParamsGrep'
-# tb intactive commands
+#### tb intactive commands
 alias intfm 'TileBuilderIntFM';  # TileBuilderIntFM FmEqvPwrEcoSynthesizeVsSynRtl, to open *failed.fss; # FmEqvPwrAllUpfSuppliesOnPrePhysicalVsSynthesize FmEqvPwrAllUpfSuppliesOnSynthesizeVsSynRtl
 alias intpt 'TileBuilderIntPT';  # TileBuilderIntPT/TileBuilderIntPrimetime cmds/PtFcGenFULLCHIPTIMINGVminSlowTopSdc.cmd
 alias intfx 'TileBuilderIntFX';  # TileBuilderIntFX data/PreEco/Synthesize.nlib
@@ -131,14 +125,30 @@ alias fxcell   'TileBuilderIntFX data/FpInsertPhysicalCells.nlib';
 alias fxgrid   'TileBuilderIntFX data/FpGenInternalPowerGrid.nlib';  
 alias fxpower  'TileBuilderIntFX data/FpFinishPower.nlib';  
 
-alias fxpostfp 'TileBuilderIntFX data/PostFloorPlan.nlib';  
+alias fxfloorplan 'TileBuilderIntFX data/PostFloorPlan.nlib';  
+
+alias fxfp     'TileBuilderIntFX data/PostFloorPlan.nlib';  
 alias fxplace  'TileBuilderIntFX data/Place.nlib';  
 alias fxcts    'TileBuilderIntFX data/Cts.nlib';  
 alias fxoptcts 'TileBuilderIntFX data/OptCts.nlib';  
 alias fxroute  'TileBuilderIntFX data/Route.nlib';  
 
+alias fxoptroute 'TileBuilderIntFX data/OptRoute.nlib';  
+alias fxreroute  'TileBuilderIntFX data/ReRoute.nlib';  
+alias fxfinal    'TileBuilderIntFX data/GenLayoutFinalPhysNetlist.nlib';  
+
+#### tb aliases
+alias tbc    'TileBuilderConsole'
+alias tbt    'TileBuilderTerm'
+alias tbg    'TileBuilderGenParams'
+alias tbm    'TileBuilderMake'
+alias tbgm   'TileBuilderGenParams; TileBuilderMake'
+alias tbo    'TileBuilderOverwriteCommand'
+alias tbgrep 'TileBuilderGenParamsGrep'
 
 ### tbs tbb
+alias tbb      'TileBuilderBranch --startfrom FxPlace  --noreview --params jdon_branch_1227.params'
+alias tbbranch 'TileBuilderBranch --startfrom FxPlace  --noreview --params jdon_branch_1227.params'
 # TileBuilderStart
 # TileBuilderBranch --startfrom FmEqvPwrAllUpfSuppliesOnSynthesizeVsSynRtl,FmEqvPwrSynthesizeVsSynRtl,FmEqvPwrAllUpfSuppliesOnPrePhysicalVsSynthesize,FmEqvPwrPrePhysicalVsSynthesize --params branch.params
 # TileBuilderBranch --startfrom GenerateAllCommands --params zhzhongl.params
@@ -219,17 +229,18 @@ alias tpop	'cd `cat $TMP/tpush.tmp`;echo `pwd`'
 alias bjob	'lsf_bsub -J test -Ip -q normal -R "select[(type==RHEL4_64)&&(gb32|| gb64||gb128) && (mem >= 50000)]"'
 alias bjob6	'lsf_bsub -J test -Ip -q regr_high -P sandstone-fe -R "select[(type==RHEL6_64)&&(csbatch||gb32||gb64||gb128||gb256) && (mem >= 50000)] rusage[mem=20000]"'
 alias bjob7	'lsf_bsub -J test -Ip -q regr_high -P sbio-fe -R "select[(type==RHEL7_64)&&(csbatch||gb32||gb64||gb128||gb256) && (mem >= 50000)] rusage[mem=20000]"'
-#alias bjob5	'lsf_bsub -J test -Ip -q regr_high -P kn-fe -G kn-fe -R "select[(type==RHEL5_64)&&(gb32|| gb64||gb128) && (mem >= 5000)] rusage[mem=2000]"'
+alias bjob5	'lsf_bsub -J test -Ip -q regr_high -P kn-fe -G kn-fe -R "select[(type==RHEL5_64)&&(gb32|| gb64||gb128) && (mem >= 5000)] rusage[mem=2000]"'
 alias bjobr	  'lsf_bsub -J test -Ip -q regr_high -m oshcsc12b2'
 alias bjobx	  'lsf_bsub -q normal -m oshcsc12b2 -Ip xterm'
-alias fct_exp 'lsf_bsub -Ip -P cz-pd -q regr_high -R " rusage[mem=15000]" "fct_explorer ./"'
+alias bjobfct 'lsf_bsub -Ip -P cz-pd -q regr_high -R " rusage[mem=15000]" "fct_explorer ./"'
+
 alias pl	'p4 filelog'
 alias plm	'p4 filelog -m 10'
 alias p4u	'p4 reopen -c default ./...;p4 -u `whoami` reopen -c default ./...;p4 -u `whoami` submit'
 alias p4cur 'p4 changes -m 1 -s submitted @$P4CLIENT'
 alias po    'p4 opened -u `whoami` '
 
-# alias phone grep -i \!$ ~/phonelist
+# alias phone 'grep -i \!$ ~/phonelist'
 # alias precmd	'echo -n "${HOST}:$cwd "'
 # alias cwd	'echo -n "${HOST}:${cwd}>"'
 alias cwd	'setprompt'
