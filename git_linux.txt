@@ -28,8 +28,8 @@ git push origin main
 
 
 #### Linux image viewer
-csh> display
-csh> eog; # dconf Error, no write permission;
+csh> display; 
+csh> eog;  # dconf Error, no write permission;
 csh> gimp *.jpg;
 csh> imginfo floorplan_image.png;
 
@@ -37,7 +37,11 @@ csh> imginfo floorplan_image.png;
 #### wget  xargs urls
 cat url-list.txt | xargs wget –c
 
-#### exec/xargs
+#### find all png files, eog/display them
+find . -name "*congestion*.png" -exec eog {} \;
+find . -name "*congestion*.png"  | xargs -i eog {} ;
+
+#### find & display; exec/xargs
 find ./*[2-4][0-9]* -name '*pdf' -exec cp {} pdfs \;
 find ./*[0-1][0-9]* -name '*pdf' | xargs -i cp {} pdfs
 find ./*11* -iname '*PDF' -exec md5sum {} \;
