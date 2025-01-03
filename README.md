@@ -1,5 +1,5 @@
 # mail: j***@***.com 
-# word: S***T***;
+# word: S###T###;
 # user: dawabala
 
 # gvim_csh
