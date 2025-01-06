@@ -114,28 +114,36 @@ qa<...>q
 @a;
 6@a;
 
-### insert/append/newline/cut/substitute/delete/yank
+#### editing files
+gf; # edit files under cursor;
+:ls  :buffers  :files    # file list in current buffer
+:e :edit  # edit current file
+:e #1     # edit 1th file in buffers
+:e #8     # edit 8th file in buffers
+### insert/append/newline/cut/substitute
 iIaAoOxs
-dd yy p
-f / * g* n N
-0 ^ B b h <> l e w E W $
-gg Ctrl-b Ctrl-u k j Ctrl-d Ctrl-f G
-### visual_select
-ctrl-v  vap vi( 
 
+###
+delete/yank
+dd yy p
 ggVG u|U  select text change into lowercase/uppercase
-gf; 
 d/Data # delete until Data;
 y2fE   # yank before 2nd E in line;
 
-# gvim remove un-matched words;
+f / * g* n N
+0 ^ B b h <> l e w E W $
+gg Ctrl-b Ctrl-u k j Ctrl-d Ctrl-f G
+
+### visual_select
+ctrl-v  vap vi( 
+
+# remove un-matched words;
 :g!/<string_to_keep>/d
 
 :split
 :vsplit
 
 :set nu;  :set nonu;  :set number;  :set nonumber;
-
 
 ### search 
 :/`\U.*\d ; # search "`MID_DEF_*=18"; "
