@@ -6,13 +6,22 @@ TileBuilderBranch --startfrom FxPlace  --noreview --params jdon_branch_1227.para
 ~/shqbit.tcl
 
 
+#  /proj/at2_til29_nobackup/jdon/at2/runtb.csh
+#  /proj/at2_til29_nobackup/jdon/at2/setup_at2.tcl
+vi override.controls override.params;
+source setup_at2.tcl;
+  # source /tools/aticad/1.0/src/sysadmin/cpd.cshrc
+  # setenv FAMILY supra
+  # setprj at2gmd
+TileBuilderStart --params override.params --controls override.controls  
+TileBuilderStart --params override.params --controls override.controls --ignore-hung-mounts
+
 # /proj/at2_til29_nobackup/zihan/SHQBIT/df_rpt_right_6_t_NLBm2_FTI_spec_dis_edge_1018_1.csv
-# /proj/at2_til22_nobackup/doudouye/SHQBIT/1022_right_6/main/pd/tiles/df_rpt_right_6_t_shqbit_try_1_TileBuilder_Oct22_0615_63123_GUI/override.jdon_branch_1227.params
-# csv
+# /proj/at2_til22_nobackup/doudouye/SHQBIT/1022_right_6/main/pd/tiles/df_rpt_right_6_t_shqbit_try_1_TileBuilder_Oct22_0615_63123_GUI/jdon_branch_1227.params
 /proj/at2_til29_nobackup/zihan/SHQBIT/df_rpt_right_6_t_1227.csv
  
  
-/proj/at2_til42_nobackup/jdon/
+#  /proj/at2_til42_nobackup/jdon/at2/
 cd /proj/at2_til42_nobackup/jdon/at2; mkdir soc_rep_1_t; vi over*s; mkdir umc_rep_bot_0_t; vi over*s; "NICKNAME = shqbid_jdon_main"" ;
 cpd; setprj at2gmd; TileBuilderStart --controls override.controls --params override.params;
 
@@ -40,7 +49,7 @@ Please check GetSdc log . make sure you get sdc from FCFP release rundir .
 setup.ScanshiftFFg1p05v.sdc; setup.ScanshiftSSg0p6v.sdc;
 
 
-
+# SHQBIT tcl scripts
 fxmacro; # open  FpPlaceMacros.nlib
 fc> source -e -v /tool/aticad/1.0/src/zoo/SHQBIT/SHQBIT_ImplementBuses.tcl; # create BusPlanning menu, SHQBIT sub-menu;
 fc> BusPlanning/SHQBIT: open /proj/at2_til29_nobackup/zihan/SHQBIT/df_rpt_right_6_t_NLBm2_FTI_spec_dis_edge_1018_1.csv;
@@ -167,17 +176,18 @@ MID tile flow has set routing blockage for SRAM/ICOVL/DTCD as the table and snap
 
 # use this command to snap site&row
 /proj/at2_til42_nobackup/huiyinli/floorplan_release
-把当前所有run,跑完CbBaseFPDRC 且macro和physical cell摆的都是对的的run link到这个目录下，以tile的名字命名
-df的tile  更新flow的现在应该都没跑到那里，前面有fail的target，所以没关系，只要给跑出来的就行
+all runnings ,after CbBaseFPDRC target passed , macro and physical cell placement is OK ?  then link runnings to above directory, named as tilename; 
+df tiles, after update flow, have not run till the target, if there is any failed target, no problem;
 
 fc_shell> source /proj/at2_til42_nobackup/zhihan/shqbit/get.tcl at2 shqbit.xlsx
-能够在屏幕上这样打印出来的cell，就都是存在的
+all the cells printed out, are the  existing cells;
 
-1、如果at2这个项目的shqbit的trail 跑起来了，把run link 到这个目录下：/proj/at2_til42_nobackup/huiyinli/at2_shqit_link  
-2、现在把准备做floorplan release的run的GetSdc这个target skip掉，然后把FxFpGenRoutedLef和FxPixFloorplan这两个target跑起来
+1. if at2 shqbit trail is running, link running dir to: /proj/at2_til42_nobackup/huiyinli/at2_shqit_link  
+2. skip GetSdc target in floorplan release running, then run 2 targets: FxFpGenRoutedLef, FxPixFloorplan;
 /home/sdhe/check_release.pl
 
-override.params里有这么一句：RUN_SHQBIT_AT_PLACE_SPEC_FILE     = tune/FxPlace/shqbit.tcl  ， 所以你们shqbit的脚本都放在这个路径下
+in override.params: RUN_SHQBIT_AT_PLACE_SPEC_FILE     = tune/FxPlace/shqbit.tcl; 
+it is where shqbit.tcl script file should be located.
 
 #### RTL ppa AI, code splitter; 
 RTL code, use AI analyzer;such as code splitter;
@@ -319,10 +329,9 @@ csh> Source $ALLTILES_DIR/scripts/tile_flow/SyncAllFlowEnvironment.csh
 csh> python3 $ALLTILES_DIR/scripts/python/extract_tile_timing_status.py
 
 #### email by Fong 
-1. some bus dont have pin blockage for flop 
+1. some bus dont have pin blockage for flop;
 Not all flops are indicated by pushdown blockage; example : 
-#red highlighted are the placement blockage indicating flop region
-but we should have more flop region, some are not showing by blockage tcl
+# red highlighted are the placement blockage indicating flop region;  but we should have more flop region, some are not showing by blockage tcl
 /proj/at2_fct1_nobackup/FCT_CENTER/SHQBIT/NLA/tile_blockage/soc_rep_top_4_t_blockage.tcl
 rundir: /proj/at2_til29_nobackup/chenchai/AT2_NLA_1226/soc_rep_top_4_t_1228/main/pd/tiles/soc_rep_top_4_t_RUN001_TileBuilder_Dec27_2129_254992_GUI
 2.  distance for the first flop in excel and pin blockage mismatch	
