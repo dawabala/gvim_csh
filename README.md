@@ -55,5 +55,14 @@ git add dumptb.py monokai.vim q13_tb.v
 git commit -m "restore dumptb.py, add chatgpt into q13_tb.v, add monokai.vim"
 git push origin main
 
+# in Linux, config user.name, user.email,  git clone, create token, git push: to confirm username and token(no need for password), then save it.  
+git config --list
+git config --global user.name "dawabala"
+git config --global user.email "jerryzhu_sh@163.com"
+git config --global credential.helper store
+
+git clone https://github.com/dawabala/gvim_csh
+git add *.csh; git commit "add *.csh"; git push;
+# in GitHub.com/dawabala, settings/developer settings/personal access tokens(classic), 
 
 

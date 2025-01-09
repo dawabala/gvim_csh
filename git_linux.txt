@@ -37,7 +37,7 @@ csh> imginfo floorplan_image.png;
 #### wget  xargs urls
 cat url-list.txt | xargs wget –c
 
-#### find all png files, eog/display them
+#### find all *.png files, eog/display them
 find . -name "*congestion*.png" -exec eog {} \;
 find . -name "*congestion*.png"  | xargs -i eog {} ;
 
@@ -106,6 +106,7 @@ find /path -type d -exec chmod 755 {} \;
 grep '^import ' *.java | sed -e 's/.*import *//' -e 's/;.*$//' | sort -u > list
 
 zgrep -a -E '*pattern1*|*pattern2*|...' *file*
+
 
 
 #### sort by time, check *_deleted *copied files;

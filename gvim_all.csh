@@ -250,6 +250,9 @@ nnoremap <space> za ; # map za to space;
 :foldopen;
 :zM,zR; # open/close all folds
 
+# fold next 1000+ lines by selected parts ( if same, hide all lines)
+/^\%(.*AABBCC.*\)\@!; zfn;
+
 ### orthodox vim
 c/d/v    # correct/delete/visual_select
 iw/it/ib # for word/tag/blocks_braces,  3*3=9 combinations, (innner, around, to be included))
