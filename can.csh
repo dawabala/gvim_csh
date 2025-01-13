@@ -85,17 +85,18 @@ old : excel file,
 database update some parts, rerun & reanalyze;
 nlb stage: nlc stage design will include,
 
-我们place的run有结果了，这边因为drv相关的还没有开始，你可以先看看function的timing
-这样子我们这边比较critical的两个tile，一个是vmw，一个gl1ac, 你要不先看看所有和gl1ac相关的two tile的path
-熟悉下design
-因为pathform里面的config 没有改，这个path目前还是assign给Kyle的，你可以自己先试着过滤先，先看看
+place run has results; drv not begin; check function timing now;
+critical tiles: vmw, gl1ac; check all gl1ac two_tile path;
+familiar with design
+pathform config not changed; path now assign to Kyle, you can filter by yourself;
  
 place run, full flat fct0058 run
 
-gl1ac这个tile和其他tile的path比较多，所以相对来说比较critical你可以先研究研究研究
-fcfp package可以从这个目录下面抓到
+gl1ac tile has lots paths with  other tiles, so it is critical, review it first;
+fcfp package:
 /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/fcfp.Final.pkg
-可以用fcfp_explorer打开，fct我们有一个类似工具fct_explorer,这个可以看看tile 的path是怎么走的
+fcfp_explorer
+fct use fct_explorer; to check tile path directions;
 
 
 # Full flat run
