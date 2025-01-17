@@ -63,21 +63,82 @@ FuncFFG1p05v FuncTT0p9v FuncTT0p75v FuncTT0p65v FuncTT0p6v FuncSSG0p6v
 
 
 
-fct workbook;
-
 # pathform scripts
 color_xterm> /tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
 # pathform;
-select _2tile report file, check my_path;
-acv clock by owners; add comments;
-new_run, new database, inherate comments;
+select _2tile report file, check my_path; acv clock by owners; add comments; inherate comments; ref_comments:
 1st round: all violations, 2nd round: new violations
 default: 200 warnings; fanout lol si,
-ref_comments:
 machine_learning_comments: machine learning targets;
+
 ask kyle and cannie on pathform;
+cd fct04/rel61;
+usage: pathform.py [-h] [--rundir RUNDIR] [--config CONFIG] [--report REPORT]
+                   [--rep_xml REP_XML] [--ft_xml FT_XML] [--inst_map INST_MAP] [--gen_db_only] [--dump_summary]
+Parse timing reports and show with a friendly way. just run it under rundir.
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --rundir RUNDIR      FCT or Tile rundir
+  --config CONFIG      pathform config file.           read from rundir/pathform.conf by default.
+  --rep_xml REP_XML    repeater contract XML file.     read from rundir/pd_repeaters.xml by default.
+  --ft_xml FT_XML      feedthru_connectivity.xml file. read from rundir/feedthru_connectivity.xml by default.
+  --inst_map INST_MAP  instance map file.              read from rundir/inst_tile.map by default.
+  --report REPORT      only process specified report.
+  --gen_db_only        Only generate database mode, No GUI
+  --dump_summary       Dump status summary to central file.
+
+/proj/canis_pd_gfx_fct01/guanwang/work/gc_rlct_long_nets.rpt.gz
+
+0114 meeting:
+place run: 061, 062;  ask other team for branch run;
+cts database;  propagate clock;
+route database;
+pretiming 
+clock design check;
+budget run status: running 32 hours;
+hdm run; full-flatten run;
+half-cycle clock jitter;
+pt_shell> report_timing to <> -exception all
+
+pretiming analysis: toplevel gc;
+GC_GFXCLK timing status @LSB.10 place stage
+timing paths mainly on gc_rlc_t/gc_vmw_t* tiles
+HFN timing : branch place run, test bound tune file
+debanking endpoint cell;
+add bounds: on internal timing, local congestions;
+memory channel: was only buffer, no flop; now has flop;
+early skew; 
+/proj/canis_pd_gfx_fct01/guanwang/repeater/LSCm/gen_2tile.rpt.gz
+/proj/canis_pd_gfx_fct01/guanwang/repeater/scripts/filter_bad_nets.tcl
+/proj/canis_pd_gfx_fct01/guanwang/repeater/scripts/filter_cant_meet.tcl
+pt_fix_eco;
+
+gl1ac_t 2 tile path;
+rdl or match;
+multi-terminal;
+cpl_gfxclk_bypass:  vdci to gdfll, p2p-single-terminal;
+gfxclk dldoclk acvclk(mv timing) scan_shift_clk
+gc_gfxclk_1 : clock_mux; to select between gc_gfxclk and gc_gfxclk_1 (affect tile internal timing, half-cycle path)
+
+# kyle wang  
+Timing report:
+/proj/canis_pd_gfx_fct01/guanwang/work/gc_rlct_long_nets.rpt.gz
 
 
+
+Feb 10, fcfp ready, 
+Feb 12, synthesis netlist ready, release function sdc;
+Feb 17, budgeting run; to release budgeting sdc;
+nlc: repeater, sdc, feedx, pin/point assignment;
+(nlc.?): 
+nld: 
+eco:
+
+0115 discussion: 
+constraint, sdc, floorplan(pin assignment), repeater,
+
+fct workbook;
 
 python scripts;
 startpoint/endpoint
@@ -93,13 +154,47 @@ pathform config not changed; path now assign to Kyle, you can filter by yourself
 place run, full flat fct0058 run
 
 gl1ac tile has lots paths with  other tiles, so it is critical, review it first;
-fcfp package:
-/proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/fcfp.Final.pkg
-fcfp_explorer
+# fcfp package:
+# NLC fcfp package
+/proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run5_hollow/gfx.pkg
+# /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/fcfp.Final.pkg
+# LSB.10 fcfp package
+# /proj/canis_pd_gfx_fcfp01/qilinren/release/LSCm_1209/gc/fp_00/fcfp.Final.pkg
+
+fcfp_explorer /proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run5_hollow/gfx.pkg
+# repeater insertion already have;
+
 fct use fct_explorer; to check tile path directions;
+
+# xml file, MCI, by kyle
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/NLC_fp00/pd_repeater.xml
+
+
+# gl1ac timing paths;
+top net
+current repeater constraints;
+How many repeater inserted in current design;
+
+
+# xml file, by michael
+# - xml file before insert repeater
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/nl_repeaters.xml   
+# - xml file after repeater inserted  (for fct, no big difference between 2 files, as we any check the bundle name and repeater constraints from the file)
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/pd_repeaters.xml  
+# exract the net info from xml file (format: net name, bundle name, repeater constraints, pd inserted repeater number, related clock name)
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/rep_info_file.lscm.txt  
+
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/nl_repeaters.xml
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/pd_repeaters.xml
+/proj/canis_pd_gfx_fct01/FCT/feedthru_xml/latest/feedthru_connectivity.xml
+
+
 
 
 # Full flat run
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/PtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming/report_timing_2tile_max.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/
+
 /proj/canis_pd_gfx_fct04/fct_release/FCT0058_20250112_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/PtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming/report_timing_2tile_max.rpt.gz
 /proj/canis_pd_gfx_fct04/fct_release/FCT0058_20250112_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/PtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/
 report_timing_2tile_max.histogram.gz
@@ -283,4 +378,109 @@ cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts
 
 #/home/hhelong/createOwnershipTables.pl -nickname $TARGET_NAME -sort rpts/davlu/$date/$TARGET_NAME -rel_dir $base_dir -prefix H -path_type all rpts/davlu/$date/$TARGET_NAME/fullchip.report.gz
 #cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncFFG1p05vRCWORST --web Main --file=- -d
+
+
+#### Creating a repeater trace from GenEnhanced xmls file
+
+The quickest way to create an FCFP repeater trace is from the GenEnhancedRepeater XML. 
+This is done using the following script (typically included as a FINISH script to the repeater insertion target).
+
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x data/GenEnhancedRepeaterXML.xml -t <top_module>  > data/early_trace_preopt.txt
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/doc/nl_repeaters.xml  -t gc > data/early_trace_preopt.txt
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/ 
+-t <top_module>  > data/early_trace_preopt.txt
+# pd_repeaters.xml
+top_module can be "gc", "mpu" or even "", runs fast and  pre-collapse. 
+not possible to merge super tiles (any sub-hierarchies like SE in case of graphics IP), hence there is some loss of accuracy at the interface of super tiles if any.
+# Creating a repeater trace from def files
+It is very useful to check the repeater positioning just after tile placement data is available. 
+This will help us understand if there are any large repeater distance violations after tile placement. 
+The design input in this case is the list of def files.  Floorplan def files can also be used for this purpose.
+These def files can be the final def files, after collapse. 
+Super tiles are flattened at this stage, hence this offers a true picture at the interface of the tiles. 
+Other inputs are configured via the measure_xmls.py file which is located in the current run directory. An example is provided here:
+/tool/aticad/1.0/src/zoo/azmohamm/doc/measure_xmls.py
+The file format can be kept simple (even though this is executed as a python script, so can include python code) like:
+var=value
+The most important input here are the XMLs:
+  PrepTopForRelease XMLs showing all the final repeaters
+  The top level feedthrough connectivity XML.
+I have had requests to have the capability to generate the repeater trace flow through some other intermediate files, 
+but as I have learnt the hardway those files don't have all the info, so it doesn't work.
+The first thing is to have this environment variable set:
+setenv TILEMAP_CSV fcfp.csv
+The command to generate the trace file (unprocessed):
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/measure_rep_dist.py -d clk -l def_list -f fcfp.csv -c ./all_conn  -t trace.out -p measure_xmls.py
+clk here is a regex for the clocks of interest ("." will get the trace for all the clocks)
+def_list is a comma separate values of tile,path_to_def
+trace.out is the name of the trace file generated
+measure_xmls.py is the full path of the location of the configuration file (default is to look for this in the current directory< br> all_conn is a file needed only when there are sub-hierarchies involved. It is a file that shows how the sub-hierarchies are connected to the top level. It is generated in a prelayout timing session using the following tcl snippet (assuming se0 and se1 are the instance names of the sub-hierarchies)
+set ac [open all_conn w]
+foreach_in_collection p [get_pins se0/*] {
+    set n [get_object_name [get_nets -of_objects $p]]
+    puts $ac "$n [get_object_name [get_pins -of_objects $n]]"
+}
+foreach_in_collection p [get_pins se1/*] {
+    set n [get_object_name [get_nets -of_objects $p]]
+    puts $ac "$n [get_object_name [get_pins -of_objects $n]]"
+}
+close $ac
+We would normally want to sort the net traces in decreasing order of max repeater distance. The below script comes in handy.
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m trace_fp_nlc > trace_fp_nlc_max
+Raw viewEdit
+Optimizing the trace
+The trace file generated at the floorplan stage uses placement locations which are going to be quite different from the final placement. This is likely to show lots of distance violations which are not real since the placement of repeaters within the tile is not optimal. To find out the real violations, we simulate the best case - this is called the optimization step. The repeaters within the tile are relocated to fix the repeater distance violations. It is important to point out that the repeater topology is not changed - that is, the trace flow never moves a repeater from one tile to another.
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -p 750 > trace_opt_nlc
+The value of 750 passed as argument p here is the repeater distance which we aim to achieve. The optimization + sorting is doable in a single step:
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -a algo3 -p 750 | \
+          /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m > trace_opt_nlc_max
+Raw viewEdit
+Generating the relpos file
+The relpos file is consumed by the budgeting step. However, there is another important reason to run this step. Until the previous stage, repeaters are all considered unique. This might create some optimism in case of reuse tiles (the effect of collapse isn't captured). It is at this stage that the reuse repeaters are de-uniquified. The final trace and the relpos file are generated with this command:
+
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_rel_pos.py -i trace_opt_nlc_max -o repeaterRelPos.txt -d relpos.dbg -t rel_trace_opt_nlc 
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m rel_trace_opt_nlc > rel_trace_opt_nlc_max
+Raw viewEdit
+Processing the trace file
+filter_pt.pl comes in very handy when working with the trace file. The command below for example filters out all EQ0 and LE0 contracts:
+filter_pt.pl -s "Trace of" -e "EQ 0" -e "LE 0" trace_full > trace_noneq0
+Raw viewEdit
+Working with multiple clock domains
+In case of SoC? , there are multiple clock domains each with their own repeater distance target. We split the trace per clock and optimize separately, merge the optimized traces and then generate the relpos file.
+filter_pt.pl -s "Trace of" -o 'domain=Cpl_HSPCLK' -o 'domain.*SHUBCLK' trace_nld_fp_merged > trace_hsp_shubclk
+filter_pt.pl -s "Trace of" -o 'domain=.*SMNCLK' -o 'domain=Cpl_LCLK' trace_nld_fp_merged > trace_lclk_smnclk
+filter_pt.pl -s "Trace of" -r 'domain=Cpl_DCLK' trace_nld_fp_merged > trace_dclk
+
+# Now optimize..
+/tool/aticad/1.0/azmohamm/scripts/arrange_reps.py  -i trace_lclk_smnclk -p 1150 -f   /home/azmohamm/mero/fcfp.csv   |  \
+      /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_lclk_smnclk_opt
+
+/tool/aticad/1.0/zoo/azmohamm/scripts/arrange_reps.py  -i trace_dclk -p 1300 -f   /home/azmohamm/mero/fcfp.csv   |  \
+       /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_dclk_opt
+
+/tool/aticad/1.0/zoo/azmohamm/scripts/arrange_reps.py  -i trace_hsp_shubclk -p 1500 -f   /home/azmohamm/mero/fcfp.csv   |  \
+       /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_hsp_shubclk_opt
+
+cat trace_lclk_smnclk_opt trace_dclk_opt trace_hsp_shubclk_opt > trace_for_rel
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_rel_pos.py -i trace_for_rel -o full_relpos.txt -d relpos.dbg -t trace_postrel
+
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  trace_postrel >  trace_postrel_max
+Raw viewEdit
+Generating bounds based on the trace file
+Even if the optimal trace does not contain any repeater distance violations, the post placement trace can. This happens because the placer choses a repeater placement different from the optimized trace. Repeaters which are close to violating the distance requirement in the optimal trace are likely to go well over the edge and cause a large distance issue. As an additional protection step, graphics fcfp teams create bounds on these critical repeaters to prevent any such large displacement from the optimal trace.
+Bound Window Criteria if (tile_width >= 400 && < 800) { Divide width in 2 equal regions } if (tile_width >= 800 && < 1200) { Divide width in 3 equal regions } if (tile_width >= 1200 && < 1500) { Divide width in 4 equal regions } Bound Command ICC2 create_bound command is used to create bounded regions in the design. These are soft bounds because intension is to not force the tool to bound the repeaters by sacrificing routability and timing. Generally, there is no guarantee that cells will be placed completely within a bound. For instance, coarse placement will violate bounds if the quality of its primary placement objectives would otherwise be destroyed. Per ICC2 manual, this command defines region-based placement constraints for coarse placement. There are two different types of bounds available: move bounds and group bounds. Move bounds restrict the placement of cells within fixed regions (i.e., bound shapes) of the core area.
+catch { create_bound -name FCFP_REP_BOUND_gc_gl1a_t_x1_y0 -boundary (1) -type soft [get_cells -physical_context [list *FCFPRepFFcgcg_Cpl_GFXCLK468675 *FCFPRepFFcgcg_Cpl_GFXCLK468333 *FCFPRepFFcgcg_Cpl_GFXCLK21482 *FCFPRepFFcgcg_Cpl_GFXCLK19238 ]]} In the above example, bound name FCFP_REP_BOUND_gc_gl1a_t_x1_y0 is used to define the boundary in (2) area. 4 repeaters are bounded to this region.
+Critical Repeaters Only critical repeaters that satisfy a certain bound criterion are bounded. For Feyarch, NLDp0 below criteria was used to generate critical repeaters list: 1. Bound repeaters if rep2rep distance >750um, make sure to bound repeater and preceding one because that's how we control the distance between two repeaters (reps)
+Trace of net SE1SA0? ? _WGP00_TA1_GRBM_stat_busy (bundle=SE1SA0_WGP00_TA1_GRBM_stat, constraint=LE 32, max=2510.7, avg=633) [ 3000.0, 4231.9] se1/gc_tatd_t0001/terminal [ 2800.0, 4031.9] se1/gc_tatd_t0001/TA_GRBM_stat_busy [ 2800.0, 4026.9] se1/gc_lds_t000/FE_FEEDX_MFT__0__gc_tatd_1_t_0__gc_lds_t_0__TA_GRBM_stat1_busy__AMD_gc_lds_t_0 506.4 -> [ 2799.8, 3515.6] se1/gc_lds_t000/FCFPRepFFcgcg_Cpl_GFXCLK531968 [ 2799.9, 3254.3] se1/gc_lds_t000/FE_FEEDX_MFT__1__gc_lds_t_0__gc_tatd_t_0__TA_GRBM_stat1_busy__AMD_gc_lds_t_0 [ 2799.9, 3249.3] se1/gc_tatd_t0000/FE_FEEDX_MFT__0__gc_lds_t_0__gc_tatd_t_0__TA_GRBM_stat1_busy__AMD_gc_tatd_t_0 860.1 -> [ 2800.2, 2656.0] se1/gc_tatd_t0000/FCFPRepFFcgcg_Cpl_GFXCLK531969 [ 2800.0, 2649.5] se1/gc_tatd_t0000/FE_FEEDX_MFT__1__gc_tatd_t_0__gc_db_t_0__TA_GRBM_stat1_busy__AMD_gc_tatd_t_0 [ 2800.0, 2644.5] se1/gc_db_t00/FE_FEEDX_MFT__0__gc_tatd_t_0__gc_db_t_0__TA_GRBM_stat1_busy__AMD_gc_db_t_0 531.1 -> [ 2798.1, 2127.0] se1/gc_db_t00/FCFPRepFFcgcg_Cpl_GFXCLK531970 [ 2791.2, 2121.5] se1/gc_db_t00/FE_FEEDX_MFT__1__gc_db_t_0__gc_cb1_t_0__TA_GRBM_stat1_busy__AMD_gc_db_t_0 [ 2791.2, 2116.5] se1/gc_cb1_t00/FE_FEEDX_MFT__0__gc_db_t_0__gc_cb1_t_0__TA_GRBM_stat1_busy__AMD_gc_cb1_t_0 536.6 -> [ 2784.7, 1603.8] se1/gc_cb1_t00/FCFPRepFFcgcg_Cpl_GFXCLK531971 [ 2783.0, 1598.3] se1/gc_cb1_t00/FE_FEEDX_MFT__1__TA_GRBM_stat1_busy__AMD_gc_cb1_t_0
+2. Magnet placement feed: Do not bound magnet placement repeaters, these are repeaters in tile preceding endpoint tile. These are special repeater which do not follow FCT clock gating request (CG) and hence need to be tied closer to feed terminal through magnet placement a. As a part of flow, the output feed in tile preceding endpoint tile has repeater b. Trace flow owner provide a list of above mentioned feed ports to CG owner for magnet placement request.
+3. IO Budgeting repeater locations: Do not bound any repeater in startpoint/endpoint tile which is connected to RTL port. 1. Bound generation flow is enabled to generate repeater locations file for critical repeaters list. The location file per tile is provided for IO budgeting. 2. We do not add these repeaters relative locations to the repeaterRelPos.txt.
+Bound Generation flow is used for two purposes and each purpose needs a separate critical repeaters list. 1. Generate bound files for each tile for PNR 2. Generate repeater location file for IO budgeting per tile and magnet placement files per tile
+Flow Scripts Finish script to generate bounds file for tiles, IO budgeting input and magnet placement feed data: /home/adosi/zoo/adosi/bin/README /home/adosi/zoo/adosi/bin/gen_trace_bound.pl /home/adosi/zoo/adosi/bin/run_me
+Master bound generation scripts: /home/adosi/zoo/adosi/bin/gen_rep_bound.pl
+Inputs for Trace and Bound Generation In short: 1. Measure_xmls.py 2. Fcfp.csv 3. Def files pointer in one file: gc_def_list/mpu_def_list 4. All_conn: se to gc level connection
+Outputs of the Flow 1. Bound files for each tile – Delivered to Tile Leads and Tile PD Flow Guy 2. Start-end tile repeater location file for IO budgeting 3. Magnet placement feedthrough file for each tile 4. List of repeaters to avoid banking during placement
+Output files:
+Under Directory: $pwd/clk  Trace: o Initial trace file is trace_fp which reads in the random locations from FCFP database. o Locations in above file are optimized in trace_opt_max. o Further, reuse tile cases are considered, and relative optimum location is generated in rel_trace_opt_max which is a sorted file with max distance on top. o For GCH, l2wd_interface_rel_trace_opt_max_filter_eq0_le0_0806 and se_rel_trace_opt_max_filter_eq0_le0_0806 are separated for l2wd+interface and SE. o Critical bundles with max distance are filtered in l2wd_interface_bundles_crit.txt and se_bundles_crit.txt.  Bound files: FCFP_REP_TILE_BOUND  IO Budgeting data: FCFP_REP_TILE_LOC_start_end_reps_io_budget and repeaterRelPos.txt  Magnet placement for feedthrough ports: magnet_feed  Repeater banking: no_bank_critical_reps 
 

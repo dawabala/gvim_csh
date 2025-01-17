@@ -33,6 +33,9 @@ csh> eog;  # dconf Error, no write permission;
 csh> gimp *.jpg;
 csh> imginfo floorplan_image.png;
 
+#### toggle/switch between linux desktops/workspaces
+ctrl-alt-<arrow_key>
+
 
 #### wget  xargs urls
 cat url-list.txt | xargs wget –c

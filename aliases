@@ -1,3 +1,6 @@
+unalias src;
+unalias ll;
+alias ll      'ls -alt'
 alias src     'source ~/.cshrc'
 alias a       'source ~/.aliases'
 
@@ -71,6 +74,28 @@ setenv PATH      $HOME/local/py39/bin/:$PATH
 alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_64]" -J term6 xterm'
 alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
 alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
+
+# tbt & ; failed of disk space; 
+# quota -l -s
+# find /tmp -user `whoami` | & grep -v 'Permission denied' | xargs du -hs | sort -g
+
+# pathform: topology   top_net bundle contract: no_rep(no repeater): MCI(multicycle path); 
+alias fct4 'cd /proj/canis_pd_gfx_fct04/'
+alias fct2 'cd /proj/canis_pd_gfx_fct02/'
+alias fct1 'cd /proj/canis_pd_gfx_fct01/'  
+
+# alias pf    "/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py &"
+# alias fcte  "/tool/aticad/1.0/bin/fct_explorer &"
+# alias fcfpe "/tool/aticad/1.0/bin/fcfp_explorer &"
+
+# alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
+# alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
+# alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
+alias pf   "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=24000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py &' "
+alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer &' "
+alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ' "
+
+
 
 #### module load aliases; module list;
 # alias module '/tool/pandora/bin/modulecmd tcsh !*'
