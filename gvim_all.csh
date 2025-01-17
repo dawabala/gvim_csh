@@ -323,6 +323,7 @@ git clone https://github.com/nachumk/systemverilog.vim ~/.vim/pack/systemverilog
 #### vim colorscheme
 # download github.com/sickill/vim-monokai/colors/monokai.vim
 # save monokai.vim into ~/.vim/colors/monokai.vim (for win, into vim\colors\monokai,vim)
+# vi ~/.vimrc, add "colorscheme monokai"
 :colors monokai; colors default;
 
 :colorscheme blue|darkblue|delek|desert|elflord|everning|morning
