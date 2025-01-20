@@ -1,66 +1,225 @@
+#### cdc script trial run
+# NA /proj/mi400_hcf_vol3/user/jialwang/fcnlconstraints_hcfvcn2/main/pd/tiles/CHIP_MID/constraints/process_scripts/cdc_analysis;
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/ToF_calculator_polygon.pl ./
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/combine_report_with_distances.pl ./
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/extractor.pl ./
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/summarize_report_with_tiles.pl
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/README
+
+# CDC report csv
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
+#NA # SYNC report csv 
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/unique.report.sync.fail.vcn.csv
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
+
+# CDCmaxdelay flow generated report FEINT analysis:
+report.cdc.csv.gz 
+report.sync.csv.gz
+#  FEINT analysis script generated unique marker-based report per IP (please start here for script testing as it has a smaller data set)
+VCN cdc: unique.report.cdc.fail.vcn.csv
+VCN sync: unique.report.sync.fail.vcn.csv
+# Running Floorplan Aware Analysis Scripts
+perl ToF_calculator_polygon.pl   //calculates the longest distance within one tile and between two tiles, requires top def and tile def files under the run directory
+perl extractor.pl //extract all the required  information from the provided report unique.report.cdc.fail.vcn.csv
+perl summarize_report_with_tiles.pl //adding tile information into the data extracted in the previous step
+perl combine_report_with_distances.pl <#ToFmm required to calculate ToF> //combines all the information we need to together
+
+# Run Reports
+#NA # HCF VCN NLBp8 Top Level DEF Location
+#NA /proj/cmb_release_vol1/a0/rapid_fcfp_meta_data/hcf_vcn_mid/rel_NLC/hcf_vcn_mid/rapid_fcfp_01/hcf_vcn_mid.def.gz
+#NA /proj/cmb_release_vol1/a0/rapid_fcfp_meta_data/hcf_vcn_mid/rel_NLC/vcn_*_0_t/rapid_fcfp_01/vcn_*_0_t.def.gz
+
+# Scripts Location:
+/proj/saw_fe_vol5/user/jialwang/fp_script/official
+# Reports Location
+# CDCmaxdelay flow generated report:
+ /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pd/tiles/CHIP_feint_CDC_NLC_TileBuilder_Jun06_1502_39729_GUI/rpts/MergeCdcMaxResDefault/report.cdc.csv.gz
+ /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pdfeint_SYNC_NLC/rpts/MergeCdcMaxResDefault/report.sync.csv.gz
+# FEINT analysis script generated unique marker-based report for VCN IP:
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv 
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/unique.report.sync.fail.vcn.csv
+# Floorplan aware analysis script generated report:
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
 
 
+# please find information for #2 distance based GateCDC analysis
+# HCF_VCN_FPcdcmaxdelay.pptx : ppt for fpaware CDC delay analysis
+# after CDC max delay run is done, reports are
+/proj/saw_fct_vol5/a0/fct_runs/CDCMaxdelay/run1_AIGC_NLB_sync/main/pd/tiles/hcf_aigc_aid_CDC_AIGC_NLB_TileBuilder_Aug02_1018_115633_GUI/rpts/MergeCdcMaxResDefault/reports.sync.csv.gz
+# use scripts to obtain results
+/home/akarna/gateCDC/extractor.pl
+/home/akarna/gateCDC/summarize_report_with_tiles.pl
+/home/akarna/gateCDC/modified_FP_script.pl    ; # usage: -t <module_name> -o <output_filename> -d <DEF release area dir> -h(elp) -u (prog info)
+/home/akarna/gateCDC/combine_report_with_distances.pl
+You will get a csv file with all info:
+/proj/saw_fct_vol5/a0/fct_runs/CDCMaxdelay/run1_AIGC_NLB_sync/main/pd/tiles/hcf_aigc_aid_CDC_AIGC_NLB_TileBuilder_Aug02_1018_115633_GUI/rpts/MergeCdcMaxResDefault/fpcdcmaxdelay.csv
+# if required fix value >1, those can be sent to IP to check if need changes
+
+
+
+
+#### gl1ac_t
+#### 
+# gl1ac sorted timing report, gc_rlc_t.gc_gl1ac_t timing path, top net,  grep pd_repeater.xml: current repeaters constraints, current repeaters, bundles 
+# rlc.gl1ac
+gc_rlc_t.gc_gl1ac_t: 76 vios, slack: -639 ~ -476  top_net: FE_FEEDX_SHARE*gc*gc*_mem_power_ctrl_8   rep_constraints:EQ0  current_repeaters: 0;  bundles;
+  FE_FEEDX_SHARE__gc_rlc_t__gc_sdma_t__mem_power_ctrl__8 (net) 
+  FE_FEEDX_SHARE__gc_pa_spi_m_ra_t0__gc_gl1ac_t0__mem_power_ctrl__8 (net) 
+
+<no_rep bundle="gc__mem" container="gc_top_t" name="gc__mem_power_ctrl[8]" orig_bundle="mem" reason="MCI">
+  <bundle_connection>
+      <end_block_info block_inst="gc_rlc_t" port="gc__mem" port_blkport="transmit" />
+      <end_block_info block_inst="gc_gl1ac_t0" port="mem" port_blkport="receive" />
+  </bundle_connection>
+</no_rep>
+# gl1ac.rlc: ask ip/sdc team  to confirm SDC;
+gc_gl1ac_t.gc_rlc_t: 4 viols, slack: -378~ -313 top_net: CLR_ME0PIPE0SE0_BARRIER CLR_ME0PIPE1SE0_BARRIER   rep_constraints: EQ0  reps: 0 noconstraints; bundles: 
+  <no_rep bundle="gc__CLR_ME0PIPE0SE0_BARRIER" container="gc_top_t" name="gc__CLR_ME0PIPE0SE0_BARRIER" orig_bundle="CLR_ME0PIPE0SE0_BARRIER" reason="bia:FIXME:missing_constraint">
+    <bundle_connection>
+      <end_block_info block_inst="gc_rlc_t" port="CLR_ME0PIPE0SE0_BARRIER" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl1ac_t0" port="CLR_ME0PIPE0_BARRIER" port_blkport="transmit" />
+    </bundle_connection>
+  </no_rep>
+  <no_rep bundle="gc__CLR_ME0PIPE1SE0_BARRIER" container="gc_top_t" name="gc__CLR_ME0PIPE1SE0_BARRIER" orig_bundle="CLR_ME0PIPE1SE0_BARRIER" reason="bia:FIXME:missing_constraint">
+    <bundle_connection>
+      <end_block_info block_inst="gc_rlc_t" port="CLR_ME0PIPE1SE0_BARRIER" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl1ac_t0" port="CLR_ME0PIPE1_BARRIER" port_blkport="transmit" />
+    </bundle_connection>
+  </no_rep>
+# rts0.gl1ac
+gc_rts_0_t0000.gc_gl1ac_t0: 53 viols, slack: -55~ -0.33 top_net:se0__WGP_SA0_WGP0 rep_constraints: reps:   constraints; bundles: 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/pd_repeaters.xml
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/nl_repeaters.xml
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/pd_repeaters.xml
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/rep_info_file.lscm.txt  
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/rep_info_file.lscm.txt  
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vReRouteFlatTyprc100cTT0P65V0CStpTiming
+
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_pa_spi_m_ra_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_pc_sx_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_rb_t011.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_rlc_t.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pa_spi_m_ra_t0.gc_gl1ac_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rb_t000.gc_gl1ac_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rb_t011.gc_gl1ac_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rlc_t.gc_gl1ac_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rts_0_t0000.gc_gl1ac_t0.sorted.gz
+# /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.gc_gl1ac_t0.sorted.gz
+
+#done -25ps /proj/canis_pd_gfx_fct04/fct_release/ FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Cts_LSB10/ rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_gl1ac_t0.gc_pa_spi_m_ra_t0.sorted.gz
+
+#done -25ps /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_gl1ac_t0.gc_pa_spi_m_ra_t0.sorted.gz
+  se0__GL1_PA_64B_RD_ret_clken (net) 
+  se0__GL1_PA_64B_WR_ret_tag[0] (net) 
+#done -55ps res:EQ1 /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_gl1ac_t0.gc_pc_sx_t0.sorted.gz
+  gc_gl1ac_t0/FCFPRepFFcgcg_Cpl_GFXCLK290161_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288285_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289857_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289149_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289833_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288853_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK290077_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289057_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2/CP (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                   52.81       0.00       0.00 r
+  gc_gl1ac_t0/FCFPRepFFcgcg_Cpl_GFXCLK290161_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288285_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289857_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289149_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289833_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288853_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK290077_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289057_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2/Q8 (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                    6.87      76.96 &    76.96 f
+  se0__gl1cc__GL1C0_DIR0_GL1R4_ret_data[367] (net) 
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK288994_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK290282_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK291970_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK289118_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK291834_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK289058_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK288594_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK291530_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_3/D6 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVT)                       131.41       5.15 &   653.18 f
+  se0__GL1_PC_RD_ret_tag[8] (net) 
+  se0__GL1_SA0DB1_64B_ret_data[191] (net) 
+  se0__gl1cc__GL1C0_DIR0_GL1R4_ret_tag_vec[16] (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_gl1ac_t0.gc_rb_t011.sorted.gz
+#done /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_gl1ac_t0.gc_rlc_t.sorted.gz
+#done -5ps reps:EQ1 /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_pa_spi_m_ra_t0.gc_gl1ac_t0.sorted.gz
+  gc_pa_spi_m_ra_t0/FCFPRepFFcgcg_Cpl_GFXCLK101040_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK100328_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK100980_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK101072_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4/CP (MB4SRLSDFQ2442D2AMDBWP143M572H3P48CPDLVT)                                      52.81       0.00       0.00 r
+  gc_pa_spi_m_ra_t0/FCFPRepFFcgcg_Cpl_GFXCLK101040_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK100328_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK100980_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK101072_bundle_se0__gl1cc__DIR0_GL1R13_GL1C4_src_order_4/Q4 (MB4SRLSDFQ2442D2AMDBWP143M572H3P48CPDLVT)                                      17.53      80.76 &    80.76 r
+  FE_FEEDX_MFT__3__gc_pa_spi_m_ra_t__gc_gl1ac_t__se0__gl1cc__DIR0_GL1R13_GL1C4_src_data__477 (net) 
+  gc_gl1ac_t0/GL1R_GL1C4_SA_src_in_data[477] (gc_gl1ac_t)                                                                                                                                                                                                                                                                                                                                                                                        0.00       0.00 &   148.44 r
+#done -5ps /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_rb_t000.gc_gl1ac_t0.sorted.gz
+  se0__BPM_SA0CB0_GL1I_cmd (net) 
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_rb_t011.gc_gl1ac_t0.sorted.gz
+#done /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_rlc_t.gc_gl1ac_t0.sorted.gz
+#todo /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_rts_0_t0000.gc_gl1ac_t0.sorted.gz
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_addr__35 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_addr__5 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_compression_key__0 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_compression_key__2 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_micro_tile_mode__0 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_size__0 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_speculative_data_read__0 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_tag__3 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_tag__7 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_wg_mask__0 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_wg_mask__6 (net) 
+  FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_wg_mask__7 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_addr__35 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_addr__5 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_compression_key__0 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_compression_key__2 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_micro_tile_mode__0 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_size__0 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_speculative_data_read__0 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_tag__3 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_tag__7 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_wg_mask__0 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_wg_mask__6 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_wg_mask__7 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__10 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__43 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__44 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__6 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__8 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_bc__0 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cid__3 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__0 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__1 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__2 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__3 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_compressed (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_compressed_write_enable (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_compression_key__0 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_compression_key__2 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_compression_key__5 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_compression_mode__1 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_data_format__1 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_data_format__3 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_data_format__4 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_data_format__6 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_fill_ctrl__1 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_gpa__1 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_micro_tile_mode__2 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_op__1 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_tag__5 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_temporal__2 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_vmid__0 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_vmid__2 (net) 
+  FE_FEEDX_MFT__7__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_vmid__3 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__10 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__43 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__44 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__6 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_addr__8 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_bc__0 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cid__3 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__0 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__1 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__2 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_cluster_id__3 (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_spi_s_bci0_cac_t0.gc_gl1ac_t0.sorted.gz
+
+
+
+
+
+# vigitpy dir: gvim git python packages; 
 # 
 jdon: git add pythonall.csh(with py310 download links);  
-guojia: install py310; chat: outlook mails save into can_mail.csh;
+guojia: install gvim, git,py310; chat: outlook mails save into can_mail.csh;
 
 # other clock no violation, all runs will auto-sort, nosp & nospflush is tuning flow, nosp to check violation.
 # review _2tile
-/proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming
-
-
-Task	Original owner	Owner	Comments
-Budgeting	Ong, JoeHuei	Ong, JoeHuei	Required er_aie permission
-GFX Timing (exclude SP interface)	Kyle, Wang	Kyle, Wang	 
-GFX Timing (SP interface)	Ling, Joanne	Ling, Joanne	Required er_aie permission
-DFT Timing (exclude SP interface)	Xue, Cannie	Xue, Cannie	 
-DFT Timing (SP interface)	Ong, JoeHuei	Ong, JoeHuei	Required er_aie permission
-
-DRV/Misc check	Ling, Joanne	Guo, Jia/Ling, Joanne	 
-Special timing	 	Guo, Jia/Ong, JoeHuei	 
-CDC Check	 	Guo, Jia/Ong, JoeHuei	 
-MV Timing/ACVCLK	Kyle, Wang	Guo, Jia	 
-
-Other Clock timing (exclude GFXCLK/ACVCLK)	Xue, Cannie	Xue, Cannie	 
-Repeater trace flow report analysis	Kyle, Wang	Kyle, Wang/Ling, Joanne	 
-FCT Daily timing run	Ling, Joanne	Ling, Joanne/Ong, JoeHuei	Required er_aie permission
-GFX Flow	Michael	Michael	 
-
-
-# gfx/dft timing;
-gfx owner: non-er tiles kyle, er tiles joan;
-dft owner: non-er tiles ding, er tiles joehuei,
-# gfx clocks group
-gfx clock: 
-gc_gfxclk: 
-dldoclock: fanout to all tiles
-gfxclk_1 : same as  gfxclk
-socclk: fanout low
-qspiclk: fanout low
-wrck
-# 4 tiles mv timing
-mv timing: acv settings to be setup; fct mv flow: to be done.
-mv_tile_list: gc_acv_sp_sq_t gc_acv_lds_t vdci_gc_  gc_d
-repeater timing:
-# DRV 
-si, double_switch
-# pt sessions;
-pt timing: no-clock, timing loop, non-constraint; compare with tile-level pt session;
-# owners
-sdc owner: collect scripts for special timing; most 6 issues;
-# current stages: NLB10p
-floorplan;
-NLC : check CDC timing; based on pretiming ;
-RTG vs GFX: W W/A repeater tiles; 
-# disk and dirs;
-fct01: working dir;
-/proj/canis_pd_gfx_fct01/jiaguo12/
-/proj/canis_pd_gfx_fct02/fct_runs/NLB_FP00/
-fct04_release: copied from er dir;
-/proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming
-# timing corners
-FuncFFG1p05v FuncTT0p9v FuncTT0p75v FuncTT0p65v FuncTT0p6v FuncSSG0p6v 
-
 
 
 # pathform scripts
@@ -175,8 +334,13 @@ top net
 current repeater constraints;
 How many repeater inserted in current design;
 
+# freeze 
+mem_power_ctrl[0]
+mem_power_ctrl[16]
+MEM_POWER_CTRL[]
 
-# xml file, by michael
+
+#### xml file, by michael
 # - xml file before insert repeater
 /proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/nl_repeaters.xml   
 # - xml file after repeater inserted  (for fct, no big difference between 2 files, as we any check the bundle name and repeater constraints from the file)
@@ -184,11 +348,7 @@ How many repeater inserted in current design;
 # exract the net info from xml file (format: net name, bundle name, repeater constraints, pd inserted repeater number, related clock name)
 /proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/rep_info_file.lscm.txt  
 
-/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/nl_repeaters.xml
-/proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/pd_repeaters.xml
 /proj/canis_pd_gfx_fct01/FCT/feedthru_xml/latest/feedthru_connectivity.xml
-
-
 
 
 # Full flat run
@@ -448,7 +608,7 @@ filter_pt.pl comes in very handy when working with the trace file. The command b
 filter_pt.pl -s "Trace of" -e "EQ 0" -e "LE 0" trace_full > trace_noneq0
 Raw viewEdit
 Working with multiple clock domains
-In case of SoC? , there are multiple clock domains each with their own repeater distance target. We split the trace per clock and optimize separately, merge the optimized traces and then generate the relpos file.
+In case of SoC , there are multiple clock domains each with their own repeater distance target. We split the trace per clock and optimize separately, merge the optimized traces and then generate the relpos file.
 filter_pt.pl -s "Trace of" -o 'domain=Cpl_HSPCLK' -o 'domain.*SHUBCLK' trace_nld_fp_merged > trace_hsp_shubclk
 filter_pt.pl -s "Trace of" -o 'domain=.*SMNCLK' -o 'domain=Cpl_LCLK' trace_nld_fp_merged > trace_lclk_smnclk
 filter_pt.pl -s "Trace of" -r 'domain=Cpl_DCLK' trace_nld_fp_merged > trace_dclk
@@ -480,7 +640,102 @@ Bound Generation flow is used for two purposes and each purpose needs a separate
 Flow Scripts Finish script to generate bounds file for tiles, IO budgeting input and magnet placement feed data: /home/adosi/zoo/adosi/bin/README /home/adosi/zoo/adosi/bin/gen_trace_bound.pl /home/adosi/zoo/adosi/bin/run_me
 Master bound generation scripts: /home/adosi/zoo/adosi/bin/gen_rep_bound.pl
 Inputs for Trace and Bound Generation In short: 1. Measure_xmls.py 2. Fcfp.csv 3. Def files pointer in one file: gc_def_list/mpu_def_list 4. All_conn: se to gc level connection
-Outputs of the Flow 1. Bound files for each tile â€“ Delivered to Tile Leads and Tile PD Flow Guy 2. Start-end tile repeater location file for IO budgeting 3. Magnet placement feedthrough file for each tile 4. List of repeaters to avoid banking during placement
+Outputs of the Flow 1. Bound files for each tile  Delivered to Tile Leads and Tile PD Flow Guy 2. Start-end tile repeater location file for IO budgeting 3. Magnet placement feedthrough file for each tile 4. List of repeaters to avoid banking during placement
 Output files:
-Under Directory: $pwd/clk ïƒ˜ Trace: o Initial trace file is trace_fp which reads in the random locations from FCFP database. o Locations in above file are optimized in trace_opt_max. o Further, reuse tile cases are considered, and relative optimum location is generated in rel_trace_opt_max which is a sorted file with max distance on top. o For GCH, l2wd_interface_rel_trace_opt_max_filter_eq0_le0_0806 and se_rel_trace_opt_max_filter_eq0_le0_0806 are separated for l2wd+interface and SE. o Critical bundles with max distance are filtered in l2wd_interface_bundles_crit.txt and se_bundles_crit.txt. ïƒ˜ Bound files: FCFP_REP_TILE_BOUND ïƒ˜ IO Budgeting data: FCFP_REP_TILE_LOC_start_end_reps_io_budget and repeaterRelPos.txt ïƒ˜ Magnet placement for feedthrough ports: magnet_feed ïƒ˜ Repeater banking: no_bank_critical_reps 
+Under Directory: $pwd/ Trace: o Initial trace file is trace_fp which reads in the random locations from FCFP database. o Locations in above file are optimized in trace_opt_max. o Further, reuse tile cases are considered, and relative optimum location is generated in rel_trace_opt_max which is a sorted file with max distance on top. o For GCH, l2wd_interface_rel_trace_opt_max_filter_eq0_le0_0806 and se_rel_trace_opt_max_filter_eq0_le0_0806 are separated for l2wd+interface and SE. o Critical bundles with max distance are filtered in l2wd_interface_bundles_crit.txt and se_bundles_crit.txt. ¿ Bound files: FCFP_REP_TILE_BOUND ¿ IO Budgeting data: FCFP_REP_TILE_LOC_start_end_reps_io_budget and repeaterRelPos.txt ¿ Magnet placement for feedthrough ports: magnet_feed ¿ Repeater banking: no_bank_critical_reps 
 
+
+
+
+
+
+
+#### canis tasks & owners; 
+Task	Original owner	Owner	Comments
+Budgeting	Ong, JoeHuei	Ong, JoeHuei	Required er_aie permission
+GFX Timing (exclude SP interface)	Kyle, Wang	Kyle, Wang	 
+GFX Timing (SP interface)	Ling, Joanne	Ling, Joanne	Required er_aie permission
+DFT Timing (exclude SP interface)	Xue, Cannie	Xue, Cannie	 
+DFT Timing (SP interface)	Ong, JoeHuei	Ong, JoeHuei	Required er_aie permission
+
+DRV/Misc check	Ling, Joanne	Guo, Jia/Ling, Joanne	 
+Special timing	 	Guo, Jia/Ong, JoeHuei	 
+CDC Check	 	Guo, Jia/Ong, JoeHuei	 
+MV Timing/ACVCLK	Kyle, Wang	Guo, Jia	 
+
+Other Clock timing (exclude GFXCLK/ACVCLK)	Xue, Cannie	Xue, Cannie	 
+Repeater trace flow report analysis	Kyle, Wang	Kyle, Wang/Ling, Joanne	 
+FCT Daily timing run	Ling, Joanne	Ling, Joanne/Ong, JoeHuei	Required er_aie permission
+GFX Flow	Michael	Michael	 
+
+
+# gfx/dft timing;
+gfx owner: non-er tiles kyle, er tiles joan;
+dft owner: non-er tiles ding, er tiles joehuei,
+# gfx clocks group
+gfx clock: 
+gc_gfxclk: 
+dldoclock: fanout to all tiles
+gfxclk_1 : same as  gfxclk
+socclk: fanout low
+qspiclk: fanout low
+wrck
+# 4 tiles mv timing
+mv timing: acv settings to be setup; fct mv flow: to be done.
+mv_tile_list: gc_acv_sp_sq_t gc_acv_lds_t vdci_gc_  gc_d
+repeater timing:
+# DRV 
+si, double_switch
+# pt sessions;
+pt timing: no-clock, timing loop, non-constraint; compare with tile-level pt session;
+# owners
+sdc owner: collect scripts for special timing; most 6 issues;
+# current stages: NLB10p
+floorplan;
+NLC : check CDC timing; based on pretiming ;
+RTG vs GFX: W W/A repeater tiles; 
+# disk and dirs;
+fct01: working dir;
+/proj/canis_pd_gfx_fct01/jiaguo12/
+/proj/canis_pd_gfx_fct02/fct_runs/NLB_FP00/
+fct04_release: copied from er dir;
+/proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming
+# timing corners
+FuncFFG1p05v FuncTT0p9v FuncTT0p75v FuncTT0p65v FuncTT0p6v FuncSSG0p6v 
+
+# Seras
+cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0042_20241220_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp_flushflow;
+color_term> tbc; 
+gvim 
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0042_20241220_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp_flushflow/cmds/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming.cmd
+
+realpath shqbit.tcl
+
+  1	1:25	ls -lrt
+     2	1:12	cd /proj/canis_pd_gfx_fct01/
+     3	1:16	gvim /home/zyang2/home_backup/DRV.csh
+     4	1:17	gvim /home/zyang2/home_backup/Navi31/get_distance_from_def.pl
+     5	2:00	gvim /home/zyang2/home_backup/Navi31/SPT/MCD_2tile/asynfifo.csh
+     6	2:05	gvim /proj/canis_pd_gfx_fct04/fct_release/FCT0038_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/GC_FCLK_max.rpt.gz
+     7	2:06	gvim /proj/canis_pd_gfx_fct04/fct_release/FCT0038_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/GC_ACVCLK_max.rpt.gz
+     8	2:20	cd /proj/canis_pd_gfx_fct04/fct_release/FCT0038_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB/
+     9	2:20	gvim cmds/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming.cmd
+    10	2:26	cd ../FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/fullchip.Grp.GC_CPUGFX_REF_ROCLK_400.gc_imu_t.gc_dldo_t.sorted.gz
+    11	2:26	gvim ../FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/fullchip.Grp.GC_CPUGFX_REF_ROCLK_400.gc_imu_t.gc_dldo_t.sorted.gz
+    12	2:28	cd ../FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/
+    13	2:28	ls
+    14	2:30	gvim SortPtGfxFuncTT0p6vReRouteFlatTyprc100cTT0P6V0CStpTiming/fullchip.Grp.GC_MTAP_Wrck.gc_vmem_rt_0_t0000.sorted.gz
+    15	2:36	cd ../../../FCT0038_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB/
+    17	2:38	resolve ../FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/fullchip.
+    18	2:42	/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
+    19	2:50	bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
+    20	2:56	bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
+    21	22:14	bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py .&'
+    22	22:15	bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py'
+    23	22:15	bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]   select[type==RHEL7_64||type==RHEL6_64]' 'Term'
+    24	21:39	bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]   select[type==RHEL7_64||type==RHEL6_64]' 'erm'
+    25	22:08	cd /proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/
+    26	22:08	TileBuilderTerm
+    27	3:57	pwd
+    28	3:57	history 30
+    29	3:58	history 30 >> ~/soc/canis3.csh
