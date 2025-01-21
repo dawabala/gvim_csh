@@ -2,7 +2,7 @@ github_push_gvim_linux;
 tcdx0_fxplace_fxcts_fxoptcts_fxroute;
 gc_gl1ac_t_fxmacro_fxplace_fxcts;
 pd_scripts;
-emails_navi44_mi200
+emails_navi44_mi200;
 
 
 ~/mid_tq/ q13.v
@@ -24,6 +24,10 @@ cd /proj/at2_til22_nobackup/zhihan/at2/PreNLA/df_tcdx0/1104/df_tcdx0_uti51/main/
 /proj/at2_til29_nobackup/jdon/at2/main/pd/tiles/df_tcdx0_1211_jdon_TileBuilder_Dec11_0031_34274_GUI/data/UniqNetlist.v.gz;  
 /proj/at2_til29_nobackup/jdon/at2/main/pd/tiles/df_tcdx0_1211_jdon_TileBuilder_Dec11_0031_34274_GUI/data/OptCts.v.gz;       
 /proj/at2_til29_nobackup/jdon/at2/main/pd/tiles/df_tcdx0_1211_jdon_TileBuilder_Dec11_0031_34274_GUI/data/Route.v.gz;       
+/proj/at2_til29_nobackup/jdon/at2/main/pd/tiles/df_tcdx0_1211_jdon_TileBuilder_Dec11_0031_34274_GUI/data/ReRoute.v.gz;       
+
+/proj/at2_til29_nobackup/jdon/at2/main/pd/tiles/df_tcdx0_1211_jdon_TileBuilder_Dec11_0031_34274_GUI/logs/FxRoute.log.gz;       
+/proj/at2_til29_nobackup/jdon/at2/main/pd/tiles/df_tcdx0_1211_jdon_TileBuilder_Dec11_0031_34274_GUI/logs/FxReRoute.log.gz;       
 
 
 # RCLK_PgenAgeData_AR_68 68/30/8/2
@@ -139,6 +143,15 @@ lindex  [get_attr [all_registers] name] 0
 
 #
 /proj/at2_til22_nobackup/zhihan/at2/PreNLA/df_tcdx0/1104/df_tcdx0_uti51/main/pd/tiles/df_tcdx0_df_tcdx0_uti52_new_sdc_frequency_TileBuilder_Nov04_0258_64459_GUI/data/UniqNetlist.v.gz
+
+#### set encoding=utr-8, GB words displaying will be OK.
+#### RTL ppa AI, code splitter;
+who are familiar with AI analysis of RTL code?
+such as code splitter.
+we have RTL PPA Code Advisor at Alpha stage, for area,tns RTL improvement, based on GPT4o and LLM, will output revised code;
+
+when I met big RTL file, use code splitter to split into RAG; how to split is an focused consideration.
+
 
 ####  python  pdf2txt fusioncompiler.pdf
 module load fusioncompiler
