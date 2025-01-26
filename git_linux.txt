@@ -26,6 +26,11 @@ git add dumptb.py monokai.vim q13_tb.v
 git commit -m "restore dumptb.py, add chatgpt into q13_tb.v, add monokai.vim"
 git push origin main
 
+# github/*/gvim_csh
+username: da****; 
+passwd:  
+ghp_Vqym0rDnNCv<*>5cjtJcnkMlBImz4LKE2<*>YvEs ; 
+# * as your firstname/secondname;
 
 #### Linux image viewer
 csh> display; 
@@ -118,7 +123,7 @@ find . -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-
 foreach file (`find .  -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-`)
         set mod_date = `date -r "$file" +"%Y-%m-%d"`
 
-# Files are copied from the source directory ($1) to the destination directory ($2).  Any differences, such as new or modified files, are updated in the destination.
+# Files copied from source dir($1) to destination dir($2).  new or modified files are updated in destination.
 # -a: archive, -v: verbose --delete: if source file removed, destination file also be removed.
 echo "Syncing $1 to $2"
 rsync -avh --delete "$1" "$2"
@@ -127,6 +132,11 @@ find "$1" -type f -printf '%T@ %p\n' | sort -n | tail -1
 
 #
 sort -k1.4 -n f.txt
+
+# tbt & ; failed of disk space;
+# quota -l -s;
+# find all your files in /tmp, then remove those files if possible;
+find /tmp -user `whoami` | & grep -v 'Permission denied' | xargs du -hs | sort -g
 
 #### emacs
 sorting lines

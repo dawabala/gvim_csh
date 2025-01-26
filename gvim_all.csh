@@ -137,7 +137,11 @@ gg Ctrl-b Ctrl-u k j Ctrl-d Ctrl-f G
 ### visual_select
 ctrl-v  vap vi( 
 
-# remove un-matched words;
+# search pattern, then delete matched lines;
+:g/<pattern>/d
+# search pattern, then delete unmatched lines;
+:v/<pattern>/d
+# remove/delete unmatched words;
 :g!/<string_to_keep>/d
 
 :split

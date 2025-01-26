@@ -75,9 +75,6 @@ alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_
 alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
 alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
 
-# tbt & ; failed of disk space; 
-# quota -l -s
-# find /tmp -user `whoami` | & grep -v 'Permission denied' | xargs du -hs | sort -g
 
 # pathform: topology   top_net bundle contract: no_rep(no repeater): MCI(multicycle path); 
 alias fct4 'cd /proj/canis_pd_gfx_fct04/'

@@ -65,4 +65,10 @@ git clone https://github.com/dawabala/gvim_csh
 git add *.csh; git commit "add *.csh"; git push;
 # in GitHub.com/dawabala, settings/developer settings/personal access tokens(classic), 
 
+# github/*/gvim_csh
+username: da****; 
+passwd:  
+ghp_Vqym0rDnNCv<*>5cjtJcnkMlBImz4LKE2<*>YvEs ; 
+# * as your firstname/secondname;
+
 
