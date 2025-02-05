@@ -41,6 +41,12 @@ alias fn       find . -name
 alias fnl      find . -name 
 alias fi       find . -iname
 
+  alias xterm   'xterm -bg black -fg grey       xterm &'
+# alias xterm   'xterm -bg black -fg darkgreen  xterm &'
+# alias xterm   'xterm -bg black -fg lightblue  xterm &'
+# 11 as bg, 10 as fg;
+alias xtermbgfg 'echo -e "\e]11;black\a; echo -e "\e]10;lightblue\a;'
+
 # alias f20  echo $fn20 # py3 \!$  sleep 29 end
 # alias f3 echo 0 1 2 3 py3 \!$
 
@@ -71,9 +77,9 @@ setenv PATH      $HOME/local/py39/bin/:$PATH
 # setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH 
 # echo $LD_LIBRARY_PATH 
 
-alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_64]" -J term6 xterm'
-alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
-alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm'
+alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_64]" -J term6 xterm &'
+alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm &'
+alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm &'
 
 
 # pathform: topology   top_net bundle contract: no_rep(no repeater): MCI(multicycle path); 
@@ -93,7 +99,10 @@ alias pf    "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[typ
 alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer &' "
 alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ' "
 
-
+# sudong bsub ptsession;
+alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
+# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
+# cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp; module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
 
 #### module load aliases; module list;
 # alias module '/tool/pandora/bin/modulecmd tcsh !*'
@@ -254,7 +263,7 @@ alias bjob6	'lsf_bsub -J test -Ip -q regr_high -P sandstone-fe -R "select[(type=
 alias bjob7	'lsf_bsub -J test -Ip -q regr_high -P sbio-fe -R "select[(type==RHEL7_64)&&(csbatch||gb32||gb64||gb128||gb256) && (mem >= 50000)] rusage[mem=20000]"'
 alias bjob5	'lsf_bsub -J test -Ip -q regr_high -P kn-fe -G kn-fe -R "select[(type==RHEL5_64)&&(gb32|| gb64||gb128) && (mem >= 5000)] rusage[mem=2000]"'
 alias bjobr	  'lsf_bsub -J test -Ip -q regr_high -m oshcsc12b2'
-alias bjobx	  'lsf_bsub -q normal -m oshcsc12b2 -Ip xterm'
+alias bjobx	  'lsf_bsub -q normal -m oshcsc12b2 -Ip xterm &'
 alias bjobfct 'lsf_bsub -Ip -P cz-pd -q regr_high -R " rusage[mem=15000]" "fct_explorer ./"'
 
 alias pl	'p4 filelog'

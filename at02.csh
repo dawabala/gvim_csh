@@ -10,6 +10,7 @@ emails_navi44_mi200;
 
 
 csh>  bsub -Is -q fstsim -n 4 -P at2-pd -J mdsj -R 'rusage[mem=80000] select[((type == any )&&((type == RHEL7_64 ||type == RHEL8_64 )&&(csbatch||parallel||gb128))&&(csbatch||gb128||parallel))]' xterm
+csh>  bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm & ; # sudong bsub
 xterm> cd /proj/at2_til22_nobackup/doudouye/
 xterm> cd mi350; (cd at2) 
 

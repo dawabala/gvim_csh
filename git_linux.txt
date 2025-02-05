@@ -7,7 +7,8 @@ git clone https://github.com/dawabala/gvim_csh
 git checkout main -- README.md
 gvim README.md
 git status
-git add README.md; # git add .
+git add README.md; 
+# git add .
 git commit -m "update README.md"
 git push origin main
 # sync & merge
@@ -25,6 +26,8 @@ git status
 git add dumptb.py monokai.vim q13_tb.v
 git commit -m "restore dumptb.py, add chatgpt into q13_tb.v, add monokai.vim"
 git push origin main
+
+git diff at02.csh
 
 # github/*/gvim_csh
 username: da****; 
@@ -164,16 +167,16 @@ ps -u zhzhongl | grep vov
 cat /proc/meminfo /proc/cpuinfo /proc/driver/*
 uname -a; lsb_release -a; lspci; lsusb;  redhat> sudo yum install pciutils
 hostname = atletx7-neu013
-uname -a = Linux atletx7-neu023 3.10.0-1160.66.1.el7.x86_64 #1 SMP Wed Apr 27 20:34:34 UTC 2022 x86_64 GNU/Linux
+uname -all = Linux atletx7-neu023 3.10.0-1160.66.1.el7.x86_64 #1 SMP Wed Apr 27 20:34:34 UTC 2022 x86_64 GNU/Linux
 uname -s = Linux
 uname -n = atletx7-neu023
 uname -m = x86_64
-uname -r = 3.10.0-1160.62.1.el7.x86_64
-uname -v = #1 SMP Wed Mar 23 09:04:02 UTC 2022
+uname -release = 3.10.0-1160.62.1.el7.x86_64
+uname -version = #1 SMP Wed Mar 23 09:04:02 UTC 2022
 uname -p = x86_64
+uname -os = GNU/Linux
 uname -X = unknown
 uname -i = unknown
-uname -o = GNU/Linux
 
 lshw lspci lsmem ususb atitool glxinfo  glxgears 
 free -h
@@ -183,5 +186,18 @@ perf mem; perf stat;
 raw events, 
 uprobes kprobes lttng ebpf bcc perf pmu 
 su; perf stat -a --per-socket -I 1000
+
+#### xterm background foreground bg/fg colors
+# setup in aliases
+  alias xterm   'xterm -bg black -fg grey       xterm &'
+# alias xterm   'xterm -bg black -fg darkgreen  xterm &'
+# alias xterm   'xterm -bg black -fg lightblue  xterm &'
+# open a new xterm
+csh> xterm -bg black -fg white &
+# change current running xterm; 11 as bg, 10 as fg;
+echo -e "\e]11;black\a"
+echo -e "\e]10;lightblue\a"
+
+
 
 
