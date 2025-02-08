@@ -45,7 +45,12 @@ alias fi       find . -iname
 # alias xterm   'xterm -bg black -fg darkgreen  xterm &'
 # alias xterm   'xterm -bg black -fg lightblue  xterm &'
 # 11 as bg, 10 as fg;
-alias xtermbgfg 'echo -e "\e]11;black\a; echo -e "\e]10;lightblue\a;'
+alias bgfg 'echo -e "\e]11;black\a"; echo -e "\e]10;darkgreen\a";'
+alias bgfg 'echo -e "\e]11;black\a"; echo -e "\e]10;lightblue\a";'
+# alias bgfg 'echo -e "\e]10;lightblue\a" '
+
+alias slowblink 'echo -e "\033[?12h\033[?12l" '
+alias slowb     'echo -e "\033[?12h\033[?12l" '
 
 # alias f20  echo $fn20 # py3 \!$  sleep 29 end
 # alias f3 echo 0 1 2 3 py3 \!$

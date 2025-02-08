@@ -323,6 +323,11 @@ git clone https://github.com/nachumk/systemverilog.vim ~/.vim/pack/systemverilog
 # begin → end → begin; module → endmodule → module ; ( → ) → ( ; function → endfunction → function
 # Replacing tabs with spaces by re-indenting the complete file
 
+#### vim cursor blink speed as 1600ms per cycle
+~/.vimrc
+:set guicursor+=a:blinkon800
+:set guicursor+=a:blinkoff800
+:set guicursor+=a:blinkwait300
 
 #### vim colorscheme
 # download github.com/sickill/vim-monokai/colors/monokai.vim

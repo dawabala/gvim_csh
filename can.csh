@@ -61,20 +61,74 @@ You will get a csv file with all info:
 
 
 
+~/soc/rpts/rpts.csh
+~/soc/rpts/place61.csh
+~/soc/rpts/cts66.csh
+~/soc/rpts/route80.csh
 
-~/soc/rpts.csh
-~/soc/place61.csh
-~/soc/cts66.csh
 zdiff cts_withrdl cts_nordl;
 zdiff place_0p65v place_0p75v;
 zdiff place_0p6v  place_0p9v;
 zdiff cts_0p6v    cts_0p9v;
 
 # sudong bsub ptsession;
+
 bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm & ; # sudong
-module load pt; pt_shell *0p75v*/pt_session;
 # zgrep PT_SHELL ./logs/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
-# cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp; module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
+csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp;
+csh> source ~sdhe/.cshrc; module load primetime/2022.03-SP5-2-T-20230819;
+csh> pt_shell; 
+pt_shell> restore_session rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
+pt_shell> trace_clk_path -inst_map inst_tile.map; # save *.csv files into clk_trace;
+# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_trace/ GC_GFXCLK.csv
+# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/inst_tile.map
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl; # save into ./clk_sink_numbers.csv
+# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_sink_numbers.csv
+
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/check_clk_branches_talk.tcl
+pt_shell> check_clk_branches_talk -top_nets_list Cpl_USB_HOST_CLK ;  # check different top clock nets sinks talk information.
+
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/top_clock_net.tcl
+
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_all_top_nets.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
+
+
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
+ analysis_bundles_from_topo_side # summarize bundle timing formation combine with topology based on prelayout ptsession
+   -inst_map file         (instance and tile map file. Format: inst_name tile_name)
+   -nl_xml file           (prelayout repeater xml file.)
+
+
+pt_shell> analysis_bundles_from_topo_side -inst_map ./inst_tile.map -nl_xml ./nl_repeaters.xml -dist_csv ./distance.csv -clk_lst {GC_GFXCLK} -constraints 'EQ 0'
+
+
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_all_top_nets.tcl
+ analysis_all_top_nets # dump top signal nets with clock, timing, connectivity information. Run it in PreTim (w/o FCFP) ptsession.
+
+
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl; # check and dump 2tile timing with large RLOL.
+ check_rlol_design_issue 
+
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/correlation/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/pin/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_bi_net_rep.tcl
+# /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_timing.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/fx_gen_inst2inst_min_distance.tcl*
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/estimate_norep_pretiming.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/gen_summary_csv_traceflow_based.py
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/report_no_rep_timing.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/sdc/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/summary/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/tune_budget/
 
 
 #### gc_gl1ac_t timing path
@@ -317,7 +371,6 @@ after newyear; check nlb reroute timing , nlc pretiming;
 
 #########
 
-
 0114 meeting:
 place run: 061, 062;  ask other team for branch run;
 cts database;  propagate clock;
@@ -325,6 +378,13 @@ route database;
 pretiming 
 clock design check;
 budget run status: running 32 hours;
+
+# NLB Budget run dir:
+# NA /proj/canis_pd_fct02/budget/gc_top_t/BGT_runs/main/pd/tiles/gc_top_t_NLB_PrePhysical_func_1028_TileBuilder_Oct28_0521_29994_GUI/
+# NLAB repeaterRelPosFile.txt for GFX domain:
+/proj/canis_pd_gfx_fct01/guanwang/repeater/NLB/repeaterRelPos.txt
+
+
 hdm run; full-flatten run;
 half-cycle clock jitter;
 pt_shell> report_timing to <> -exception all
@@ -386,11 +446,46 @@ gl1ac tile has lots paths with  other tiles, so it is critical, review it first;
 # fcfp package:
 # NLC fcfp package
 /proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run5_hollow/gfx.pkg
+/proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run5_hollow/
 # /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/fcfp.Final.pkg
 # LSB.10 fcfp package
 # /proj/canis_pd_gfx_fcfp01/qilinren/release/LSCm_1209/gc/fp_00/fcfp.Final.pkg
-
+fcfp_explorer /home/www/htdocs/cad/socdm/viz_tools/docs/fcfp_explorer/training/raven2_training.pkg
 fcfp_explorer /proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run5_hollow/gfx.pkg
+
+#### NLB fp_00 GFX FCFP are released in the below area:  copied from NLB+fp_00
+# NLB formal run preplace QoR.xls
+gl1ac: area of 585, cells of 388000, mem of 167, macro of 19, repeaters of 31925;
+vmw:   area of 708, cells of 543000, mem of 482, macro of 2,  repeaters of 3700;
+
+
+FCFP release area: /proj/canis/a0/floorplan/rel_NLB_GFX/*/fp_00/*
+FCFP PKG:          /proj/canis/a0/floorplan/rel_NLB_GFX/gfx.pkg
+
+NLC FCFP PKG: /proj/canis/a0/floorplan/rel_NLC_GFX/ gfx.pkg
+/proj/canis/a0/floorplan/rel_NLC_GFX/gfx.pkg
+/proj/canis/a0/floorplan/rel_NLC_GFX/
+gc_top_t.upf*
+/proj/canis/a0/floorplan/rel_NLC_GFX/FEEDS
+/proj/canis/a0/floorplan/rel_NLC_GFX/feedthrough.list
+/proj/canis/a0/floorplan/rel_NLC_GFX/FEI_PDI.map
+excel
+/proj/canis/a0/floorplan/rel_NLC_GFX/ 
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_ExcludeNets.list
+instpower.csv
+/proj/canis/a0/floorplan/rel_NLC_GFX/repeater.list
+reuse_user_check_misalign_pins_10um
+reuse_user_check_misalign_pins_50um
+tile_no_routelist
+
+## FE tile List
+dfx_dftcnr2_t00gc_acv_lds_t00gc_acv_sp_sq_t00gc_acvi_t00gc_ch_t00gc_cpc_t00gc_cpf_t00gc_cpg_t00gc_dldo_t00gc_ea_1_t00gc_ea_cpwd_t00gc_ea_t00gc_gdfll_t00gc_gds_oa_t00gc_ge_aid_t00gc_gl1ac_t00gc_gl2ar_1_t00gc_gl2ar_t00gc_gl2c_1_t00gc_gl2c_2_t00gc_gl2c_t00gc_imu_t00gc_pa_t00gc_pc_sx_t00gc_rb_1_t00gc_rb_2_t00gc_rb_t00gc_rlc_t00gc_rts_0_t00gc_rts_1_t00gc_sc_bci1_t00gc_sdma_t00gc_sp0_0_t00gc_sp0_1_t00gc_sp1_0_t00gc_sp1_1_t00gc_spi_m_ra_t00gc_spi_s_bci0_cac_t00gc_sq_sqc_t00gc_utcl2_t00gc_vmw_t00gc_vx_swc_0_t00gc_vx_swc_1_t00vdci2_gc_df_2_t00vdci_gc_acv_t00vdci_gc_df_ch_t00vdci_gc_dfcrest_t00vdci_gc_dfx_t00vdci_gc_syshub_t00vdci_gch_soc_gfxm_t
+## PD tile List
+dfx_dftcnr2_t00gc_acv_lds_t00gc_acv_sp_sq_t00gc_acvi_t00gc_ch_t00gc_cpc_t00gc_cpf_t00gc_cpg_t00gc_dldo_t00gc_ea_1_t00gc_ea_cpwd_t00gc_ea_t00gc_gdfll_t00gc_gds_oa_t00gc_ge_aid_t00gc_gl1ac_t00gc_gl2ar_1_t00gc_gl2ar_t00gc_gl2c_1_t00gc_gl2c_2_t00gc_gl2c_t00gc_imu_t00gc_pa_t00gc_pc_sx_t00gc_rb_1_t00gc_rb_2_t00gc_rb_t00gc_rlc_t00gc_rts_0_t00gc_rts_1_t00gc_sc_bci1_t00gc_sdma_t00gc_sp0_0_t00gc_sp0_1_t00gc_sp1_0_t00gc_sp1_1_t00gc_spi_m_ra_t00gc_spi_s_bci0_cac_t00gc_sq_sqc_t00gc_utcl2_t00gc_vmw_t00gc_vx_swc_0_t00gc_vx_swc_1_t00vdci2_gc_df_2_t00vdci_gc_acv_t00vdci_gc_df_ch_t00vdci_gc_dfcrest_t00vdci_gc_dfx_t00vdci_gc_syshub_t00vdci_gch_soc_gfxm_t
+
+
+
+
 # repeater insertion already have;
 
 fct use fct_explorer; to check tile path directions;
@@ -457,212 +552,62 @@ IO weight method:
 
 
 #### pt session
-From: Zhang, Michael(SH) Sent: Tuesday, January 14, 2025 11:51 AM
 Subject: RE: [Canis GFX] FCT tune files for SYN
-Hi Joanne,
-Could you please save a local session for AIE session? Once loaded, please update the table
-
+Hi Joanne, Could you please save a local session for AIE session? Once loaded, please update the table
 Pre-syn (without FCFP, nometa data) released on Jan 14 (main session used for pretiming analysis)
- 	Dir	Local session with library includce
+ 	Dir	Local session with library include
 No-sp	  /proj/canis_fe_gfx_sdc01/huanli12/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/ 	/proj/canis_pd_gfx_fct01/michzhan/nlc/pretiming_nometa/pre_session_nometa_0114
 Full-AIE /proj/canis_pd_gfx_sdc01/qingrloh/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata_fullAIE/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/	
 
-
 Pre-syn (without FCFP, nometa data) released on Jan 10  (Please also keep these session)
- 	Dir	Local session with library includce
+ 	Dir	Local session with library include
 No-sp	/proj/canis_fe_gfx_sdc01/huanli12/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/ 	/proj/canis_pd_gfx_fct01/michzhan/nlc/pretiming_nometa/pre_session_nometa_0109
 Full-AIE	/proj/canis_pd_gfx_sdc01/qingrloh/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata_fullAIE/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession	 /proj/canis_pd_gfx_fct03_aie_er/joanling/nlc/pretiming_nometa/
 
 
-From: Li, Huan <Huan.Li@amd.com> 
-Sent: Tuesday, January 14, 2025 11:44 AM
 To: Wang, Kyle <Guangling.Wang@amd.com>; Chang, An <An.Chang@amd.com>; Ling, Joanne <Joanne.Ling@amd.com>; Zhang, Michael(SH) <Michael.Zhang3@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com>
 Subject: RE: [Canis GFX] FCT tune files for SYN
-
-[AMD Official Use Only - AMD Internal Distribution Only]
-
-Hi Michael/Kyle , 
-
 Please find NLC below FP00 nometadata ptsession :
 
 Non-AIE : /proj/canis_fe_gfx_sdc01/huanli12/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/
 AIE : /proj/canis_pd_gfx_sdc01/qingrloh/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata_fullAIE/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/
-
 For these 2 runs , we fixed bpm related generated clock and all rlc_mem_power_ctrl_reg_cp through DSLP or SD to sync pudelay violations , still exist lib internal generated clock  ¿gc_rlc_t/u_gfxDldoPsmTileTop/I_psmlt_v1/I_mapsmro_v1/CLK1_div_pin_1¿ which needs IP to confirm . 
 
-Thanks & Regards ,
-Huan
 
 From: Wang, Kyle <Guangling.Wang@amd.com> 
-Sent: Monday, January 13, 2025 2:36 PM
 To: Chang, An <An.Chang@amd.com>; Ling, Joanne <Joanne.Ling@amd.com>
 Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com>; Li, Huan <Huan.Li@amd.com>; Zhang, Michael(SH) <Michael.Zhang3@amd.com>
 Subject: RE: [Canis GFX] FCT tune files for SYN
 
-[AMD Official Use Only - AMD Internal Distribution Only]
-
-
-Thanks Joanne¿s help.
-
-
-Hi An,
-
             Update port name for syn_io tune files.
             /proj/canis_pd_gfx_fct01/FCT/release/to_syn/NLC/syn_io/*
-
             Please help to retrace it.
 
 
-Regards,
-kyle
-From: Zhang, Michael(SH) <Michael.Zhang3@amd.com> 
-Sent: Monday, January 13, 2025 12:10 PM
 To: Chang, An <An.Chang@amd.com>; Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com>; Li, Huan <Huan.Li@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
 Subject: RE: [Canis GFX] FCT tune files for SYN
-
-[AMD Official Use Only - AMD Internal Distribution Only]
-
-Hi Kyle,
-Could you please work with Joanne and check it?
+Hi Kyle, Could you please work with Joanne and check it?
  
-Thanks!
-Michael
- 
-From: Chang, An <An.Chang@amd.com> 
-Sent: Monday, January 13, 2025 11:41 AM
-To: Zhang, Michael(SH) <Michael.Zhang3@amd.com>; Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com>; Li, Huan <Huan.Li@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Chang, An <An.Chang@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi @Zhang, Michael(SH)/@Wang, Kyle,
- 
-Have you checked and updated the tunes for NLC?
- 
-Regards,
-An
- 
-From: Zhang, Michael(SH) <Michael.Zhang3@amd.com> 
-Sent: Friday, January 10, 2025 7:36 AM
-To: Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com>; Li, Huan <Huan.Li@amd.com>; Chang, An <An.Chang@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Thanks!
- 
- 
-From: Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com> 
-Sent: Friday, January 10, 2025 2:21 AM
-To: Li, Huan <Huan.Li@amd.com>; Chang, An <An.Chang@amd.com>; Zhang, Michael(SH) <Michael.Zhang3@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi Michael ,
  
 Please below is the AIE ptsession:
 /proj/canis_pd_gfx_sdc01/qingrloh/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata_fullAIE/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession
  
-Thanks,
-Ziwei
- 
-From: Li, Huan <Huan.Li@amd.com> 
-Sent: Thursday, January 9, 2025 12:20 PM
-To: Chang, An <An.Chang@amd.com>; Zhang, Michael(SH) <Michael.Zhang3@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>; Ong, ZiWei (Zi Wei) <ZiWei.Ong@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
  
 + Ziwei to provide  AIE ptsession 
- 
-Hi Michael ,
- 
 Please use below NLC FP00 nometadata session :
 /proj/canis_fe_gfx_sdc01/huanli12/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/ 
- 
 Please note this session have some lib internal generated clocks and these clocks may impact timing results . We have sent mail to related IP to confirm .
  
-Hi @Ong, ZiWei (Zi Wei) ¿?
- 
-Please update AIE ptseesion once it finishes .
- 
-Thanks & Regards ,
-Huan
- 
-From: Chang, An <An.Chang@amd.com> 
-Sent: Thursday, January 9, 2025 11:38 AM
-To: Zhang, Michael(SH) <Michael.Zhang3@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>; Li, Huan <Huan.Li@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Chang, An <An.Chang@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-+ @Li, Huan.
- 
-From: Zhang, Michael(SH) <Michael.Zhang3@amd.com> 
-Sent: Thursday, January 9, 2025 11:37 AM
-To: Chang, An <An.Chang@amd.com>; Wang, Kyle <Guangling.Wang@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
  
 We have no nlc session yet, still wating LiHuan to provide the session.
  
-From: Chang, An <An.Chang@amd.com> 
-Sent: Thursday, January 9, 2025 11:36 AM
-To: Wang, Kyle <Guangling.Wang@amd.com>; Zhang, Michael(SH) <Michael.Zhang3@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Chang, An <An.Chang@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
 Can you check in NLC session?
  
-From: Wang, Kyle <Guangling.Wang@amd.com> 
-Sent: Thursday, January 9, 2025 11:34 AM
-To: Chang, An <An.Chang@amd.com>; Zhang, Michael(SH) <Michael.Zhang3@amd.com>
-Cc: dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
+Hi @Chang, An, I have checked in LSB.10 pd_repeaters.xml, This port exist in these tiles.
+Hi @Zhang, Michael(SH), These ports are related to the HFN from gc_vmw_t* tile.
+ Do you know why these ports are missing in NLC design? 
  
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi @Chang, An,
- 
-            I have checked in LSB.10 pd_repeaters.xml, This port exist in these tiles.
- 
- 
-Hi @Zhang, Michael(SH),
- 
-            These ports are related to the HFN from gc_vmw_t* tile.
- 
-            Do you know why these ports are missing in NLC design? 
- 
- 
- 
- 
-Regards,
-kyle
- 
-From: Chang, An <An.Chang@amd.com> 
-Sent: Thursday, January 9, 2025 11:09 AM
-To: Wang, Kyle <Guangling.Wang@amd.com>
-Cc: Zhang, Michael(SH) <Michael.Zhang3@amd.com>; dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Chang, An <An.Chang@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi @Wang, Kyle,
- 
-We see below ports can¿t be found for io delay override in NLC design.
-Would you check and correct?
+Hi @Wang, Kyle, We see below ports can¿t be found for io delay override in NLC design.  Would you check and correct?
  
 gc_rts_0_t	cannot find port se0__sa0__wgp00__vmw_os, skip it
 gc_rts_1_t	cannot find port se0__sa0__wgp00__vmw_os, skip it
@@ -670,76 +615,27 @@ gc_vx_swc_0_t	cannot find port se0__sa0__wgp00__vmw_os, skip it
 gc_vx_swc_1_t	cannot find port se0__sa0__wgp00__vmw_os, skip it
 gc_sq_sqc_t	cannot find port se0__sa0__wgp00__vmw_os, skip it
  
-Regards,
-An
- 
-From: Wang, Kyle <Guangling.Wang@amd.com> 
-Sent: Wednesday, January 8, 2025 12:28 PM
-To: Chang, An <An.Chang@amd.com>
-Cc: Zhang, Michael(SH) <Michael.Zhang3@amd.com>; dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi An,
-            
-            Updating tune files directory,
- 
+Hi An, Updating tune files directory,
                         /proj/canis_pd_gfx_fct01/FCT/release/to_syn/NLC/syn_io/*
                         /proj/canis_pd_gfx_fct01/FCT/release/to_syn/NLC/mbb_syn/*
  
             For IO constraints, please source them into tune after loading SDC.
- 
                         source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/tune_pr/procs.tcl
                         source -echo -verbose /proj/canis_pd_gfx_fct01/FCT/release/to_syn/NLC/syn_io/<tile>.syn.io_sdc.tcl
                         source -echo -verbose rpts/$TARGET_NAME/override_io_delay.sdc
  
  
-regards,
-kyle
- 
-From: Chang, An <An.Chang@amd.com> 
-Sent: Wednesday, January 8, 2025 11:22 AM
-To: Wang, Kyle <Guangling.Wang@amd.com>
-Cc: Zhang, Michael(SH) <Michael.Zhang3@amd.com>; dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>; Chang, An <An.Chang@amd.com>
-Subject: RE: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi Kyle,
- 
 We will apply them in NLC syn.
- 
 Can you share definition of ¿override_io_delay¿?
  
-Regards,
-An
- 
-From: Wang, Kyle <Guangling.Wang@amd.com> 
-Sent: Tuesday, January 7, 2025 6:32 PM
-To: Chang, An <An.Chang@amd.com>
-Cc: Zhang, Michael(SH) <Michael.Zhang3@amd.com>; dl.Canis_PD_GFX_FCT <dl.Canis_PD_GFX_FCT@amd.com>
-Subject: [Canis GFX] FCT tune files for SYN
- 
-[AMD Official Use Only - AMD Internal Distribution Only]
- 
-Hi @Chang, An,
-            
-            FCT have prepared some tune files for SYN, if you have no issues for these, please take it in NLC.
- 
-            Please take a look the format of the tune files.
- 
+Hi @Chang, An, FCT have prepared some tune files for SYN, if you have no issues for these, please take it in NLC.
+ Please take a look the format of the tune files.  
             For example: 
 1)	/proj/canis_pd_gfx_fct01/FCT/release/to_syn/mbb_syn/gc_rts_0_t.GC_GFXCLK_guanwang.syn.mbb_exclude.list
-           
 2)	/proj/canis_pd_gfx_fct01/FCT/release/to_syn/syn_io/gc_rts_0_t.GC_GFXCLK_guanwang.syn.io_sdc.tcl
  
-            I have put them in these directory,
-                        /proj/canis_pd_gfx_fct01/FCT/release/to_syn/*
- 
+I have put them in these directory, /proj/canis_pd_gfx_fct01/FCT/release/to_syn/*
             
-            
-
 
 Created by Yin, Haimeng, last modified on Dec 13, 2024
 Category: timing closure
@@ -762,6 +658,9 @@ Example:
 #### Latency Reporting for Corner tt0p65v0c_typrc125c_setup ####
 summary table for corner tt0p65v0c_typrc125c_setup
 clock/skew_group   attrs sinks target_skew global_skew target_latency max_latency min_latency median_latency latency_std_dev
+
+\\\\\\\\\\\\\\\\\\  Mode list:
+FuncFFG1p05v    FuncTT0p75v     FuncTT0p65v     FuncTT0p9v       FuncSSG0p6v    FuncTT0p6v
 ### Mode: FuncTT0p65v Scenario: setup_tt0p65v0c_typrc125c_FuncTT0p65v
 clock_core         M,D   147954   50        226        150             405        179          308           32
 MTAP_Wrck
@@ -782,11 +681,9 @@ Do the analysis based on timing results and design information.
 # You may check below report for debug.
 <rundir>/rpts/FxCts/FxCts_structure.rpt.gz
 
-Reference method
-Chose one script to summarize for all tiles all clocks into a table.
+# Reference method; Chose one script to summarize for all tiles all clocks into a table.
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/summ_tile_clock_latency.py
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/get_tile_clock_latency_i2_summary.pl
-
 
 
 # Feedback clock latency to tile team
@@ -901,21 +798,17 @@ cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts
 #/home/hhelong/createOwnershipTables.pl -nickname $TARGET_NAME -sort rpts/davlu/$date/$TARGET_NAME -rel_dir $base_dir -prefix H -path_type all rpts/davlu/$date/$TARGET_NAME/fullchip.report.gz
 #cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncFFG1p05vRCWORST --web Main --file=- -d
 
-
+\\\\\\\\\ RepeaterTraceFlow
 #### Creating a repeater trace from GenEnhanced xmls file
-
-The quickest way to create an FCFP repeater trace is from the GenEnhancedRepeater XML. 
-This is done using the following script (typically included as a FINISH script to the repeater insertion target).
-
+create an FCFP repeater trace from GenEnhancedRepeater XML, with following script (typically included as a FINISH script to repeater insertion target).
 /tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x data/GenEnhancedRepeaterXML.xml -t <top_module>  > data/early_trace_preopt.txt
 /tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/doc/nl_repeaters.xml  -t gc > data/early_trace_preopt.txt
 
-
+/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/
 /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/ 
--t <top_module>  > data/early_trace_preopt.txt
 # pd_repeaters.xml
 top_module can be "gc", "mpu" or even "", runs fast and  pre-collapse. 
-not possible to merge super tiles (any sub-hierarchies like SE in case of graphics IP), hence there is some loss of accuracy at the interface of super tiles if any.
+unable to merge super tiles (any sub-hierarchies like SE in case of graphics IP), hence there is loss of accuracy at interface of super tiles if any.
 # Creating a repeater trace from def files
 It is very useful to check the repeater positioning just after tile placement data is available. 
 This will help us understand if there are any large repeater distance violations after tile placement. 
@@ -1093,3 +986,109 @@ bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||
 bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py'
 cd /proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/
     
+
+
+
+
+# /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl
+proc parse_nl_rep_xml {xml net_bundle bundle_constriant net_container net_clk net_orig} {
+    upvar $net_bundle a_net_bundle
+    upvar $bundle_constriant a_bundle_constriant
+    upvar $net_container a_net_container
+    upvar $net_clk a_net_clk
+    upvar $net_orig a_net_orig
+    
+    set FI [open $xml r]
+    set cur_clk ""
+    set cur_constraint ""
+    set cur_container ""
+    set flag_constraint 0
+    while {[gets $FI line] >= 0} {
+        #if {[regexp "<rep .* sdc_clk=\"(.*?)\" constraint=\"(.*?)\" .* container=\"(.*?)\" file" $line - clk constraint container]} 
+        if {[regexp "<rep " $line]} {
+            foreach seg [split $line] {
+                if {[regexp "^sdc_clk=\"(.*?)\"" $seg - clk]} {
+                    set cur_clk $clk
+                    set flag_constraint 0
+                } elseif {[regexp "^constraint=\"(.*)" $seg - constraint]} {
+                    set cur_constraint $constraint
+                    set flag_constraint 1
+                } elseif {$flag_constraint == 1 && [regexp "(.*)\"" $seg - constraint]} {
+                    set cur_constraint "${cur_constraint} ${constraint}"
+                    set flag_constraint 0
+                } elseif {[regexp "^container=\"(.*?)\"" $seg - container]} {
+                    set cur_container $container
+                    set flag_constraint 0
+                } else {
+                    set flag_constraint 0
+                }
+            }
+        # elseif {[regexp "<net name=\"(.*?)\" bundle=\"(.*?)\"" $line - net bundle]} 
+        } elseif {[regexp "<net " $line]} {
+            foreach seg [split $line] {
+                if {[regexp "^name=\"(.*?)\"" $seg - net]} {
+                    set net_orig $net
+                    set net [regsub {\[} $net "___hmyin1___"]
+                    set net [regsub {\]} $net "___hmyin2___"]
+                } elseif {[regexp "^bundle=\"(.*?)\"" $seg - bundle]} {
+                    set bundle $bundle
+                }
+            }
+            set a_net_bundle($net) $bundle
+            set a_net_container($net) $cur_container
+            set a_net_clk($net) $cur_clk
+            set a_net_orig($net) $net_orig
+            #if {![info exists a_bundle_constriant($bundle)]} {set a_bundle_constriant($bundle) $cur_constraint}
+            set a_bundle_constriant($bundle) $cur_constraint
+        #elseif {[regexp "<no_rep name=\"(.*?)\" bundle=\"(.*?)\" .* container=\"(.*?)\" file" $line - net bundle container]} 
+        } elseif {[regexp "<no_rep " $line]} {
+            foreach seg [split $line] {
+                if {[regexp "^name=\"(.*?)\"" $seg - net]} {
+                    set net_orig $net
+                    set net [regsub {\[} $net "___hmyin1___"]
+                    set net [regsub {\]} $net "___hmyin2___"]
+                } elseif {[regexp "^bundle=\"(.*?)\"" $seg - bundle]} {
+                    set bundle $bundle
+                } elseif {[regexp "^container=\"(.*?)\"" $seg - container]} {
+                    set cur_container $container
+                }
+            }
+            set cur_clk "*"
+            set cur_constraint "no_rep"
+            set a_net_bundle($net) $bundle
+            set a_net_container($net) $cur_container
+            set a_net_clk($net) $cur_clk
+            set a_net_orig($net) $net_orig
+            #if {![info exists a_bundle_constriant($bundle)]} {set a_bundle_constriant($bundle) $cur_constraint}
+            set a_bundle_constriant($bundle) $cur_constraint
+        #elseif {[regexp "<axi_rep .* sdc_clk=\"(.*?)\" constraint=\"(.*?)\" .* container=\"(.*?)\" file" $line - clk constraint container]} 
+        } elseif {[regexp "<axi_rep " $line]} {
+            foreach seg [split $line] {
+                if {[regexp "^sdc_clk=\"(.*?)\"" $seg - clk]} {
+                    set cur_clk $clk
+                    set flag_constraint 0
+                } elseif {[regexp "^constraint=\"(.*)" $seg - constraint]} {
+                    set cur_constraint $constraint
+                    set flag_constraint 1
+                } elseif {$flag_constraint == 1 && [regexp "(.*)\"" $seg - constraint]} {
+                    set cur_container "${cur_constraint} ${constraint}"
+                    set flag_constraint 0
+                } elseif {[regexp "^container=\"(.*?)\"" $seg - container]} {
+                    set cur_container $container
+                    set flag_constraint 0
+                } else {
+                     set flag_constraint 0
+                }
+            }
+        } elseif {[regexp "</" $line] || [regexp "<bundle" $line] || [regexp "^$" $line] || [regexp "<end_block_info" $line]} {
+            ## NA
+        } elseif {[regexp "<?" $line] || [regexp "<net_repeaters>" $line] || [regexp "<identifier" $line]} {
+            ## NA
+        } else {
+            puts "unmatched: $line"
+        }
+    }
+    close $FI
+}
+## [parse_nl_rep_xml $nl_xml a_net_bundle a_bundle_constriant a_net_container a_net_clk a_net_orig]
+
