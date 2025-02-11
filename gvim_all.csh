@@ -200,6 +200,10 @@ g/^/m 0           # revert all lines;
 :%s/<pattern>/ng
 :%s///ng; # search first match, then count all matched pattern;
 
+# search/grep file under cursor, and count
+:command! -nargs=1 Grepc execute ':!grep <args> ' . expand('<cfile>')
+:Grepc "EQ 0"  | wc -l; ctrl-c;
+
 ### record/replay
 qaq, @a, 20@a;
 

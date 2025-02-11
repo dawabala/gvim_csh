@@ -6,6 +6,8 @@ cp -pr /home/jialwang/hcf_vcn/fp_analysis/extractor.pl ./
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/summarize_report_with_tiles.pl
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/README
 
+
+
 # CDC report csv
 #NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv
 #NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
@@ -58,24 +60,35 @@ You will get a csv file with all info:
 # if required fix value >1, those can be sent to IP to check if need changes
 
 
-
+# vigitpy dir: gvim git python packages; 
+jdon: git add pythonall.csh(with py310 download links);  
+guojia: install gvim, git,py310; chatgpt: outlook mails save into can_mail.csh;
 
 
 ~/soc/rpts/rpts.csh
 ~/soc/rpts/place61.csh
 ~/soc/rpts/cts66.csh
 ~/soc/rpts/route80.csh
+~/soc/rpts/timing.061.csh
 
 zdiff cts_withrdl cts_nordl;
 zdiff place_0p65v place_0p75v;
 zdiff place_0p6v  place_0p9v;
 zdiff cts_0p6v    cts_0p9v;
 
+# include  clock mesh design;
+# 0066_cts_0p75v_2t_withrdl
+# 0066_cts_0p65v_2t_withrdl
+# 0066_cts_0p65v_2t_nordl
+
+# pt session; 
+timing report not in it, timing path; 
 # sudong bsub ptsession;
 
 bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm & ; # sudong
 # zgrep PT_SHELL ./logs/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
 csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp;
+
 csh> source ~sdhe/.cshrc; module load primetime/2022.03-SP5-2-T-20230819;
 csh> pt_shell; 
 pt_shell> restore_session rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
@@ -88,6 +101,13 @@ pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/cloc
 
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/check_clk_branches_talk.tcl
 pt_shell> check_clk_branches_talk -top_nets_list Cpl_USB_HOST_CLK ;  # check different top clock nets sinks talk information.
+
+# fct workbook scripts
+/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/
+/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
+/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/analyze_path_lol_length.tcl
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/top_clock_net.tcl
@@ -116,12 +136,15 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_r
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/correlation/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/
+
+
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/pin/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_bi_net_rep.tcl
 # /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_timing.tcl
+
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/fx_gen_inst2inst_min_distance.tcl*
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/estimate_norep_pretiming.tcl
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/gen_summary_csv_traceflow_based.py
@@ -130,11 +153,77 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/sdc/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/summary/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/tune_budget/
 
+\\\\\  aziz scripts
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -p 750 > trace_opt_nlc
+# The value of 750 passed as argument p here is the repeater distance which we aim to achieve. The optimization + sorting is doable in a single step:
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -a algo3 -p 750 | \
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m > trace_opt_nlc_max
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/
+arrange_reps.py*
+buf2inv.pl*
+fct_tile_status.pl*
+gen_early_trace.py*
+gen_rel_pos.py*
+histo.pl*
+histo_drv.pl*
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/measure_rep_dist.py*
+modify_bad_trans.pl*
+process_trace.py*
+qtop.pl*
+sort_by_slack.pl*
+sort_trace.pl*
+split_report.pl*
+split_sum_drv.pl*
+split_trans_uniq.pl*
+sum.pl*
+sum.py*
+summ_clktrans.pl*
+summ_datacap.pl*
+summ_datatrans.pl*
+summ_dblswitch.pl*
+summ_si_bottleneck.pl*
+summ_si_clktrans.pl*
+summ_si_datatrans.pl*
+summ_sort.py*
 
-#### gc_gl1ac_t timing path
-#### 
-# gl1ac sort_rpt, gc_rlc_t.gc_gl1ac_t timing path, top net,  grep pd_repeater.xml: current repeaters constraints, current repeaters, bundles 
-# rlc.gl1ac mem_power_ctrl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/fct_early/
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/fct_monitor/
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/ml_eco/
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
+
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_N6.aziz.tcl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_N6.tcl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_n5.tcl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/path_manager.tcl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delaycell_manager.tcl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/fix_my_hold.tcl
+/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/strix_pt_hold_fix_config.tcl
+
+
+pt_shell> source          /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/path_manager.tcl
+pt_shell> source          /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/fix_my_hold.tcl
+pt_shell> init_hold_fixer /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/strix_pt_hold_fix_config.tcl
+    pt_shell> set PHF(SETUP_PVT) ssg0p65v0c
+    pt_shell> set PHF(SETUP_MARGIN) 80
+    pt_shell> set PHF(FIX_PATH_TYPE) all
+    pt_shell> set PHF(FIX_PATH_TYPE) interface
+
+pt_shell> fix_my_hold {rpts/Pt*/si_LCLK_min.rpt.gz /proj/strix1/nonsi_fct_run/rpts/Pt*/LCLK_min.rpt.gz}
+
+You can provide /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\ cts tune
+# cts tune file; kyle;  $tile.cts.early_skew.tcl; $tile.cts.late_skew.tcl; 
+tune/FxCts/FxCts.pre_opt.tcl
+# set_clock_balance_points -delay -90 -balance_points [get_pins gc_rlc_t/grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/CP ]
+  set_clock_balance_points -delay -90 -balance_points [get_pins          grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/CP ]
+
+~/rpts/timingpath.061.csh
+\\\\\\\\\\\\\\\\\\\\\\\\\\ gc_gl1ac_t timingpath 061
+# gl1ac sort_rpt, gc_rlc_t.gc_gl1ac_t timing path, top net,  
+# grep pd_repeater.xml: current repeaters constraints, current repeaters, bundles 
+\\\\ rlc.gl1ac mem_power_ctrl; LSC.5  mem_power_ctrl IP add patches; 
 gc_rlc_t.gc_gl1ac_t: 76 vios, slack: -639 ~ -476  top_net: FE_FEEDX_SHARE*gc*gc*_mem_power_ctrl_8   rep_constraints:EQ0  current_repeaters: 0;  bundles;
   FE_FEEDX_SHARE__gc_rlc_t__gc_sdma_t__mem_power_ctrl__8 (net) 
   FE_FEEDX_SHARE__gc_pa_spi_m_ra_t0__gc_gl1ac_t0__mem_power_ctrl__8 (net) 
@@ -146,32 +235,17 @@ gc_rlc_t.gc_gl1ac_t: 76 vios, slack: -639 ~ -476  top_net: FE_FEEDX_SHARE*gc*gc*
   </bundle_connection>
 </no_rep>
 
-# fct workbook scripts
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/
-/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/analyze_path_lol_length.tcl
-/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
-Usage:
-
-
-# gl1ac.rlc: ask ip/sdc team  to confirm SDC;
-# *BARRIER: LSC.5 fcfp add repeaters with constraint: LE26 ; mem_power_ctrl IP add patches; 
-# cts tune file; kyle;  $tile.cts.early_skew.tcl; $tile.cts.late_skew.tcl; 
-tune/FxCts/FxCts.pre_opt.tcl
-# set_clock_balance_points -delay -90 -balance_points [get_pins gc_rlc_t/grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/CP ]
-  set_clock_balance_points -delay -90 -balance_points [get_pins          grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/CP ]
-
+\\\\ gl1ac.rlc *BARRIER: LSC.5 fcfp add repeaters for *BARRIER with constraint: LE26 ; 
+# ask ip/sdc team  to confirm SDC;
+# gl1ac.rlc.place
+Startpoint: gc_gl1ac_t0/grbmh_se/ugrbmh_schedule/FxPlace_oCLR_ME0PIPE1_BARRIER_reg_MB_oCLR_ME0PIPE0_BARRIER_reg_bank_0__4615392/CP
+Endpoint:   gc_rlc_t/grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/D
 # gl1ac.rlc.cts
 Startpoint: gc_gl1ac_t0/grbmh_se/ugrbmh_schedule/FxPlace_oCLR_ME0PIPE1_BARRIER_reg_MB_oCLR_ME0PIPE0_BARRIER_reg_bank_0__4653827/CP
 EndPoint  : gc_rlc_t/grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/CP 
-# gl1ac.rlc.place
-Startpoint: gc_gl1ac_t0/grbmh_se/ugrbmh_schedule/FxPlace_oCLR_ME0PIPE1_BARRIER_reg_MB_oCLR_ME0PIPE0_BARRIER_reg_bank_0__4615392/CP
-Endpoint: gc_rlc_t/grbm/ugrbm_schedule/FxPlace_qSCH_GDS_DMA_TRAPPED_reg_MB_qSCH_GDS_DMA_RTR_reg_MB_SYSTEM_READ_PENDING_reg_MB_GRAPHICS_READ_PENDING_reg_MB_qMe0Pipe0Barrier_dly_reg_0__MB_qMe0Pipe1Barrier_reg_0__MB_qSCH_FAO_reg_MB_qSCH_CLKEN_HALT_reg_bank_6__696004/D
+# gl1ac.rlc place vs. cts: same endpoints, startpoints reg_bank_0_4615392/CP  vs. startpoints_reg_bank_0_4653827/CP;
 
-# pt session; 
-timing report not in it, timing path; 
-
+# 
 gc_gl1ac_t.gc_rlc_t: 4 viols, slack: -378~ -313 top_net: CLR_ME0PIPE0SE0_BARRIER CLR_ME0PIPE1SE0_BARRIER   rep_constraints: EQ0  reps: 0 noconstraints; bundles: 
   <no_rep bundle="gc__CLR_ME0PIPE0SE0_BARRIER" container="gc_top_t" name="gc__CLR_ME0PIPE0SE0_BARRIER" orig_bundle="CLR_ME0PIPE0SE0_BARRIER" reason="bia:FIXME:missing_constraint">
     <bundle_connection>
@@ -209,11 +283,17 @@ gc_rts_0_t0000.gc_gl1ac_t0: 53 viols, slack: -55~ -0.33 top_net:se0__WGP_SA0_WGP
 
 ### Path from ./rpts/PtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming/report_timing_2tile_max.rpt.gz , slack = -54.030000, tns = -154.030000, margin = 100, clock = GC_GFXCLK
 
-/proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/pd_repeaters.xml
+\\\\\\\\\  xml file, by michael
+# nl.xml: xml file before insert repeater ; pd.xml : xml file after repeater inserted  (for fct, no big difference between 2 files, as we only check the bundle name and repeater constraints from the file)
+# rep_info_file.lscm.txt: extract the net info from xml file (format: net name, bundle name, repeater constraints, pd inserted repeater number, related clock name)
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/nl_repeaters.xml   
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/pd_repeaters.xml  
+/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/rep_info_file.lscm.txt  
+/proj/canis_pd_gfx_fct01/FCT/feedthru_xml/latest/feedthru_connectivity.xml
+
 /proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/nl_repeaters.xml
 /proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/pd_repeaters.xml
 /proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/rep_info_file.lscm.txt  
-/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/rep_info_file.lscm.txt  
 
 
 #### cts  8 tiles big net delay; compare rdl vs. nordl;
@@ -227,10 +307,6 @@ gc_rts_0_t0000.gc_gl1ac_t0: 53 viols, slack: -55~ -0.33 top_net:se0__WGP_SA0_WGP
   gc_gdfll_t/Cpl_GFXCLK (net) 
   gc_gdfll_t/Cpl_GFXCLK (gc_gdfll_t)                                                                                                                         0.00       0.00 &   552.49 r
 
-#include  clock mesh design;
-# 0066_cts_0p75v_2t_withrdl
-# 0066_cts_0p65v_2t_withrdl
-# 0066_cts_0p65v_2t_nordl
 
 grep "gc*FE_FEEDX" /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.gc_gl2c_q1_c5_t.gc_gl2c_q0_c0_t.sorted.gz
 q1c5 to q1c4: no feedthru;
@@ -295,20 +371,11 @@ q1c5 to q1c4: no feedthru;
   gc_pc_sx_t0/FxPlace_ZINV_424_inst_3521606/I (INVD4SPG1AMDBWP143M169H3P48CPDULVTLL)                                                          10.62       2.08 &   262.62 f
   gc_pc_sx_t0/FxPlace_ZINV_424_inst_3521606/ZN (INVD4SPG1AMDBWP143M169H3P48CPDULVTLL)                                                         19.33      13.58 &   276.20 r
   gc_pc_sx_t0/FxPlace_ZINV_385_inst_3521605/I (INVD8BWP143M169H3P48CPDULVTLL)                                                                 24.52       6.88 &   283.08 r
-  gc_pc_sx_t0/FxPlace_ZINV_385_inst_3521605/ZN (INVD8BWP143M169H3P48CPDULVTLL)                                                                18.96      16.13 &   299.22 f
-  gc_pc_sx_t0/FxPlace_ZBUF_322_inst_3521604/I (BUFFD8AMDBWP143M169H3P48CPDULVTLL)                                                             37.71      16.73 &   315.94 f
-  gc_pc_sx_t0/FxPlace_ZBUF_322_inst_3521604/Z (BUFFD8AMDBWP143M169H3P48CPDULVTLL)                                                             11.27      22.32 &   338.27 f
-  gc_pc_sx_t0/FxPlace_ZINV_204_inst_3521603/I (INVOPT3FD9BWP143M286H3P48CPDULVTLL)                                                            34.06      15.95 &   354.22 f
-  gc_pc_sx_t0/FxPlace_ZINV_204_inst_3521603/ZN (INVOPT3FD9BWP143M286H3P48CPDULVTLL)                                                           28.35      22.86 &   377.08 r
-  gc_pc_sx_t0/FxPlace_ZINV_150_inst_3521602/I (INVOPT3FD9BWP143M286H3P48CPDULVTLL)                                                            45.30      19.24 &   396.32 r
-  gc_pc_sx_t0/FxPlace_ZINV_150_inst_3521602/ZN (INVOPT3FD9BWP143M286H3P48CPDULVTLL)                                                           31.15      24.36 &   420.68 f
-  gc_pc_sx_t0/FxPlace_ZBUF_89_inst_3521601/I (BUFFD8AMDBWP143M169H3P48CPDULVTLL)                                                              68.03      32.14 &   452.82 f
   gc_pc_sx_t0/FxPlace_ZBUF_89_inst_3521601/Z (BUFFD8AMDBWP143M169H3P48CPDULVTLL)                                                               9.29      26.59 &   479.41 f
   gc_pc_sx_t0/FxPlace_ZINV_38_inst_3521600/I (INVD8BWP143M169H3P48CPDULVTLL)                                                                  83.39      44.48 &   523.89 f
   gc_pc_sx_t0/FxPlace_ZINV_38_inst_3521600/ZN (INVD8BWP143M169H3P48CPDULVTLL)                                                                 48.64      40.58 &   564.47 r
   gc_pc_sx_t0/FxPlace_ZINV_15_inst_3521599/I (INVD8BWP143M169H3P48CPDULVTLL)                                                                  71.47      27.45 &   591.92 r
   gc_pc_sx_t0/FxPlace_ZINV_15_inst_3521599/ZN (INVD8BWP143M169H3P48CPDULVTLL)                                                                 19.48      18.85 &   610.78 f
-
 
   FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_addr__35 (net) 
   FE_FEEDX_MFT__10__gc_rts_0_t_0__gc_pc_sx_t__se0__WGP_SA0_WGP0_3_TCP1_GL1_req_* (net) 
@@ -320,11 +387,6 @@ q1c5 to q1c4: no feedthru;
   FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP1_GL1_req_* (net) 
 
 
-
-# vigitpy dir: gvim git python packages; 
-# 
-jdon: git add pythonall.csh(with py310 download links);  
-guojia: install gvim, git,py310; chat: outlook mails save into can_mail.csh;
 
 # other clock no violation, all runs will auto-sort, nosp & nospflush is tuning flow, nosp to check violation.
 # review _2tile
@@ -340,25 +402,109 @@ machine_learning_comments: machine learning targets;
 
 ask kyle and cannie on pathform;
 cd fct04/rel61;
-usage: pathform.py [-h] [--rundir RUNDIR] [--config CONFIG] [--report REPORT]
-                   [--rep_xml REP_XML] [--ft_xml FT_XML] [--inst_map INST_MAP] [--gen_db_only] [--dump_summary]
+usage: pathform.py [-h] [--rundir RUNDIR] [--config CONFIG] [--report REPORT] [--rep_xml REP_XML] [--ft_xml FT_XML] [--inst_map INST_MAP] [--gen_db_only] [--dump_summary]
 Parse timing reports and show with a friendly way. just run it under rundir.
 
 optional arguments:
-  -h, --help           show this help message and exit
-  --rundir RUNDIR      FCT or Tile rundir
   --config CONFIG      pathform config file.           read from rundir/pathform.conf by default.
   --rep_xml REP_XML    repeater contract XML file.     read from rundir/pd_repeaters.xml by default.
   --ft_xml FT_XML      feedthru_connectivity.xml file. read from rundir/feedthru_connectivity.xml by default.
   --inst_map INST_MAP  instance map file.              read from rundir/inst_tile.map by default.
   --report REPORT      only process specified report.
-  --gen_db_only        Only generate database mode, No GUI
   --dump_summary       Dump status summary to central file.
 
-/proj/canis_pd_gfx_fct01/guanwang/work/gc_rlct_long_nets.rpt.gz
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ meeting minutes
 
-#########
-0121 meeting:
+\\\\ 0218 meeting
+drv : fly hu does not summarize DRV report for soundwave yet, 
+\\\\ 0211 meeting
+canniexue create CDC env based on NLB , run CDC; 
+special timing; lihuan, flush flow; check error; 
+drv: soundwave drv report summary; 
+ 1 corner;
+
+\\ canis  drv
+DRV is a kind of timing sign-off item. FCT need to make sure all of them are check properly. Some of them can be waived following rules from design guidelines.
+Item           Criteria                             Runs to check             Report files name            Owner waivers
+Illegal clock No Vio with waiver (Follow dont use list) nonSI normal runs Pt*/check_clock_cells.rpt        FCT signoff and fix (tile owner can fix non CK buffer/inverter first)
+min_pulse_width
+min_period
+clock_tran
+data_tran
+data_cap
+data_cap.rpt.gz
+si_clock_noise_area
+si_clock_noise_height
+si_clock_double_switch
+si_noise_area
+si_noise_height
+clock_si
+si_bottleneck
+Tie_fanout
+RC-011/RC-012
+SI_clock_tran
+SI_data_tran
+
+Reference method
+Script to summarize DRV: developed by Feng1, Jian1 
+
+/tool/pandora/bin/python3.9  /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py -instMap inst_tile.map
+
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
+usage: fix_drv.py [-h] [--nonsi] [--si] [--rc] [-instMap INSTMAP] [-fix FIX] [-lib_cell_file LIB_CELL_FILE] [-waiver WAIVER]
+optional arguments:
+  --nonsi               enable nonsi option to fix nonsi drv
+  --si                  enable si option to fix si drv
+  --rc                  check rc011 and rc012 violation
+  -instMap INSTMAP      inst map file
+  -fix FIX              violation to fix
+  -lib_cell_file LIB_CELL_FILE     inst lib cells which can be used when fix drv
+  -waiver WAIVER        add waiver when fixing drv
+
+For SI bottlneck report si_bottleneck_nets_cells_for_eco.rpt.gz , use scripts 
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/report_si_bottleneck.tcl    
+in tune/PtTim/PtTim.general.extrasirpts.tcl .
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/tune/PtTim/PtTim.general.extrasirpts.tcl 
+
+
+# Below scripts implemented above methods. developed by Ren, Qilin 
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC011.tcl
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC012.tcl
+# Output files:
+rpts/${TARGET_NAME}/check_DRV_RC011.postwaived.rpt
+rpts/${TARGET_NAME}/check_DRV_RC012.postwaived.rpt
+
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC011.waived.rpt.gz
+# ### in setup corner, <80% min_slew_index value of RC-011 violations could ignore ###
+# Warning: An extrapolation exceeding 80% of the library characterization range has been detected. The delay calculation accuracy may be affected. for the cell timing arc, (trfps2plvt128x256m1bp_gfx_tt0p750v100c_typical/trfps2plvt128x256m1bp_gfx) gc_gl2ar_q1_t/gl2a/mdcc/mdc0/mdc_data/mdata_mem/mem_0_1/PDP/CLK-->QP[97] (max retain_rising) [r/f total_cap = 0.000138279/0.000145601, lib_range = [0.001 0.075]/[0.001 0.075] (pF)] (RC-011)
+# Warning: An extrapolation exceeding 80% of the library characterization range has been detected. The delay calculation accuracy may be affected. for the cell timing arc, (trfps2plvt128x256m1bp_gfx_tt0p750v100c_typical/trfps2plvt128x256m1bp_gfx) gc_gl2ar_q1_t/gl2a/mdcc/mdc0/mdc_data/mdata_mem/mem_0_1/PDP/CLK-->QP[98] (max retain_rising) [r/f total_cap = 0.000163518/0.000171574, lib_range = [0.001 0.075]/[0.001 0.075] (pF)] (RC-011)
+# Warning: An extrapolation exceeding 80% of the library characterization range has been detected. The delay calculation accuracy may be affected. for the cell timing arc, (trfps2pslvt128x64m1bl_gfx_tt0p750v100c_typical/trfps2pslvt128x64m1bl_gfx) gc_gl2ar_q1_t/gl2a/mdcc/mdc2/mdc_tag/dirty_ram/mem_0_0/PDP/CLK-->QP[62] (min rising_edge) [r/f total_cap = 0.000150024/0.000159892, lib_range = [0.001 0.075]/[0.001 0.075] (pF)] (RC-011)
+# ### in setup corner, >10% max_slew_index value of RC-011 violations, if slack > skew_diff could waive ###
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC011.postwaived.rpt.gz
+
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.waived.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.postwaived_report.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.postwaived_fix.rpt.gz
+
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/
+
+
+
+
+
+nlc release; dft release is discussing
+lihuan to release function in 0214;
+nlc trial run flow;
+0217 : release budge sdc; 
+tile-level work: 
+nlb: reroute database
+focus on 098/099 run:  read clock design , match may be incorect
+fct099 check timing, feedback to tile team;  bundle, clock_latency, io,
+
+
+
+\\\\   0121 meeting:
 after newyear; check nlb reroute timing , nlc pretiming;
 # top module name changed to gc_top_t;
 /proj/canis_fe_gfx_sdc01/huanli12/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/nl/prelayout/gc_top_t/sdc_release/functional/NLC_prelayout_set1_budget_uncertainty/PlFc*
@@ -369,9 +515,8 @@ after newyear; check nlb reroute timing , nlc pretiming;
     10 corners now;
 0p6v & 0p75v most critical corners; 0p58v being evalued for lowpower ;
 
-#########
 
-0114 meeting:
+\\\\   0114 meeting:
 place run: 061, 062;  ask other team for branch run;
 cts database;  propagate clock;
 route database;
@@ -412,6 +557,7 @@ gc_gfxclk_1 : clock_mux; to select between gc_gfxclk and gc_gfxclk_1 (affect til
 # kyle wang  
 Timing report:
 /proj/canis_pd_gfx_fct01/guanwang/work/gc_rlct_long_nets.rpt.gz
+/proj/canis_pd_gfx_fct01/guanwang/work/gc_rlct_long_nets.rpt.gz
 
 
 #########
@@ -423,12 +569,9 @@ nlc: repeater, sdc, feedx, pin/point assignment;
 nld: 
 eco:
 
-#########
-0115 discussion: 
+\\\\   0115 discussion with michael: 
 constraint, sdc, floorplan(pin assignment), repeater,
-
 fct workbook;
-
 python scripts;
 startpoint/endpoint
 old : excel file, 
@@ -454,9 +597,10 @@ fcfp_explorer /home/www/htdocs/cad/socdm/viz_tools/docs/fcfp_explorer/training/r
 fcfp_explorer /proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run5_hollow/gfx.pkg
 
 #### NLB fp_00 GFX FCFP are released in the below area:  copied from NLB+fp_00
-# NLB formal run preplace QoR.xls
+# NLB formal run preplace QoR(1024).xls
 gl1ac: area of 585, cells of 388000, mem of 167, macro of 19, repeaters of 31925;
 vmw:   area of 708, cells of 543000, mem of 482, macro of 2,  repeaters of 3700;
+
 
 
 FCFP release area: /proj/canis/a0/floorplan/rel_NLB_GFX/*/fp_00/*
@@ -464,26 +608,24 @@ FCFP PKG:          /proj/canis/a0/floorplan/rel_NLB_GFX/gfx.pkg
 
 NLC FCFP PKG: /proj/canis/a0/floorplan/rel_NLC_GFX/ gfx.pkg
 /proj/canis/a0/floorplan/rel_NLC_GFX/gfx.pkg
-/proj/canis/a0/floorplan/rel_NLC_GFX/
-gc_top_t.upf*
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_top_t.upf*
 /proj/canis/a0/floorplan/rel_NLC_GFX/FEEDS
 /proj/canis/a0/floorplan/rel_NLC_GFX/feedthrough.list
 /proj/canis/a0/floorplan/rel_NLC_GFX/FEI_PDI.map
+/proj/canis/a0/floorplan/rel_NLC_GFX/ 
 excel
 /proj/canis/a0/floorplan/rel_NLC_GFX/ 
 /proj/canis/a0/floorplan/rel_NLC_GFX/gc_ExcludeNets.list
-instpower.csv
 /proj/canis/a0/floorplan/rel_NLC_GFX/repeater.list
-reuse_user_check_misalign_pins_10um
-reuse_user_check_misalign_pins_50um
+/proj/canis/a0/floorplan/rel_NLC_GFX/reuse_user_check_misalign_pins_10um
+/proj/canis/a0/floorplan/rel_NLC_GFX/reuse_user_check_misalign_pins_50um
+/proj/canis/a0/floorplan/rel_NLC_GFX/ instpower.csv
 tile_no_routelist
 
 ## FE tile List
 dfx_dftcnr2_t00gc_acv_lds_t00gc_acv_sp_sq_t00gc_acvi_t00gc_ch_t00gc_cpc_t00gc_cpf_t00gc_cpg_t00gc_dldo_t00gc_ea_1_t00gc_ea_cpwd_t00gc_ea_t00gc_gdfll_t00gc_gds_oa_t00gc_ge_aid_t00gc_gl1ac_t00gc_gl2ar_1_t00gc_gl2ar_t00gc_gl2c_1_t00gc_gl2c_2_t00gc_gl2c_t00gc_imu_t00gc_pa_t00gc_pc_sx_t00gc_rb_1_t00gc_rb_2_t00gc_rb_t00gc_rlc_t00gc_rts_0_t00gc_rts_1_t00gc_sc_bci1_t00gc_sdma_t00gc_sp0_0_t00gc_sp0_1_t00gc_sp1_0_t00gc_sp1_1_t00gc_spi_m_ra_t00gc_spi_s_bci0_cac_t00gc_sq_sqc_t00gc_utcl2_t00gc_vmw_t00gc_vx_swc_0_t00gc_vx_swc_1_t00vdci2_gc_df_2_t00vdci_gc_acv_t00vdci_gc_df_ch_t00vdci_gc_dfcrest_t00vdci_gc_dfx_t00vdci_gc_syshub_t00vdci_gch_soc_gfxm_t
 ## PD tile List
 dfx_dftcnr2_t00gc_acv_lds_t00gc_acv_sp_sq_t00gc_acvi_t00gc_ch_t00gc_cpc_t00gc_cpf_t00gc_cpg_t00gc_dldo_t00gc_ea_1_t00gc_ea_cpwd_t00gc_ea_t00gc_gdfll_t00gc_gds_oa_t00gc_ge_aid_t00gc_gl1ac_t00gc_gl2ar_1_t00gc_gl2ar_t00gc_gl2c_1_t00gc_gl2c_2_t00gc_gl2c_t00gc_imu_t00gc_pa_t00gc_pc_sx_t00gc_rb_1_t00gc_rb_2_t00gc_rb_t00gc_rlc_t00gc_rts_0_t00gc_rts_1_t00gc_sc_bci1_t00gc_sdma_t00gc_sp0_0_t00gc_sp0_1_t00gc_sp1_0_t00gc_sp1_1_t00gc_spi_m_ra_t00gc_spi_s_bci0_cac_t00gc_sq_sqc_t00gc_utcl2_t00gc_vmw_t00gc_vx_swc_0_t00gc_vx_swc_1_t00vdci2_gc_df_2_t00vdci_gc_acv_t00vdci_gc_df_ch_t00vdci_gc_dfcrest_t00vdci_gc_dfx_t00vdci_gc_syshub_t00vdci_gch_soc_gfxm_t
-
-
 
 
 # repeater insertion already have;
@@ -501,16 +643,6 @@ How many repeater inserted in current design;
 # freeze 
 # add patch with false path;
 mem_power_ctrl[0]; mem_power_ctrl[16]; MEM_POWER_CTRL[]
-
-#### xml file, by michael
-# - xml file before insert repeater
-/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/nl_repeaters.xml   
-# - xml file after repeater inserted  (for fct, no big difference between 2 files, as we any check the bundle name and repeater constraints from the file)
-/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/pd_repeaters.xml  
-# exract the net info from xml file (format: net name, bundle name, repeater constraints, pd inserted repeater number, related clock name)
-/proj/canis_pd_gfx_fct01/FCT/rep_xml/LSB10_fp00/rep_info_file.lscm.txt  
-
-/proj/canis_pd_gfx_fct01/FCT/feedthru_xml/latest/feedthru_connectivity.xml
 
 
 # Full flat run
@@ -546,8 +678,6 @@ $tile.cts.early_skew.tcl $tile.cts.late_skew.tcl
 $tile.route.ndr.list $tile.optroute.io_weight.tcl
 IO weight method:
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/tune_pr/tune_gen_for_critical_bundle.tcl
-
-
 
 
 
@@ -589,19 +719,14 @@ Subject: RE: [Canis GFX] FCT tune files for SYN
 Hi Kyle, Could you please work with Joanne and check it?
  
  
-Please below is the AIE ptsession:
+# Please below is the AIE ptsession:
 /proj/canis_pd_gfx_sdc01/qingrloh/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata_fullAIE/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession
  
- 
-+ Ziwei to provide  AIE ptsession 
-Please use below NLC FP00 nometadata session :
+# Please use below NLC FP00 nometadata session :
 /proj/canis_fe_gfx_sdc01/huanli12/Canis/FCNL_constraints/GC_SDC_RUN2/main/pd/tiles/NLC_FP00_nometadata/rpts/PtFcGenFULLCHIPTIMINGLpTypicalTopSdc/ptsession/ 
 Please note this session have some lib internal generated clocks and these clocks may impact timing results . We have sent mail to related IP to confirm .
  
  
-We have no nlc session yet, still wating LiHuan to provide the session.
- 
-Can you check in NLC session?
  
 Hi @Chang, An, I have checked in LSB.10 pd_repeaters.xml, This port exist in these tiles.
 Hi @Zhang, Michael(SH), These ports are related to the HFN from gc_vmw_t* tile.
@@ -707,21 +832,10 @@ SMS             	FuncTT0p65v	   H-Tree	200	1100	80
 /proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/extra_uncons_in_fct.list;   #Count: 131911
 # For NLB.10 non aie no clock report, Points below not commented, pls help review.
 /proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/ 
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/PtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/
 
 ### Generated by  joanling  with /tools/aticad/1.0/flow/TileBuilder/supra/scripts/timing/sortTimingPaths  on Jan 8, 2025  at  11:46:27
 ### /tools/aticad/1.0/flow/TileBuilder/supra/scripts/timing/sortTimingPaths -outdir ./relDir/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming -tmpdir ./relDir/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming -groups -gzip -clockinfo -extrainfo -prefix fullchip -inst "(acp_.*?) (athub_.*?) (chnl_*) (dce_.*?) (df_.*?) (dfx_.*?) gc/(se0/gc_.*?) gc/(se1/gc_.*?) gc/(se0/*?) gc/(se1/*?) gc/(.*?) (se0/.*?) (se1/.*?) gc_top_t/gc/(.*?) gc_top_t/(se0/.*?) gc_top_t/(se1/.*?) gc_top_t/(.*?) (gc_*?) (io_usb_s5_t) (mmhub_.*?) (nbio_.*?) (oss_.*?) (stat.*?) (serdes.*?) (smu_.*?) (umc_.*?) (uvd_.*?) (vdci.*?) (usb_t_hc_0/.*?) (usb_t_hc_1/.*?) (io_t/.*?) (mp4_top_t/.*?) (dcn_top_t/.*?) (vcn_top_t/.*?) (ddrss_top_t/.*?) (ddrss_top_h_t/.*?)" ./rpts/PtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/report_timing.rpt.gz -limit 100
 /proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming_2t/
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming_2t_ptfixeco/
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/fullchip.report.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/fullchip.vdci_gc_acv_t.sorted.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/fullchip.Grp.GC_ACVCLK.gc_acv_lds_t.sorted.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_gl2c_q0_c0_t.sorted.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p6vPlaceFlatTyprc100cTT0P6V0CStpTiming/fullchip.gc_vx_swc_1_t0131.gc_vx_swc_0_t0130.sorted.gz
-
-
-
 
 # Aie sq num not match, pls check extra 6 points:
 tile	no clock number	in FCT run number
@@ -729,7 +843,6 @@ gc_sq*	944	950
 /proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/left_aie.rpt.gz
 # Uncons points: Uncommented ones:
 /proj/canis_pd_gfx_fct04/fct_release/FCT0048_20250108_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/left_unconstrained_endpoints.rpt.gz
-
 
 
 
@@ -831,7 +944,8 @@ The command to generate the trace file (unprocessed):
 clk here is a regex for the clocks of interest ("." will get the trace for all the clocks)
 def_list is a comma separate values of tile,path_to_def
 trace.out is the name of the trace file generated
-measure_xmls.py is the full path of the location of the configuration file (default is to look for this in the current directory< br> all_conn is a file needed only when there are sub-hierarchies involved. It is a file that shows how the sub-hierarchies are connected to the top level. It is generated in a prelayout timing session using the following tcl snippet (assuming se0 and se1 are the instance names of the sub-hierarchies)
+measure_xmls.py is the full path of the location of the configuration file (default is to look for this in the current directory< br> all_conn is a file needed only when there are sub-hierarchies involved. It is a file that shows how the sub-hierarchies are connected to the top level. 
+It is generated in a prelayout timing session using the following tcl snippet (assuming se0 and se1 are the instance names of the sub-hierarchies)
 set ac [open all_conn w]
 foreach_in_collection p [get_pins se0/*] {
     set n [get_object_name [get_nets -of_objects $p]]
@@ -902,27 +1016,13 @@ Under Directory: $pwd/ Trace: o Initial trace file is trace_fp which reads in th
 
 
 
-
-
-
 #### canis tasks & owners; 
 Task	Original owner	Owner	Comments
-Budgeting	Ong, JoeHuei	Ong, JoeHuei	Required er_aie permission
-GFX Timing (exclude SP interface)	Kyle, Wang	Kyle, Wang	 
-GFX Timing (SP interface)	Ling, Joanne	Ling, Joanne	Required er_aie permission
-DFT Timing (exclude SP interface)	Xue, Cannie	Xue, Cannie	 
-DFT Timing (SP interface)	Ong, JoeHuei	Ong, JoeHuei	Required er_aie permission
-
-DRV/Misc check	Ling, Joanne	Guo, Jia/Ling, Joanne	 
 Special timing	 	Guo, Jia/Ong, JoeHuei	 
 CDC Check	 	Guo, Jia/Ong, JoeHuei	 
 MV Timing/ACVCLK	Kyle, Wang	Guo, Jia	 
-
-Other Clock timing (exclude GFXCLK/ACVCLK)	Xue, Cannie	Xue, Cannie	 
 Repeater trace flow report analysis	Kyle, Wang	Kyle, Wang/Ling, Joanne	 
-FCT Daily timing run	Ling, Joanne	Ling, Joanne/Ong, JoeHuei	Required er_aie permission
 GFX Flow	Michael	Michael	 
-
 
 # gfx/dft timing;
 gfx owner: non-er tiles kyle, er tiles joan;
@@ -989,8 +1089,8 @@ cd /proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_G
 
 
 
-
 # /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl
+~/soc/rpts/n100.xml
 proc parse_nl_rep_xml {xml net_bundle bundle_constriant net_container net_clk net_orig} {
     upvar $net_bundle a_net_bundle
     upvar $bundle_constriant a_bundle_constriant

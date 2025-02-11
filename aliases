@@ -110,7 +110,7 @@ alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200
 # cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp; module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
 
 #### module load aliases; module list;
-# alias module '/tool/pandora/bin/modulecmd tcsh !*'
+alias module '/tool/pandora/bin/modulecmd tcsh !*'
 
 # module avail verdi; module unload verdi; 
 #        csh> verdi -sv -f /proj/at2_til22_nobackup/doudouye/at2_code/data/SynRtl/SynRtl.vf;

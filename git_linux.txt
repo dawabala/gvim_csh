@@ -48,6 +48,7 @@ ctrl-alt-<arrow_key>
 #### wget  xargs urls
 cat url-list.txt | xargs wget –c
 
+######### find, xargs, exec; 
 #### find all *.png files, eog/display them
 find . -name "*congestion*.png" -exec eog {} \;
 find . -name "*congestion*.png"  | xargs -i eog {} ;
@@ -57,8 +58,19 @@ find ./*[2-4][0-9]* -name '*pdf' -exec cp {} pdfs \;
 find ./*[0-1][0-9]* -name '*pdf' | xargs -i cp {} pdfs
 find ./*11* -iname '*PDF' -exec md5sum {} \;
 
-#### make awk sed
-# gnu make sed grep awk sed cut
+#### find files by username, then move to new dir;
+find . -type f -user `whoami` -maxdepth 1 -print0 | xargs -0 mv -t ~/soc/rpts/workbook_0062place/ # only search current dir, no subdir;
+find . -type f -user jdon -exec mv {} <new_dir> \;
+find . -type f -user jdon -print0 | xargs -0 mv -t <new_dir> ; # move files in bulk, better performance;
+
+
+#### find all your files in /tmp, then remove those files if possible;
+find /tmp -user `whoami` | & grep -v 'Permission denied' | xargs du -hs | sort -g
+
+#### make # gnu make 
+wget http://ftp.gnu.org/gnu/make/make-4.3.tar.gz
+#### awk sed
+# sed grep awk sed cut
 set tar_list     = (`echo $target | sed -e 's/_/ /g'`)
 set suffix       = `echo $tgt | sed 's/\w\+_//' | tr 'A-Z' 'a-z'`
 set tilenickname = ` grep "^NICKNAME\b" $dir_name/tile.params | grep -v "#" | cut -d "=" -f2 | sed 's/ //g'`
@@ -66,7 +78,6 @@ set runlog       = (`vsr -nowait -cb -force $job|sed -e 's/Nothing to do/ \\\\03
 sed -i 's/hier/hcdc/g'
 grep meta * | awk '{print $1}' | sed 's/:<meta//g' | cut -c-100,200
 
-wget http://ftp.gnu.org/gnu/make/make-4.3.tar.gz
 wget https://git.savannah.gnu.org/cgit/sed.git/snapshot/sed-4.8.tar.gz
 wget https://ftp.gnu.org/gnu/grep/grep-3.6.tar.gz 
 
@@ -80,6 +91,10 @@ set -i 's/abc/xyz/g' pdbooks.txt; # replace inplace, no bak file;
 # awk:  column 3-10 same as colum 14-21 ?  if the same, print line;
 awk '$3$4$5==$14$15$16' <file_name>
 
+# save  lines 10 to 100 of large file into new file, using sed, awk, tail/head; 
+sed -n '10,100p' pd_repeaters.xml > pd100.xml
+awk 'NR>=10 && NR<=100' feedthru.xml > pd100.xml
+tail -n +10 nl_repeaters.xml | head -n 91 > pd100.xml
 
 # mid.h: "parameter WIDTH=16," mapping.txt: "WIDTH 16"  tdatq13.v: "[WIDTH-1:0] queue;" changed into [16-1:0] queue";    
 foreach line ( `cat mapping.txt` )
@@ -138,8 +153,6 @@ sort -k1.4 -n f.txt
 
 # tbt & ; failed of disk space;
 # quota -l -s;
-# find all your files in /tmp, then remove those files if possible;
-find /tmp -user `whoami` | & grep -v 'Permission denied' | xargs du -hs | sort -g
 
 #### emacs
 sorting lines
@@ -161,6 +174,11 @@ ps -p 5888 -detail
 ps -f -p 35389 -p 35471
 ps -f -p 35389 -p 35471 -p 35562 -p 35563 -u
 ps -u zhzhongl | grep vov
+
+# stop find without exiting pt_shell:  Find the Process ID (PID) of find, stop PID;
+1: ps aux | grep find; # get pid of 52340; kill -9 52340;
+2: ctrl-z; ps aux| grep find; kill -9 52340;
+3: ctrl-z; jobs -l;
 
 #### cpu, perf
 ## cpu
@@ -186,6 +204,12 @@ perf mem; perf stat;
 raw events, 
 uprobes kprobes lttng ebpf bcc perf pmu 
 su; perf stat -a --per-socket -I 1000
+
+#### paul shook environment setup, visualization tool suite development;
+Session type --- Using "AMD_XFCE_16G" since it seems to work best .
+Remote Access Dashboard --- https://myetx.amd.com:8443/etx/
+Twiki page              --- http://twiki.amd.com/twiki/bin/view/ETX/WebHome
+
 
 #### xterm background foreground bg/fg colors
 # setup in aliases
