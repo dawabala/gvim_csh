@@ -6,6 +6,7 @@ alias a       'source ~/.aliases'
 
 alias cpd    'source /tools/aticad/1.0/src/sysadmin/cpd.cshrc'
 alias at2    'source /tools/aticad/1.0/src/sysadmin/cpd.cshrc; setenv FAMILY supra; setprj at2gmd'
+alias histo  '/tools/aticad/1.0/bin/histo '
 
 alias d       'display'
 alias e       'eog'
@@ -66,7 +67,6 @@ alias f100  "echo foreach n ($n100) py3 pyeda.py sha256.v; sleep 119; end"
 # alias venv "python -m venv \!:1 ; source \!:1/bin/activate.csh"
 # alias funcargs "echo first \!:1 ; echo second \!:2"
 # color_term py3
-# /tool/pandora64/bin/python3
 # alias srcpy3 'source ~/.aliases_py3'
 # moved py3 env/alias from .cshrc  to .aliases_py3, for color_term
 # alias py36       $HOME/.pyenv/versions/activepython-3.6.0/bin/python3
@@ -74,9 +74,11 @@ alias f100  "echo foreach n ($n100) py3 pyeda.py sha256.v; sleep 119; end"
 
 #### pyenv
 setenv PATH      $HOME/local/py39/bin:$HOME/local/:$PATH
-alias  python3   'setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH; setenv C_INCLUDE_PATH /home/zhzhongl/local/include; $HOME/local/py39/bin/python3'
-alias  pip3      $HOME/local/py39/bin/pip3
-alias  python    $HOME/local/py39/bin/python3
+# alias  python3   'setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH; setenv C_INCLUDE_PATH /home/zhzhongl/local/include; $HOME/local/py39/bin/python3'
+# alias  pip3      $HOME/local/py39/bin/pip3
+# alias  python    $HOME/local/py39/bin/python3
+alias python /tool/pandora64/bin/python3
+alias python3 /tool/pandora64/bin/python3
 setenv PATH      $HOME/local/py39/bin/:$PATH
 
 # setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH 
@@ -101,12 +103,14 @@ alias fct1 'cd /proj/canis_pd_gfx_fct01/'
 # alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=12000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
 
 alias pf    "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py &' "
-alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer &' "
+alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer ./ &' "
 alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ' "
 
 # sudong bsub ptsession;
 alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
 # zgrep PT_SHELL ./logs/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
+# module load primetime/2022.03-SP5-2-T-20230819
+# module load primetime/2023.12-SP5
 # cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp; module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
 
 #### module load aliases; module list;
@@ -226,21 +230,27 @@ alias ll	  'ls -alF'
 alias lt      'ls -alt'
 alias lss     'ls -lS'
 alias lsize   'll -S'
+alias la	  'ls -alFTS'
 
 alias l       'less'
+
 alias hp      'echo ######## $cwd ######### >> ~/cmdhist.csh'
+alias h		  'history'
+alias hh	  'history -h'
 alias h100    'hh 300 >> ~/cmdhist.csh'
 alias h200    'hh 300 >> ~/cmdhist.csh'
 alias h300    'hh 300 >> ~/cmdhist.csh'
-alias h		  'history'
-alias hh      'history \!:1 | cut -c 13-'
-alias hh2     'history \!:1 | cut -c 14-'; # 
-alias hhh     'history $1   | cut -c 13-'
+
 # !:0: Retrieves the command name from the last command.
 # !:1: first argument of last command;  
 # !:2: second argument, and so on.
 # !* : all arguments 
 # !$ : last argument 
+alias hh2     'history \!:1 | cut -c 13-'
+alias hh3     'history \!:1 | cut -c 14-'; 
+alias hhh     'history $1   | cut -c 13-'
+
+
 alias j		  'jobs'
 alias a-x	  'chmod a-x \!*'
 alias a+x	  'chmod a+x \!*'

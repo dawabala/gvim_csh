@@ -5,7 +5,7 @@ cp -pr /home/jialwang/hcf_vcn/fp_analysis/combine_report_with_distances.pl ./
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/extractor.pl ./
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/summarize_report_with_tiles.pl
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/README
-
+# requirement on reports/logs files;
 
 
 # CDC report csv
@@ -213,6 +213,92 @@ pt_shell> fix_my_hold {rpts/Pt*/si_LCLK_min.rpt.gz /proj/strix1/nonsi_fct_run/rp
 You can provide /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
 
 
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ NLC release latest pkg,xml files
+/proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run6_hollow/ gfx.pkg
+/proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run6_hollow/GenRepeaterReport.xml
+/proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run6_hollow/pd_repeaters.xml
+/proj/canis_pd_gfx_fcfp_rel02/rel_LSC_GFX_bbox/gfx.pkg
+/proj/canis_pd_gfx_fcfp_rel02/ rel_LSC_GFX_bbox/
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\  timing_path reroute 109 
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rlc_t.gc_gl1ac_t0.sorted.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.gc_gl2c_q1_c5_t.gc_gl2c_q0_c0_t.sorted.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.gc_pa_spi_m_ra_t0.gc_rb_t011.sorted.gz
+
+
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\  timing_path reroute 098
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_pa_spi_m_ra_t0.gc_rb_t011.sorted.gz
+start_point: 
+  gc_pa_spi_m_ra_t0/FCFPRepFFCpl_GFXCLK103633_bundle_RLC_SE0_gfx_3d_en_order_5/CP (SDFQTXGEQAD4BWP143M169H3P48CPDLVT)                                                         31.52       4.20 &  1060.18 r
+  gc_pa_spi_m_ra_t0/FCFPRepFFCpl_GFXCLK103633_bundle_RLC_SE0_gfx_3d_en_order_5/Q (SDFQTXGEQAD4BWP143M169H3P48CPDLVT)                                                          13.77      32.84 &  1093.02 f
+end_point
+  gc_rb_t011/FCFPRepFFMFNCpl_GFXCLK37_MB_FCFPRepFFMFNCpl_GFXCLK321_MB_FCFPRepFFMFNCpl_GFXCLK276_MB_FCFPRepFFMFNCpl_GFXCLK367/D2 (MB4SRLSDFQ2442D2AMDBWP143M572H3P48CPDLVT)    38.42      14.35 &  1646.80 f
+# qilinren new pd.xml, no gfx*en*order_5 bundles
+  <rep clk_wire="Cpl_GFXCLK" constraint="LE 24" container="gc_top_t" contract="2941" domain="Cpl_GFXCLK" file="/proj/canis_fe_fcnl01/FCNL/NLB/main/pd/tiles/canis_try_run3/data/CreateP4Env/out/linux_3.10.0_64.VCS/can/library/gc-canis/pub/src/meta/connectivity/bia_repeaters_gc.xml" limited="False" negedge="false" pd="4" rep_inst="gc_top_t_rep_Cpl_GFXCLK" scan_balance="false" scanned="" sdc_clk="GC_GFXCLK">
+    <net bundle="gc__RLC_SE0_gfxen" fgcg_ctrl="false" name="gc__RLC_SE0_gfxen" net_bundle_dir="same" orig_bundle="RLC_SE0_gfxen" pdestimate="3" rep_type="rep">
+      <repInstance id="73624" instName="FCFPRepFFCpl_GFXCLK73624_bundle_gc__RLC_SE0_gfxen_order_1" order="1" parentInstance="gc_utcl2_t" usageCount="1" />
+      <repInstance id="73625" instName="FCFPRepFFCpl_GFXCLK73625_bundle_gc__RLC_SE0_gfxen_order_2" order="2" parentInstance="gc_utcl2_t" usageCount="1" />
+      <repInstance id="73626" instName="FCFPRepFFCpl_GFXCLK73626_bundle_gc__RLC_SE0_gfxen_order_3" order="3" parentInstance="gc_sdma_t" usageCount="1" />
+      <repInstance id="73627" instName="FCFPRepFFCpl_GFXCLK73627_bundle_gc__RLC_SE0_gfxen_order_4" order="4" parentInstance="gc_ge_aid_t" usageCount="1" />
+    </net>
+    <net bundle="gc__RLC_SE0_gfx_3d_en" fgcg_ctrl="false" name="gc__RLC_SE0_gfx_3d_en" net_bundle_dir="same" orig_bundle="RLC_SE0_gfx_3d_en" pdestimate="3" rep_type="rep">
+      <repInstance id="73620" instName="FCFPRepFFCpl_GFXCLK73620_bundle_gc__RLC_SE0_gfx_3d_en_order_1" order="1" parentInstance="gc_rlc_t" usageCount="1" />
+      <repInstance id="73621" instName="FCFPRepFFCpl_GFXCLK73621_bundle_gc__RLC_SE0_gfx_3d_en_order_2" order="2" parentInstance="gc_utcl2_t" usageCount="1" />
+      <repInstance id="73622" instName="FCFPRepFFCpl_GFXCLK73622_bundle_gc__RLC_SE0_gfx_3d_en_order_3" order="3" parentInstance="gc_sdma_t" usageCount="1" />
+      <repInstance id="73623" instName="FCFPRepFFCpl_GFXCLK73623_bundle_gc__RLC_SE0_gfx_3d_en_order_4" order="4" parentInstance="gc_ge_aid_t" usageCount="1" />
+    </net>
+
+# old pd.xml
+# <net bundle="RLC_SE0_gfx_3d_en" fgcg_ctrl="false" name="RLC_SE0_gfx_3d_en" net_bundle_dir="same" orig_bundle="RLC_SE0_gfx_3d_en" pdestimate="3" rep_type="rep">
+#       <repInstance id="103629" instName="FCFPRepFFCpl_GFXCLK103629_bundle_RLC_SE0_gfx_3d_en_order_1" order="1" parentInstance="gc_rlc_t" usageCount="1" />
+#       <repInstance id="103630" instName="FCFPRepFFCpl_GFXCLK103630_bundle_RLC_SE0_gfx_3d_en_order_2" order="2" parentInstance="gc_sdma_t" usageCount="1" />
+#       <repInstance id="103631" instName="FCFPRepFFCpl_GFXCLK103631_bundle_RLC_SE0_gfx_3d_en_order_3" order="3" parentInstance="gc_gds_oa_t" usageCount="1" />
+#       <repInstance id="103632" instName="FCFPRepFFCpl_GFXCLK103632_bundle_RLC_SE0_gfx_3d_en_order_4" order="4" parentInstance="gc_pa_spi_m_ra_t0" usageCount="1" />
+#       <repInstance id="103633" instName="FCFPRepFFCpl_GFXCLK103633_bundle_RLC_SE0_gfx_3d_en_order_5" order="5" parentInstance="gc_pa_spi_m_ra_t0" usageCount="1" />
+#     </net>
+# 
+#  <bundle name="RLC_SE0_gfx_3d_en" orig_name="RLC_SE0_gfx_3d_en" pre_ctnr_name="gc" pre_tile_if_name="RLC_SE0_gfx_3d_en" protocol="NULL" />
+#     <bundle_connection>
+#       <end_block_info block_inst="gc_gl1ac_t0" port="RLC_gfx_3d_clken" port_blkport="receive" />
+#       <end_block_info block_inst="gc_rlc_t" port="RLC_SE0_gfx_3d_en" port_blkport="transmit" />
+# 
+# 
+
+~/soc/rpts/route98/../sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_ea_q1_c4_t.gc_gl2c_q1_c5_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_ea_q1_c5_t.gc_gl2c_q1_c5_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c4_t.gc_gl2c_q1_c5_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_rb_t011.gc_gl2c_q1_c5_t.sorted.gz
+
+
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_ea_q1_c4_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_ea_q1_c5_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_gl2c_q0_c0_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_gl2c_q0_c1_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_gl2c_q0_c2_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_gl2c_q1_c3_t.sorted.gz
+~/soc/rpts/route98_rdl/fullchip.Grp.GC_GFXCLK.gc_gl2c_q1_c5_t.gc_gl2c_q1_c4_t.sorted.gz
+
+gc_gl2c_q1_c5_t.gc_gl2c_q0_c0_t
+top_net: cpwd0__gl2cc__gl2c_os  bundle: cpwd0__gl2cc__gl2c_os  EQ 0;   
+
+ <rep clk_wire="Cpl_GFXCLK" constraint="EQ 0" container="gc" contract="1073" domain="Cpl_GFXCLK" file="/proj/gfxip_pd8/zhijin/gfx13_1028/out/linux_3.10.0_64.VCS/canis/library/gc-canis/pub/src/meta/connectivity/bia_repeaters_gc.xml" negedge="false" pd="0" rep_inst="gc_rep_Cpl_GFXCLK" scan_balance="false" scanned="" sdc_clk="GC_GFXCLK">
+    <net bundle="cpwd0__gl2cc__gl2c_os" fgcg_ctrl="false" name="cpwd0__gl2cc__gl2c_os" net_bundle_dir="same" orig_bundle="gl2c_os" pdestimate="0" rep_type="rep" />
+    <bundle name="cpwd0__gl2cc__gl2c_os" orig_name="gl2c_os" pre_ctnr_name="gc" pre_tile_if_name="cpwd0__gl2cc__gl2c_os" protocol="NULL" />
+    <bundle_connection>
+      <end_block_info block_inst="gc_gl2c_q0_c0_t" port="psm_os_detected_in" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl2c_q0_c1_t" port="psm_os_detected_in" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl2c_q0_c2_t" port="psm_os_detected_in" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl2c_q1_c3_t" port="psm_os_detected_in" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl2c_q1_c4_t" port="psm_os_detected_in" port_blkport="receive" />
+      <end_block_info block_inst="gc_gl2c_q1_c5_t" port="psm_os_detected_out" port_blkport="transmit" />
+    </bundle_connection>
+
+
 \\\\\\\\\\\\\\\\\\\\\\\\\\ cts tune
 # cts tune file; kyle;  $tile.cts.early_skew.tcl; $tile.cts.late_skew.tcl; 
 tune/FxCts/FxCts.pre_opt.tcl
@@ -336,6 +422,7 @@ q1c5 to q1c4: no feedthru;
   se0__GL1_PA_64B_RD_ret_clken (net) 
   se0__GL1_PA_64B_WR_ret_tag[0] (net) 
 # 0061_0p65v_place
+
 #done -55ps res:EQ1 /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/rpts/sort_rpts/SortPtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming_2t/fullchip.gc_gl1ac_t0.gc_pc_sx_t0.sorted.gz
   gc_gl1ac_t0/FCFPRepFFcgcg_Cpl_GFXCLK290161_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288285_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289857_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289149_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289833_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288853_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK290077_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289057_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2/CP (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                   52.81       0.00       0.00 r
   gc_gl1ac_t0/FCFPRepFFcgcg_Cpl_GFXCLK290161_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288285_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289857_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289149_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289833_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK288853_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK290077_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK289057_bundle_se0__gl1cc__GL1C0_DIR0_GL1R4_ret_order_2/Q8 (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                    6.87      76.96 &    76.96 f
@@ -416,23 +503,357 @@ optional arguments:
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\ meeting minutes
 
 \\\\ 0218 meeting
-drv : fly hu does not summarize DRV report for soundwave yet, 
+
+CPF_SE0SA0TA0_texstat
+CPF_SE0SA0TA2_texstat
+CPF_SE0SA0TA6_texstat
+CPF_SE0SA0TA7_texstat
+se0__SA1WGP00SP0_SX_expvdata
+se0__SA1WGP00SP1_SX_expvdata
+se0__SA1WGP00SQ0_SX_expcmd
+se0__SA1WGP00_SQG_msg
+se0__SA1WGP00_SQG_ttrace
+se0__SA1_RIE_CAC_sig2
+se0__SA1_SP_CAC_sig4
+\\  bci1.bci0: path_1: slack -272ps;  371 violations; bundle: se0__SA1WGP00_SQG_msg_order_2;    LE 7;  top_net: FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_msg_valid (net) 
+               path_371: slack -0.1ps;                bundle: se0__SA1WGP00_SQG_ttrace_order_2; LE 7 ; top_net: FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_ttrace_data__42 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_spi_s_bci0_cac_t0.sorted.gz
+
+  gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK519_bundle_se0__SA1WGP00_SQG_msg_order_2/CP (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            34.35       1.84 &   733.87 r
+  gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK519_bundle_se0__SA1WGP00_SQG_msg_order_2/Q (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             22.53      26.70 &   760.57 r
+  gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK519_bundle_se0__SA1WGP00_SQG_msg_order_2Net (net)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  7    12.34 
+  gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK26065_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26181_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26201_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26089_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26175_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26179_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26075_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26011_bundle_se0__SA1WGP00_SQG_msg_order_2/CP (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVTLL)                   25.57       5.03 &   765.60 r
+  gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK26065_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26181_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26201_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26089_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26175_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26179_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26075_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26011_bundle_se0__SA1WGP00_SQG_msg_order_2/Q5 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVTLL)                    9.75      47.88 &   813.48 r
+
+  FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_msg_valid (net) 
+
+  gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK521_bundle_se0__SA1WGP00_SQG_ttrace_order_2_28_MPCTS_SPLIT/CP (CKOR2LNQAN2LPSD2AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     29.31       5.43 &   684.64 r
+  gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK521_bundle_se0__SA1WGP00_SQG_ttrace_order_2_28_MPCTS_SPLIT/Q (CKOR2LNQAN2LPSD2AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      32.05      26.83 &   711.47 r
+  gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK521_bundle_se0__SA1WGP00_SQG_ttrace_order_2Net_38 (net)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       5     9.64 
+  gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK26519_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26273_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26497_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26531_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26361_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26269_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26401_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26293_bundle_se0__SA1WGP00_SQG_ttrace_order_2/CP (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                   32.56       4.45 &   743.49 r
+  gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK26519_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26273_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26497_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26531_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26361_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26269_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26401_bundle_se0__SA1WGP00_SQG_ttrace_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26293_bundle_se0__SA1WGP00_SQG_ttrace_order_2/Q6 (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                   12.01      39.17 &   782.66 r
+
+  FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_ttrace_data__42 (net) 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pc_sx_t0.gc_spi_s_bci0_cac_t0.sorted.gz
+path_1: slack -272ps;  371 violations; bundle: se0__SA1WGP00_SQG_msg_order_2; LE 7; top_net: FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_valid  fanout:1255;
+
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         36.86       9.86 &   711.97 r
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/Q (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          13.18      17.93 &   729.90 r
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24310_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24772_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24688_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24716_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24240_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24366_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24429_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24191_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (MB8SRLSDFQSXG4844D2BWP143M286H3P48CPDLVT)                   35.95       5.68 &   755.66 r
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24310_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24772_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24688_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24716_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24240_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24366_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24429_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24191_bundle_se0__SA0WGP00_SQG_msg_order_7/Q3 (MB8SRLSDFQSXG4844D2BWP143M286H3P48CPDLVT)                    8.57      39.08 &   794.74 r
+
+  FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_valid (net) 
+
+path_371: slack -0.1ps; bundle: se0__SA1WGP00_SQG_ttrace_order_2; LE 7 ; top_net:   FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_ttrace_data__42 
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                   36.86       9.86 &   711.97 r
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/Q (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                    13.18      17.93 &   729.90 r
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24289_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24331_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24394_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24408_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24485_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24100_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (MB6SRLSDFQSXG4644EQBD2BWP143M286H3P48CPDULVTLL)                   29.72       3.48 &   754.40 r
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24289_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24331_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24394_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24408_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24485_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24100_bundle_se0__SA0WGP00_SQG_msg_order_7/Q4 (MB6SRLSDFQSXG4644EQBD2BWP143M286H3P48CPDULVTLL)                   52.36      63.97 &   818.37 f
+
+  FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_data__46 (net) 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_pc_sx_t0.sorted.gz
+  FE_FEEDX_SHARE__gc_gl1ac_t0__gc_pc_sx_t0__se0__GRBMH_TA_soft_resetb (net) 
+  Endpoint: gc_pc_sx_t0/FCFPRepFFMFNCpl_GFXCLK407/D (rising edge-triggered flip-flop clocked by GC_GFXCLK)
+                                                                                                                                                     3    12.77 
+  gc_gl1ac_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK2212_bundle_se0__GL1_PC_RD_ret_order_1/CP (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                             30.94       2.49 &   695.05 r
+  gc_gl1ac_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK2212_bundle_se0__GL1_PC_RD_ret_order_1/Q (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                              32.35      26.74 &   721.79 r
+  gc_gl1ac_t0/FCFPRepFFcgcg_Cpl_GFXCLK394716_bundle_se0__GL1_PC_RD_ret_order_1/CP (SDFQTXGOPTQFD1BWP143M169H3P48CPDLVT)                                                                                                                                      36.38       3.37 &   764.23 r
+  gc_gl1ac_t0/FCFPRepFFcgcg_Cpl_GFXCLK394716_bundle_se0__GL1_PC_RD_ret_order_1/Q (SDFQTXGOPTQFD1BWP143M169H3P48CPDLVT)                                                                                                                                        8.72      30.53 &   794.77 f
+  se0__GL1_PC_RD_ret_tag[7] (net) 
+  
+  se0__GL1_PC_RD_ret_tag[6] (net) 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pc_sx_t0.gc_gl1ac_t0.sorted.gz
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK1384_bundle_se0__WGP_SA0_WGP0_3_TCP0_GL1_req_order_12/CP (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                             39.90       5.58 &   733.80 r
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK1384_bundle_se0__WGP_SA0_WGP0_3_TCP0_GL1_req_order_12/Q (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                              38.59      35.64 &   769.43 r
+  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK1384_bundle_se0__WGP_SA0_WGP0_3_TCP0_GL1_req_order_12Net (net)                                                                                  23    20.93 
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK154776_bundle_se0__WGP_SA0_WGP0_3_TCP0_GL1_req_order_12/CP (SDFQTXGEQAD4BWP143M169H3P48CPDULVTLL)                                                                     42.94       3.45 &   772.89 r
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK154776_bundle_se0__WGP_SA0_WGP0_3_TCP0_GL1_req_order_12/Q (SDFQTXGEQAD4BWP143M169H3P48CPDULVTLL)                                                                       5.56      27.20 &   800.09 f
+2-stage CLKGATE repeaters;
+top_net: 
+  FE_FEEDX_MFT__2__gc_pc_sx_t__gc_gl1ac_t__se0__SA0CB0_GL1_comp_req_op__6 (net) 
+  FE_FEEDX_MFT__5__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_1_TCP1_GL1_req_op__4 (net) 
+  FE_FEEDX_MFT__8__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_2_TCP0_GL1_req_op__3 (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP0_GL1_req_send (net) 
+  FE_FEEDX_MFT__11__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA0_WGP0_3_TCP0_GL1_req_op__1 (net) 
+  FE_FEEDX_MFT__12__gc_pc_sx_t__gc_gl1ac_t__se0__WGP_SA1_WGP0_3_TCP1_GL1_req_op__6 (net) 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_rb_t011.sorted.gz
+
+  FE_FEEDX_SHARE__gc_gl1ac_t0__gc_rb_t011__se0__GRBMH_GFX_soft_resetb (net) 
+
+  gc_rb_t011/clk_out_cts_6_1324 (net) 
+  gc_rb_t011/FCFPRepFFMFNCpl_GFXCLK366_MB_FCFPRepFFMFNCpl_GFXCLK367_MB_FCFPRepFFMFNCpl_GFXCLK38_MB_FCFPRepFFMFNCpl_GFXCLK322/CP       0.32 &  1103.99 r
+  clock reconvergence pessimism                                                                                                     100.30    1204.29
+  library setup time                                                                                                                -10.66    1193.63
+  data required time                                                                                                                          1193.63
+  ------------------------------------------------------------------------------------------------------------------------------------------------------
+  data required time                                                                                                                          1193.63
+  data arrival time                                                                                                                          -1183.28
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_rb_t010.sorted.gz
+  gc_gl1ac_t0/RLC_BPM1_status (net)                                                                      1    12.45 
+  gc_gl1ac_t0/RLC_BPM1_status (gc_gl1ac_t) <-                                                                             0.00       0.00 &   925.72 r
+  se0__BPM_SA1CB0_GL1I_status (net) 
+  gc_rb_t010/bpm_db/bpm_status_in/q0_reg_0_/D (SDFQTXGOPTBCED1BWP143M169H3P48CPDULVTLL)                                  46.90      17.20 &  1188.54 r
+  data arrival time                                                                                                                          1188.54
+
+  gc_rb_t010/bpm_db/bpm_status_in/clk (gc_rb_t_ati_dff_in_WIDTH1_2_0)                                                        0.00       0.00 &  1094.60 r
+  gc_rb_t010/bpm_db/bpm_status_in/clk (net) 
+  gc_rb_t010/bpm_db/bpm_status_in/q0_reg_0_/CP (SDFQTXGOPTBCED1BWP143M169H3P48CPDULVTLL)                                    31.87       3.17 &  1097.77 r
+  clock reconvergence pessimism                                                                                                       100.34    1198.11
+  library setup time                                                                                                                   -3.27    1194.84
+  data required time                                                                                                                            1194.84
+
+
+  se0__BPM_SA1CB0_GL1I_status (net) 
+
+  FE_FEEDX_MFT__1__gc_rb_2_t__gc_rb_t_1__se0__BPM_SA1CB0_GL1I_status (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_QSPICLK.gc_spi_s_bci0_cac_t0.gc_pc_sx_t0.sorted.gz
+clk_gate repeater;  top_net: cpwd0__ipx_dldo_top__gpu_dldo; bundle: cpwd0__ipx_dldo_top__gpu_
+  gc_spi_s_bci0_cac_t0/FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193520_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_43_wakeX_order_1_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193202_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_28_wakeX_order_1_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193499_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_42_wakeX_order_1_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg194361_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_86_wakeX_order_2_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg194370_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_86_wakeX_order_2_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg194364_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_86_wakeX_order_2/CP (MB6SRLSDFQSXG4644EQAD2BWP143M286H3P48CPDLVT)                   59.40      13.77 &   879.36 r
+  gc_spi_s_bci0_cac_t0/FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193520_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_43_wakeX_order_1_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193202_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_28_wakeX_order_1_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193499_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_42_wakeX_order_1_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg194361_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_86_wakeX_order_2_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg194370_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_86_wakeX_order_2_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg194364_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_86_wakeX_order_2/Q3 (MB6SRLSDFQSXG4644EQAD2BWP143M286H3P48CPDLVT)                   90.81      92.67 &   972.03 f
+  FE_FEEDX_MFT__4__gc_spi_s_bci0_cac_t__gc_pc_sx_t__cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_42_wakeX__1 (net) 
+  gc_pc_sx_t0/FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193500_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_42_wakeX_order_2_MB_FCFPRepFFCpl_gpu_dldo_ONO_0_clkout_cg193200_bundle_cpwd0__ipx_dldo_top__gpu_dldo_v1__I_gpu_dldo_pgmon_core_v1__gpu_dldo_ONO_0_col_27_wakeX_order_2/D1 (MB2SRLSDFQ2211D1AMDBWP143M286H3P48CPDLVTLL)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    135.53      31.86 &  2631.13 f
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_QSPICLK.gc_spi_s_bci0_cac_t0.gc_rb_t000.sorted.gz
+
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.gc_pc_sx_t0.sorted.gz
+# add repeaters;
+  se0__SQG_SA0WGP00_cmd_fgcg (net) 
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK588_bundle_se0__SQG_SA0WGP00_cmd_order_1/D (SDFQTXGOPTBCED2BWP143M286H3P48CPDULVTLL)                                                                                                                                                                                                                                                                                          18.58       7.56 &  1386.66 f
+
+  se0__DIDT_SA0_VMW_power_throttle_stall (net) 
+  gc_pc_sx_t0/FCFPRepFFCpl_GFXCLK322375_bundle_se0__DIDT_SA0_VMW_power_throttle_order_1_MB_FCFPRepFFCpl_GFXCLK168112_bundle_se0__DIDT_SA0_VTF_power_throttle_order_1/D1 (MB2SRLSDFQ2211D1AMDBWP143M286H3P48CPDLVT)                                                                                                                                                                                                                      67.34      18.26 &  1332.41 f
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.gc_sc_bci1_t0.sorted.gz
+  se0__SA1_wgp_cac_ctrl[0] (net) 
+  gc_sc_bci1_t0/FCFPRepFFCpl_GFXCLK32000_bundle_se0__SA1_wgp_cac_ctrl_order_1/D (SDFQD1AMDBWP143M286H3P48CPDLVTLL)                                                                                            63.28       8.47 &  1312.01 f
+
+  se0__SPI_SA1WGP00SQ1_sdata_data[171] (net) 
+  gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK39448_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK40300_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK39124_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK40444_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK40504_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK40138_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK40492_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4_MB_FCFPRepFFcgcg_Cpl_GFXCLK38968_bundle_se0__SPI_SA1WGP00SQ1_sdata_order_4/D4 (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                          29.10       7.53 &  1241.01 f
+
+  se0__SPI_SA1WGP00SP1_vdata_data[650] (net) 
+  gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK442577_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK443477_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK444209_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK443399_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK443339_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK444269_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK445265_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6_MB_FCFPRepFFcgcg_Cpl_GFXCLK441407_bundle_se0__SPI_SA1WGP00SP1_vdata_order_6/D4 (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                          67.97      15.05 &  1215.20 f
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.gc_pa_spi_m_ra_t0.sorted.gz
+  FE_FEEDX_MFT__4__gc_spi_s_bci0_cac_t__gc_pa_spi_m_ra_t__CPC_SE0SPI_cscntl1_transport_send (net) 
+  gc_pa_spi_m_ra_t0/spi_m/ugfx_icg_spim/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_45_MPCTS_SPLIT/E (CKOR2LNQAN2LPSD2AMDBWP143M286H3P48CPDULVT)                                                                                44.52      22.02 &  1302.93 r
+  gc_pa_spi_m_ra_t0/spi_m/ugfx_icg_spim/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_45_MPCTS_SPLIT/CP (CKOR2LNQAN2LPSD2AMDBWP143M286H3P48CPDULVT)                                                                               10.31       0.54 &  1062.98 r
+
+
+  FE_FEEDX_MFT__4__gc_spi_s_bci0_cac_t__gc_pa_spi_m_ra_t__CPC_SE0SPI_cscntl1_pipeid__1 (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.gc_rts_0_t0100.sorted.gz
+  se0__DIDT_SA1_SQ_power_throttle_stall (net) 
+  se0__DIDT_SA1_VMW_power_throttle_stall (net) 
+  se0__DIDT_SA1_VCD_power_throttle_stall (net) 
+  se0__DIDT_SA1_VTF_power_throttle_stall (net) 
+  FE_FEEDX_MFT__2__gc_spi_s_bci0_cac_t__gc_rts_0_t_4__se0__gl1cc__GL1C2_DIR0_GL1R4_ret_data__447 (net) 
+  FE_FEEDX_MFT__1__gc_spi_s_bci0_cac_t__gc_rts_0_t_4__se0__PC_SA1WGP00LDS0_cntrl_wgp_id__1 (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rlc_t.gc_gdfll_t.sorted.gz
+  cpwd0__GfxClk_ClkDs_allow (net) 
+  cpwd0__RLC_GDFLL_reg_access_srcid_0
+  cpwd0__RLC_GDFLL_reg_access_srcid_1
+  cpwd0__RLC_GDFLL_reg_access_srcid_2
+  cpwd0__RLC_GDFLL_reg_access_srcid_3
+  cpwd0__RLC_GDFLL_reg_access_vld_tog (net) 
+
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpg_t.gc_ea_cpwd_t.sorted.gz
+  cpwd0__CPG_TPI_crest_sdp_sel (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pa_spi_m_ra_t0.gc_rb_t011.sorted.gz
+  FE_FEEDX_MFT__3__gc_pa_spi_m_ra_t__gc_gl1ac_t__RLC_SE0_gfxen (net) 
+  FE_FEEDX_SHARE__gc_gl1ac_t0__gc_rb_t011__se0__RLC_BPM_gfxen (net) 
+  gc_rb_t011/FCFPRepFFMFNCpl_GFXCLK37_MB_FCFPRepFFMFNCpl_GFXCLK321_MB_FCFPRepFFMFNCpl_GFXCLK276/D3 (MB3SRLSDFQLP2233D1AMDBWP143M455H3P48CPDULVTLL)                                                                                                                                                                                                                                                                                                      46.62      22.17 &  1312.13 r
+
+  FE_FEEDX_MFT__3__gc_pa_spi_m_ra_t__gc_gl1ac_t__RLC_SE0_gfx_3d_en (net) 
+  FE_FEEDX_SHARE__gc_gl1ac_t0__gc_rb_t011__se0__RLC_BPM_gfx_3d_en (net) 
+  gc_rb_t011/FCFPRepFFMFNCpl_GFXCLK37_MB_FCFPRepFFMFNCpl_GFXCLK321_MB_FCFPRepFFMFNCpl_GFXCLK276/D2 (MB3SRLSDFQLP2233D1AMDBWP143M455H3P48CPDULVTLL)                                                                    59.68      27.38 &  1263.40 f
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_imu_t.gc_sdma_t.sorted.gz
+  cpwd0__SEM_SDMA1_resp_send (net) 
+  FE_FEEDX_MFT__1__gc_rlc_t__gc_sdma_t__cpwd0__SEM_SDMA1_resp_send (net) 
+
+  cpwd0__SEM_SDMA0_resp_send (net) 
+  FE_FEEDX_MFT__1__gc_rlc_t__gc_sdma_t__cpwd0__SEM_SDMA0_resp_send (net) 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_cpf_t.sorted.gz
+  FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_pix_min_lod__1 (net) 
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__SE0SA1TA_CPF_texstat0_pix_min_lod__1 (net) 
+  gc_cpf_t/FCFPRepFFcgcg_Cpl_GFXCLK327871_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327931_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327841_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327811_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327836_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327801_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327806_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327926_bundle_SE0SA1TA_CPF_texstat0_order_5/D3 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                           23.37       8.75 &  1288.25 f
+
+
+  FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_cntr_bank_id__0 (net) 
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__SE0SA1TA_CPF_texstat0_cntr_bank_id__0 (net) 
+  gc_cpf_t/FCFPRepFFcgcg_Cpl_GFXCLK327901_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327856_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327861_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327881_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327866_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327896_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327916_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327921_bundle_SE0SA1TA_CPF_texstat0_order_5/D7 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                   24.64       9.80 &  1198.65 f
+
+  FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_pix_lod_clamp_cnt__2 (net) 
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__SE0SA1TA_CPF_texstat0_pix_lod_clamp_cnt__2 (net) 
+  gc_cpf_t/FCFPRepFFcgcg_Cpl_GFXCLK327901_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327856_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327861_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327881_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327866_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327896_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327916_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327921_bundle_SE0SA1TA_CPF_texstat0_order_5/D6 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                         22.51       8.33 &  1219.07 f
+
+
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_utcl2_t.gc_cpg_t.sorted.gz
+  FE_FEEDX_MFT__1__gc_utcl2_t__gc_rlc_t__cpwd0__CH_ACV0_ret_data__168 (net) 
+  cpwd0__CH_ACVIO_ACV0_ret_data[168] (net) 
+  gc_cpg_t/FCFPRepFFcgcg_Cpl_GFXCLK470753_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470666_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470468_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470867_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470627_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470087_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470774_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470642_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1/D1 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVT)                   43.31       9.33 &  1320.50 f
+
+  FE_FEEDX_MFT__1__gc_utcl2_t__gc_rlc_t__cpwd0__CH_CPF_ret_data__254 (net) 
+  FE_FEEDX_MFT__2__gc_rlc_t__gc_cpg_t__cpwd0__CH_CPF_ret_data__254 (net) 
+  gc_cpg_t/FCFPRepFFcgcg_Cpl_GFXCLK433372_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433302_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433656_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433686_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433172_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433326_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433600_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433248_bundle_cpwd0__CH_CPF_ret_order_2/D5 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                   55.26      28.02 &  1225.12 f
+
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pa_spi_m_ra_t0.gc_pc_sx_t0.sorted.gz
+  FE_FEEDX_MFT__3__gc_pa_spi_m_ra_t__gc_gl1ac_t__RLC_SE0_gfxen (net) 
+  FE_FEEDX_SHARE__gc_gl1ac_t0__gc_pc_sx_t0__se0__RLC_BPM_gfxen (net) 
+  gc_pc_sx_t0/FCFPRepFFMFNCpl_GFXCLK271/D (SDFQTXGOPTBCED4BWP143M286H3P48CPDULVTLL)                                                                                                                                                                                                                                                                                                                                                                     22.35       8.88 &  1284.39 r
+
+  FE_FEEDX_MFT__3__gc_pa_spi_m_ra_t__gc_gl1ac_t__RLC_SE0_gfx_3d_en (net) 
+  FE_FEEDX_SHARE__gc_gl1ac_t0__gc_pc_sx_t0__se0__RLC_BPM_gfx_3d_en (net) 
+  gc_pc_sx_t0/FCFPRepFFMFNCpl_GFXCLK316/D (SDFQTXGOPTBBD4BWP143M169H3P48CPDULVTLL)                                                                                                                                    32.30      14.12 &  1208.43 f
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpg_t.gc_utcl2_t.sorted.gz
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_rlc_t__cpwd0__ACV0_ACVIO_CH_src_last (net) 
+  cpwd0__ACV0_CH_src_last (net) 
+  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK468115_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467908_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467953_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468020_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467957_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467907_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468111_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467975_bundle_cpwd0__ACV0_CH_src_order_1/D4 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVT)                                                                      54.22      26.88 &  1245.18 f
+  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK468164_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468120_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467906_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468033_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468176_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467921_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468063_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467930_bundle_cpwd0__ACV0_CH_src_order_1/D8 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                                                               44.15      20.19 &  1206.66 r
+
+  cpwd0__ACV0_CH_src_last 
+  cpwd0__ACV0_CH_src_data
+  cpwd0__ACV0_CH_src_mask
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sdma_t.gc_pa_spi_m_ra_t0.sorted.gz
+ 2 pre-stage repeaters;  
+  gc_sdma_t/FCFPRepCLKGATEcgcg_Cpl_GFXCLK753_bundle_CPG_SE0SPI_csdata1_order_3/CP (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          39.39       6.00 &   754.45 r
+  gc_sdma_t/FCFPRepCLKGATEcgcg_Cpl_GFXCLK753_bundle_CPG_SE0SPI_csdata1_order_3/Q (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           38.94      35.72 &   790.17 r
+  gc_sdma_t/FCFPRepFFcgcg_Cpl_GFXCLK65979_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66189_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66018_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66054_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66012_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66159_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66129_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66291_bundle_CPG_SE0SPI_csdata1_order_3/CP (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                   44.23       3.66 &   793.82 r
+  gc_sdma_t/FCFPRepFFcgcg_Cpl_GFXCLK65979_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66189_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66018_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66054_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66012_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66159_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66129_bundle_CPG_SE0SPI_csdata1_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK66291_bundle_CPG_SE0SPI_csdata1_order_3/Q3 (MB8SRLSDFQTXGLP3553D2AMDBWP143M1144H3P48CPDLVT)                   13.51      56.51 &   850.34 f
+
+  FE_FEEDX_MFT__2__gc_sdma_t__gc_gds_oa_t__CPG_SE0SPI_csdata1_data__ (net) 
+  FE_FEEDX_MFT__3__gc_gds_oa_t__gc_pa_spi_m_ra_t__CPG_SE0SPI_csdata1_data__ (net) 
+  CGP_SE0_SPI_csdata 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pc_sx_t0.gc_rts_0_t0100.sorted.gz
+  Startpoint: gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK473204_bundle_se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg_order_2/CP (rising edge-triggered flip-flop clocked by GC_GFXCLK)
+  Endpoint: gc_rts_0_t0100/FCFPRepFFcgcg_Cpl_GFXCLK473268_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473184_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473226_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473109_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473235_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473193_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473100_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473277_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC1_rep_fgcg_order_3/D2 (rising edge-triggered flip-flop clocked by GC_GFXCLK)
+
+  FE_FEEDX_MFT__1__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg_override (net) 
+  FE_FEEDX_MFT__2__gc_spi_s_bci0_cac_t__gc_rts_0_t_4__se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg_override (net) 
+  gc_rts_0_t0100/FCFPRepFFcgcg_Cpl_GFXCLK473268_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473184_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473226_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473109_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473235_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473193_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473100_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473277_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC1_rep_fgcg_order_3/D2 (MB8SRLSDFQTXGLP3553D1AMDBWP143M1144H3P48CPDULVTLL)                   27.79       9.85 &  1246.37 r
+
+  gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK473129_bundle_se0__gl1cc__GL1A_WGP_SA1_WGP0_3_GL1R_SRC0_rep_fgcg_order_2/Q (SDFQTXGOPTBBD4BWP143M169H3P48CPDLVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 31.59      38.84 &   789.46 f
+  FE_FEEDX_MFT__1__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__gl1cc__GL1A_WGP_SA1_WGP0_3_GL1R_SRC0_rep_fgcg_override (net) 
+  FE_FEEDX_MFT__2__gc_spi_s_bci0_cac_t__gc_rts_0_t_4__se0__gl1cc__GL1A_WGP_SA1_WGP0_3_GL1R_SRC0_rep_fgcg_override (net) 
+  gc_rts_0_t0100/FCFPRepFFcgcg_Cpl_GFXCLK473268_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473184_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473226_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473109_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473235_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473193_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473100_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473277_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC1_rep_fgcg_order_3/D4 (MB8SRLSDFQTXGLP3553D1AMDBWP143M1144H3P48CPDULVTLL)                   38.43      18.12 &  1204.74 f
+
+  FE_FEEDX_MFT__1__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg_override (net) 
+  FE_FEEDX_MFT__1__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__gl1cc__GL1A_GL1IR_WGP_SA1_WGP0_2_SQC_harvest_active (net) 
+  FE_FEEDX_MFT__1__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__gl1cc__GL1A_GL1IR_WGP_SA1_WGP0_1_SQC_rep_fgcg_override (net) 
+  FE_FEEDX_MFT__1__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__gl1cc__GL1A_WGP_SA1_WGP0_3_GL1R_SRC0_rep_fgcg_override (net) 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpg_t.gc_cpf_t.sorted.gz
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__cpwd0__CH_CPC_ret_data__131 (net) 
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__cpwd0__CH_CPC_ret_data__254 (net) 
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpf_t.gc_cpg_t.sorted.gz
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rb_t001.gc_rb_t000.sorted.gz
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gds_oa_t.gc_spi_s_bci0_cac_t0.sorted.gz
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_ch_t.gc_rlc_t.sorted.gz                       
+
+
+
+
+
+
+
+
+ -165.4   GC_GFXCLK  -178    40    gc_rlc_t.gc_gdfll_t
+ -146.6   GC_GFXCLK  -136    4     gc_cpg_t.gc_ea_cpwd_t
+ -137.8   GC_GFXCLK  -84     4     gc_pa_spi_m_ra_t0.gc_rb_t011
+ -104.0   GC_GFXCLK  -181    32    gc_imu_t.gc_sdma_t
+ -99.0   GC_GFXCLK   -131    37    gc_sc_bci1_t0.gc_cpf_t
+ -93.7   GC_GFXCLK   -83     392   gc_utcl2_t.gc_cpg_t
+ -73.3   GC_GFXCLK   -56     4     gc_pa_spi_m_ra_t0.gc_pc_sx_t0
+ -69.8   GC_GFXCLK   -157    454   gc_cpg_t.gc_utcl2_t
+ -58.8   GC_GFXCLK   -206    391   gc_sdma_t.gc_pa_spi_m_ra_t0
+
+ -55.9   GC_GFXCLK   -80     8     gc_pc_sx_t0.gc_rts_0_t0100
+ -50.8   GC_GFXCLK   -101    14    gc_cpg_t.gc_cpf_t
+ -46.8   GC_GFXCLK   -103    39    gc_cpf_t.gc_cpg_t
+ -39.8   GC_GFXCLK   -113    27    gc_rb_t001.gc_rb_t000
+ -37.2   GC_GFXCLK   -118    4     gc_gds_oa_t.gc_spi_s_bci0_cac_t0
+ -35.9   GC_GFXCLK   -68     17    gc_ch_t.gc_rlc_t                       
+
+
+.sorted.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.
+.sorted.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_spi_s_bci0_cac_t0.
+.sorted.gz
+
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_.sorted.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_.sorted.gz
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_spi_s_bci0_cac_t0.sorted.gz
+
+# drv : fly hu does not summarize DRV report for soundwave yet, 
+# open pt_drv session; enable pt drv running;
+
+
 \\\\ 0211 meeting
-canniexue create CDC env based on NLB , run CDC; 
+cannie xue create CDC env based on NLB , run CDC; 
 special timing; lihuan, flush flow; check error; 
 drv: soundwave drv report summary; 
- 1 corner;
+1 corner;
 
-\\ canis  drv
+\\\\\\\\ canis  drv
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0110_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ApplyMvtRoute_LSB10_WithRDL/
+/proj/canis_pd_gfx_fct05_aie_er/fct_runs/NLB_FP00/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/
+
 DRV is a kind of timing sign-off item. FCT need to make sure all of them are check properly. Some of them can be waived following rules from design guidelines.
 Item           Criteria                             Runs to check             Report files name            Owner waivers
 Illegal clock No Vio with waiver (Follow dont use list) nonSI normal runs Pt*/check_clock_cells.rpt        FCT signoff and fix (tile owner can fix non CK buffer/inverter first)
+check_clock_cells
 min_pulse_width
 min_period
 clock_tran
 data_tran
 data_cap
-data_cap.rpt.gz
 si_clock_noise_area
 si_clock_noise_height
 si_clock_double_switch
@@ -440,10 +861,54 @@ si_noise_area
 si_noise_height
 clock_si
 si_bottleneck
-Tie_fanout
+tie_fanout
 RC-011/RC-012
-SI_clock_tran
-SI_data_tran
+si_clock_tran
+si_data_tran
+
+
+# min_period;  Minimum Period Checking
+Minimum period checking looks for violations of the min_period constraint for a cell pin, as defined in the cell library. 
+This constraint requires the time between successive arrivals of clock edges of the same type (rising or falling) to be at least a specified value.
+pt_shell> report_min_period             [-verbose] ...
+pt_shell> report_constraint -min_period [-verbose] ...
+pt_shell> report_analysis_coverage -check_type min_period
+pt_shell> report_min_period -path_type full_clock uff2/CP
+
+~/soc/rpts/route98
+~/soc/rpts/run_route94
+
+ls: cannot access ./rpts/PtDrv*Stp*/data_trans.rpt.gz:                 No such file or directory missing data_tran rpt, check if ./rpts/PtDrv*Stp*/data_trans.rpt.gz exist!
+ls: cannot access ./rpts/PtDrv*Stp*/data_cap.rpt.gz:                   No such file or directory missing data_cap rpt, check if ./rpts/PtDrv*Stp*/data_cap.rpt.gz exist!
+ls: cannot access ./rpts/PtDrv*Stp*/clock_trans.rpt.gz:                No such file or directory missing ck_tran rpt, check if ./rpts/PtDrv*Stp*/clock_trans.rpt.gz exist!
+ls: cannot access ./rpts/PtDrv*Stp*/tie_fanout.rpt.gz:                 No such file or directory missing tie_fanout rpt, check if ./rpts/PtDrv*Stp*/tie_fanout.rpt.gz exist!  
+ls: cannot access ./rpts/Pt*Func*Stp*/si_data_trans.rpt.gz:            No such file or directory missing si_data_tran rpt, check if ./rpts/Pt*Func*Stp*/si_data_trans.rpt.gz exist!
+ls: cannot access ./rpts/Pt*/si_noise_height.rpt.gz:                   No such file or directory
+ls: cannot access ./rpts/Pt*/si_noise_area.rpt.gz:                     No such file or directory missing si_noise rpt, check if ./rpts/Pt*/si_noise_height.rpt.gz ./rpts/Pt*/si_noise_area.rpt.gz exist!
+ls: cannot access ./rpts/Pt*Stp*/si_bottleneck_nets_cells_for_eco.rpt: No such file or directory missing si_bottleneck_nets_cells_for_eco rpt
+ls: cannot access ./rpts/Pt*Func*Stp*/si_clock_trans.rpt.gz:           No such file or directory missing si_clock_tran rpt, chcek if ./rpts/Pt*Func*Stp*/si_clock_trans.rpt.gz exist!
+ls: cannot access ./rpts/Pt*/si_clock_noise_height.rpt.gz:             No such file or directory
+ls: cannot access ./rpts/Pt*/si_clock_noise_area.rpt.gz:               No such file or directory missing si_ck_noise rpt
+ls: cannot access ./rpts/Pt*/si_clock_double_switching.rpt.gz:         No such file or directory missing si_clock_double_switching rpt
+ls: cannot access ./rpts/Pt*/clock_si.rpt.gz:                          No such file or directory missing clock_si rpt, check if ./rpts/Pt*/clock_si.rpt.gz exist!
+
+ ./rpts/PtDrv*Stp*/*
+ ./rpts/Pt*Func*Stp*/si_*
+ ./rpts/Pt*/*si*; ./rpts/Pt*Stp*/si*
+
+
+Traceback (most recent call last):
+  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module>
+    check_rc('RC-011')
+Traceback (most recent call last):
+  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module>
+    check_rc('RC-011')
+  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2110, in check_rc
+    cell_pin, slack = extract_rc(row)
+  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2095, in extract_rc
+    slack = matchall.group().split('rpt.gz')[1].replace(',', '.')
+IndexError: list index out of range
+
 
 Reference method
 Script to summarize DRV: developed by Feng1, Jian1 
@@ -451,6 +916,7 @@ Script to summarize DRV: developed by Feng1, Jian1
 /tool/pandora/bin/python3.9  /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py -instMap inst_tile.map
 
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
+~/soc/drv/fix_drv.py
 usage: fix_drv.py [-h] [--nonsi] [--si] [--rc] [-instMap INSTMAP] [-fix FIX] [-lib_cell_file LIB_CELL_FILE] [-waiver WAIVER]
 optional arguments:
   --nonsi               enable nonsi option to fix nonsi drv
@@ -464,16 +930,29 @@ optional arguments:
 For SI bottlneck report si_bottleneck_nets_cells_for_eco.rpt.gz , use scripts 
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/report_si_bottleneck.tcl    
 in tune/PtTim/PtTim.general.extrasirpts.tcl .
-/proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/tune/PtTim/PtTim.general.extrasirpts.tcl 
+# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/tune/PtTim/PtTim.general.extrasirpts.tcl 
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0094_20250207_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_WithRDL/tune/PtTim/PtTim.general.extrasirpts.tcl 
+/proj/canis_pd_gfx_fct04/fct_runs/
+
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/
+
+/proj/canis_pd_gfx_fct02/fct_runs/
 
 
 # Below scripts implemented above methods. developed by Ren, Qilin 
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/report_si_bottleneck.tcl; # source in tune/PtTim/Pttim.general.extrasirpts.tcl
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC011.tcl
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC012.tcl
+
 # Output files:
 rpts/${TARGET_NAME}/check_DRV_RC011.postwaived.rpt
 rpts/${TARGET_NAME}/check_DRV_RC012.postwaived.rpt
+
+
+
+
 
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC011.waived.rpt.gz
 # ### in setup corner, <80% min_slew_index value of RC-011 violations could ignore ###
@@ -486,6 +965,10 @@ rpts/${TARGET_NAME}/check_DRV_RC012.postwaived.rpt
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.waived.rpt.gz
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.postwaived_report.rpt.gz
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.postwaived_fix.rpt.gz
+
+
+
+
 
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/
 
@@ -629,8 +1112,12 @@ dfx_dftcnr2_t00gc_acv_lds_t00gc_acv_sp_sq_t00gc_acvi_t00gc_ch_t00gc_cpc_t00gc_cp
 
 
 # repeater insertion already have;
-
+\\\\\\\\ fct_explorer
 fct use fct_explorer; to check tile path directions;
+alias fcte  '';
+cd release/0071*; 
+fcte;
+
 
 # xml file, MCI, by kyle
 /proj/canis_pd_gfx_fct01/FCT/rep_xml/NLC_fp00/pd_repeater.xml
@@ -1084,7 +1571,6 @@ bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]   select[type==RHEL7_64|
 bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
 bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py .&'
 bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py'
-cd /proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/
     
 
 
@@ -1092,11 +1578,11 @@ cd /proj/canis_pd_gfx_fct04/fct_release/FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_G
 # /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl
 ~/soc/rpts/n100.xml
 proc parse_nl_rep_xml {xml net_bundle bundle_constriant net_container net_clk net_orig} {
-    upvar $net_bundle a_net_bundle
+    upvar $net_bundle        a_net_bundle
     upvar $bundle_constriant a_bundle_constriant
-    upvar $net_container a_net_container
-    upvar $net_clk a_net_clk
-    upvar $net_orig a_net_orig
+    upvar $net_container     a_net_container
+    upvar $net_clk           a_net_clk
+    upvar $net_orig          a_net_orig
     
     set FI [open $xml r]
     set cur_clk ""
@@ -1192,3 +1678,133 @@ proc parse_nl_rep_xml {xml net_bundle bundle_constriant net_container net_clk ne
 }
 ## [parse_nl_rep_xml $nl_xml a_net_bundle a_bundle_constriant a_net_container a_net_clk a_net_orig]
 
+
+history [-h] [-r] [argument_list]
+ARGUMENTS
+       -h     Displays  the history list without the leading numbers.  You can use this for creating scripts from existing  history.   
+              You  can then source the script with the source command.  You can combine this option with only a single numeric argument.  
+       -r     Reverses the order of output so that most recent history entries display first rather than the oldest  entries  first.   
+       argument_list
+              Additional arguments to history (see DESCRIPTION).
+
+Advanced Tcl History
+       The history command performs  one  of  several  operations  related  to
+       recently-executed  commands  recorded in a history list.  Each of these
+       recorded commands is referred to as an  "event."   When  specifying  an
+       event to the history command, the following forms may be used:
+
+        o  A  number,  which if positive, refers to the event with that number
+         (all events are numbered starting at 1).  If the number is  negative,
+         it  selects  an  event relative to the current event; for example, -1
+         refers to the previous event, -2 to the one before that, and  so  on.
+         Event 0 refers to the current event.
+
+        o  A string selects the most recent event that matches the string.  An
+         event is considered to match the string either if the string  is  the
+         same  as  the first characters of the event, or if the string matches
+         the event in the sense of the string match command.
+
+       The history command can take any of the following forms:
+
+       history
+              Same as history info, described below.
+
+       history add command [exec]
+              Adds the command argument to the history list as  a  new  event.
+              If  exec is specified (or abbreviated), the command is also exe-
+              cuted and its result is returned.  If exec is not specified,  an
+              empty string is returned.
+
+       history change newValue [event_number]
+              Replaces  the  value  recorded  for an event with newValue.  The
+              event_number specifies the event to replace, and defaults to the
+              current  event (not event -1).  This command is intended for use
+              in commands that implement new forms of history substitution and
+              want  to  replace  the current event (that invokes the substitu-
+              tion) with the command created through substitution.  The return
+              value is an empty string.
+
+       history clear
+              Erases  the  history  list.  The current keep limit is retained.
+              The history event numbers are reset.
+
+       history event [event_number]
+              Returns the value of  the  event  given  by  event_number.   The
+              default value of event_number is -1.
+
+       history info [count]
+              Returns a formatted string, giving the event number and contents
+              for each of the events in the history list  except  the  current
+              event.   If  count is specified, then only the most recent count
+              events are returned.
+
+       history keep [count]
+              Changes the size of the history  list  to  count  events.   Ini-
+              tially, 20 events are retained in the history list.  If count is
+              not specified, the current keep limit is returned.
+
+       history nextid
+              Returns the number of the next event to be recorded in the  his-
+              tory  list.   Use this for printing the event number in command-
+              line prompts.
+
+       history redo [event_number]
+              Reruns the command indicated by event and  returns  its  result.
+              The  default  value of event_number is -1.  This command results
+              in history revision.  See the following section for details.
+
+
+ gui_start
+ current_design
+ help *no_clock*; help *clock*;
+ help report*; help *skew*; 
+ puts $argv; puts $argc; set argc;
+ report_clocks
+ get_clock
+ report_clock
+ report_clock_crossing
+ report_clock_gate_savings
+ report_clock_gating_check
+
+ restore_session rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
+ set {worst.endpts.default.GC_ACVCLK.setup.paths} [::get_timing_paths -delay_type max -path_type full_clock_expanded -to [get_selection] -max_paths 999999 -nworst 1 -slack_lesser_than 0 -include_hierarchical_pins -group {GC_ACVCLK}]
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
+ check_repeater_bundle_cycle.tcl -inst_map inst_tile.map
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
+ trace_clk_path
+ trace_clk_path -inst_map inst_tile.map -clks GC_ACVCLK
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl
+ list_sink_numbers_by_clk
+ ls -al ./clk_sink_numbers.csv
+ sh gvim clk_sink_numbers.csv
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_bi_net_rep.tcl
+ check_bi_net_rep -inst_map inst_tile.map -nl_xml pd_repeaters.xml
+ ls -al bi_nets.rpt; sh gvim bi_nets.rpt;
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
+ check_repeater_bundle_cycle -inst_map inst_tile.map -nl_xml pd_repeaters.xml
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC011.tcl
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC012.tcl
+ ls -al rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ -t
+# rpts/PtGfxFuncTT0p75v*/check_DRV_RC011.waived.rpt.gz
+# rpts/PtGfxFuncTT0p75v*/check_DRV_RC012.waived.rpt.gz
+ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
+ report_min_period -help
+ report_analysis_coverage -help
+ ls ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteHdmTyprc100cTT0P75V100CStpTiming/ptsession/
+ restore_session rpts/PtGfxFuncTT0p75vReRouteHdmTyprc100cTT0P75V100CStpTiming/ptsession
+
+
+
+csh> TileBuilderIntPrimetime cmds/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.cmd
+csh> source ~sdhe/.cshrc
+csh> which module
+csh> module load primetime/2022.03-SP5-2-T-20230819
+csh> pt_shell;
+csh> module unload primetime
+csh> module avail pt_shell
+csh> module load primetime/2023.12-SP5
+csh> cd ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/;  ls rpts/PtGfxFunc*0p75*/ptsession
+
+csh>  ps -w `whoami`
+csh>  ps -u jiaguo12
+csh>  top; ps aux; jobs -l ;ps aux | grep find;
