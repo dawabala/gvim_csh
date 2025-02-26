@@ -1,0 +1,164 @@
+****************************************
+Report : clock
+Design : gc
+Version: V-2023.12-SP5
+Date   : Tue Feb 25 23:24:50 2025
+****************************************
+
+Attributes: p - Propagated clock G - Generated  clock I - Inactive   clock
+
+Clock             Period          Waveform            Attrs     Sources
+-----------------------------------------------------------------------
+GC_ACVCLK         397.00          {0 198.5}           p         {Cpl_ACVCLK_acv0}
+GC_GFXCLK         495.00          {0 247.5}           p, G      {gc_gdfll_t/gdfll/d0nt_touch_gdfll_glitch_free_mux_0/d0nt_touch_inst_agmux_out/Z}
+GC_GFXCLK_DIV2
+                  990.00          {495 990}           p, G      {gc_gdfll_t/gdfll/ugdfll_charz/d0nt_touch_n0scan_gfxclk_div2/QN}
+GC_GFXCLK_DIV4
+                 1980.00          {1485 2475}         p, G      {gc_gdfll_t/gdfll/ugdfll_charz/d0nt_touch_n0scan_gfxclk_div4/QN}
+GC_QSPICLK       1565.00          {0 782.5}           p         {Cpl_VDDCR_GFXAON_GPU_DLDO_CLK}
+GC_SMNCLK        1252.00          {0 626}             p         {Cpl_VDDCR_SOC_IMUCLK_IN}
+GC_VDDGFX_REF_ROCLK_N
+                 6431.00          {0 3215.5}          p         {Cpl_VDDCR_GFX_REF_ROCLK_N}
+GC_dfll_MstrOscClkFb
+                  190.00          {0 95}              p         {gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFb}
+GC_dfll_MstrOscClkFn
+                  190.00          {0 95}              p         {gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn}
+GC_dfll_MstrOscClkFn_div
+                  380.00          {0 190}             p, G      {gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn_div}
+GC_dfll_MstrOscClkFn_non_div
+                  190.00          {0 95}              p, G      {gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn_non_div}
+GC_dfll_SlvOscClkFb
+                  190.00          {0 95}              p         {gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFb}
+GC_dfll_SlvOscClkFn
+                  495.00          {0 247.5}           p         {gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn}
+GC_dfll_SlvOscClkFn_div
+                  990.00          {0 495}             p, G      {gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn_div}
+GC_dfll_SlvOscClkFn_non_div
+                  495.00          {0 247.5}           p, G      {gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn_non_div}
+
+
+
+Generated     Master          Generated       Master          Waveform
+Clock         Source          Source          Clock           Modification
+-------------------------------------------------------------------------------
+GC_GFXCLK     gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn_non_div
+                              gc_gdfll_t/gdfll/d0nt_touch_gdfll_glitch_free_mux_0/d0nt_touch_inst_agmux_out/Z
+                                              GC_dfll_SlvOscClkFn_non_div
+                                                              div(1), combinational
+GC_GFXCLK_DIV2
+              gc_gdfll_t/gdfll/d0nt_touch_gdfll_glitch_free_mux_0/d0nt_touch_inst_agmux_out/Z
+                              gc_gdfll_t/gdfll/ugdfll_charz/d0nt_touch_n0scan_gfxclk_div2/QN
+                                              GC_GFXCLK       div(2), inv
+GC_GFXCLK_DIV4
+              gc_gdfll_t/gdfll/ugdfll_charz/d0nt_touch_n0scan_gfxclk_div2/QN
+                              gc_gdfll_t/gdfll/ugdfll_charz/d0nt_touch_n0scan_gfxclk_div4/QN
+                                              GC_GFXCLK_DIV2  div(2), inv
+GC_dfll_MstrOscClkFn_div
+              gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn
+                              gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn_div
+                                              GC_dfll_MstrOscClkFn
+                                                              div(2)
+GC_dfll_MstrOscClkFn_non_div
+              gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn
+                              gc_gdfll_t/gdfll/udfll/dfll_MstrOscClkFn_non_div
+                                              GC_dfll_MstrOscClkFn
+                                                              div(1), combinational
+GC_dfll_SlvOscClkFn_div
+              gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn
+                              gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn_div
+                                              GC_dfll_SlvOscClkFn
+                                                              div(2)
+GC_dfll_SlvOscClkFn_non_div
+              gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn
+                              gc_gdfll_t/gdfll/udfll/dfll_SlvOscClkFn_non_div
+                                              GC_dfll_SlvOscClkFn
+                                                              div(1), combinational
+
+1
+****************************************
+Report : clock_skew
+Design : gc
+Version: V-2023.12-SP5
+Date   : Tue Feb 25 23:24:55 2025
+****************************************
+
+
+                Min Condition Source Latency      Max Condition Source Latency
+------------------------------------------------------------------------------------------
+Object        Early_r Early_f  Late_r  Late_f   Early_r Early_f  Late_r  Late_f  Rel_clk
+------------------------------------------------------------------------------------------
+GC_dfll_MstrOscClkFn_div
+                86.34   89.21   99.87  103.07     86.34   89.21   99.87  103.07
+                                                                                 -- 
+GC_dfll_SlvOscClkFn_div
+                64.01   66.89   74.12   77.32     64.01   66.89   74.12   77.32
+                                                                                 -- 
+GC_dfll_MstrOscClkFn_non_div
+                69.93   68.41   80.59   79.60     69.93   68.41   80.59   79.60
+                                                                                 -- 
+GC_dfll_SlvOscClkFn_non_div
+                47.61   45.78   54.82   52.82     47.61   45.78   54.82   52.82
+                                                                                 -- 
+GC_GFXCLK      432.51  410.27  458.62  435.68    432.51  410.27  458.62  435.68
+                                                                                 -- 
+GC_GFXCLK_DIV2
+               570.71  566.77  598.98  595.56    570.71  566.77  598.98  595.56
+                                                                                 -- 
+GC_GFXCLK_DIV4
+               599.76  595.82  631.08  627.61    599.76  595.82  631.08  627.61
+                                                                                 -- 
+
+              Min Rise  Min Fall  Max Rise  Max Fall
+Object          Transition   Transition   Transition   Transition
+--------------------------------------------------------------------------------
+GC_ACVCLK       32.16     32.16     32.16     32.16
+GC_QSPICLK     105.00    105.00    105.00    105.00
+GC_SMNCLK      101.41    101.41    101.41    101.41
+GC_VDDGFX_REF_ROCLK_N
+               105.00    105.00    105.00    105.00
+GC_dfll_MstrOscClkFb
+                15.39     15.39     15.39     15.39
+GC_dfll_MstrOscClkFn
+                15.39     15.39     15.39     15.39
+GC_dfll_SlvOscClkFb
+                15.39     15.39     15.39     15.39
+GC_dfll_SlvOscClkFn
+                40.10     40.10     40.10     40.10
+GC_dfll_MstrOscClkFn_div
+                30.78     30.78     30.78     30.78
+GC_dfll_SlvOscClkFn_div
+                80.19     80.19     80.19     80.19
+GC_dfll_MstrOscClkFn_non_div
+                15.39     15.39     15.39     15.39
+GC_dfll_SlvOscClkFn_non_div
+                40.10     40.10     40.10     40.10
+GC_GFXCLK       40.10     40.10     40.10     40.10
+GC_GFXCLK_DIV2
+                80.19     80.19     80.19     80.19
+GC_GFXCLK_DIV4
+               105.00    105.00    105.00    105.00
+
+PtGfxFuncFFG1p05vReRouteFlatTyprc100cFFGNP1P05VM40CStpTiming
+PtGfxFuncSSG0p6vReRouteFlatTyprc100cSSGNP0P6VM40CStpTiming
+PtGfxFuncTT0p65vReRouteFlatTyprc100cTT0P65V0CStpTiming
+PtGfxFuncTT0p6vReRouteFlatTyprc100cTT0P6V0CStpTiming
+PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming
+PtGfxFuncTT0p9vReRouteFlatTyprc100cTT0P9V100CStpTiming
+
+ReleaseGfxFuncFFG1p05vReRouteFlatTyprc100cFFGNP1P05VM40CStpTimingPt
+ReleaseGfxFuncSSG0p6vReRouteFlatTyprc100cSSGNP0P6VM40CStpTimingPt
+ReleaseGfxFuncTT0p65vReRouteFlatTyprc100cTT0P65V0CStpTimingPt
+ReleaseGfxFuncTT0p6vReRouteFlatTyprc100cTT0P6V0CStpTimingPt
+ReleaseGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTimingPt
+ReleaseGfxFuncTT0p9vReRouteFlatTyprc100cTT0P9V100CStpTimingPt
+
+PtGfxFuncFFG1p05vReRouteFlatRcbestCCbest0cFFGNP1P05VM40CHldTiming
+PtGfxFuncFFG1p05vReRouteFlatRcworstCCworst100cFFGNP1P05VM40CHldTiming
+PtGfxFuncSSG0p6vReRouteFlatRcbestCCbest0cSSGNP0P6VM40CHldTiming
+PtGfxFuncSSG0p6vReRouteFlatRcworstCCworst100cSSGNP0P6VM40CHldTiming
+
+ReleaseGfxFuncFFG1p05vReRouteFlatRcbestCCbest0cFFGNP1P05VM40CHldTimingPt
+ReleaseGfxFuncFFG1p05vReRouteFlatRcworstCCworst100cFFGNP1P05VM40CHldTimingPt
+ReleaseGfxFuncSSG0p6vReRouteFlatRcbestCCbest0cSSGNP0P6VM40CHldTimingPt
+ReleaseGfxFuncSSG0p6vReRouteFlatRcworstCCworst100cSSGNP0P6VM40CHldTimingPt
+

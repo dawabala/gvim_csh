@@ -3,6 +3,9 @@ unalias ll;
 alias ll      'ls -alt'
 alias src     'source ~/.cshrc'
 alias a       'source ~/.aliases'
+alias srcsdhe    'source ~sdhe/.cshrc'
+alias srcsd      'source ~sdhe/.cshrc'
+alias srcsudong  'source ~sdhe/.cshrc'
 
 alias cpd    'source /tools/aticad/1.0/src/sysadmin/cpd.cshrc'
 alias at2    'source /tools/aticad/1.0/src/sysadmin/cpd.cshrc; setenv FAMILY supra; setprj at2gmd'
@@ -39,10 +42,11 @@ alias du4      du -h -d 4
 alias du5      du -h -d 5
 
 alias fn       find . -name 
+alias findname find . -name 
 alias fnl      find . -name 
 alias fi       find . -iname
 
-  alias xterm   'xterm -bg black -fg grey       xterm &'
+alias xterm   'xterm -bg black -fg grey       xterm &'
 # alias xterm   'xterm -bg black -fg darkgreen  xterm &'
 # alias xterm   'xterm -bg black -fg lightblue  xterm &'
 # 11 as bg, 10 as fg;
@@ -80,6 +84,7 @@ setenv PATH      $HOME/local/py39/bin:$HOME/local/:$PATH
 alias python /tool/pandora64/bin/python3
 alias python3 /tool/pandora64/bin/python3
 setenv PATH      $HOME/local/py39/bin/:$PATH
+setenv PATH      /tool/aticad/1.0/bin/:$PATH
 
 # setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH 
 # echo $LD_LIBRARY_PATH 
@@ -107,8 +112,17 @@ alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[typ
 alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ' "
 
 # sudong bsub ptsession;
-alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
-# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
+# alias xtermpt "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 )&&(csbatch||tmpshortrr||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell ; restore_session" 
+# alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
+
+alias term200 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
+alias term100 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=100000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
+alias term150 "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=100000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
+alias pt        'source ~sdhe/.cshrc; module load primetime/2023.12-SP5; which pt_shell; pt_shell -file rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; "
+alias ptsession 'source ~sdhe/.cshrc;  module load primetime/2023.12-SP5; which pt_shell; pt_shell; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession "
+alias ptsession 'source ~sdhe/.cshrc;  module load primetime/2023.12-SP5; which pt_shell; pt_shell -file rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; "
+
+# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75v*TT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
 # module load primetime/2022.03-SP5-2-T-20230819
 # module load primetime/2023.12-SP5
 # cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp; module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
@@ -151,14 +165,13 @@ alias load_fm    'module load formality'
 # module unload primetime/2021.06-SP5-1
 # module unload fusioncompiler/2020.09-SP6-T-20210916
 # module unload verdi/2019.06-SP1-1
-# module unload primetime/2021.06-SP5-1
  
 #### tb intactive commands
 alias intfm 'TileBuilderIntFM';  # TileBuilderIntFM FmEqvPwrEcoSynthesizeVsSynRtl, to open *failed.fss; # FmEqvPwrAllUpfSuppliesOnPrePhysicalVsSynthesize FmEqvPwrAllUpfSuppliesOnSynthesizeVsSynRtl
 alias intpt 'TileBuilderIntPT';  # TileBuilderIntPT/TileBuilderIntPrimetime cmds/PtFcGenFULLCHIPTIMINGVminSlowTopSdc.cmd
 alias intfx 'TileBuilderIntFX';  # TileBuilderIntFX data/PreEco/Synthesize.nlib
 alias intdc 'TileBuilderIntDC';  # cTileBuilderIntDC mds/DgSynthesize.cmd
-alias fxsyn    'TileBuilderIntFX data/PreEco/Synthesize.nlib';  
+alias fxsyn 'TileBuilderIntFX data/PreEco/Synthesize.nlib';  
 
 alias fxmacro  'TileBuilderIntFX data/FpPlaceMacros.nlib';  
 

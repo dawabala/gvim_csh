@@ -45,6 +45,9 @@ csh> imginfo floorplan_image.png;
 ctrl-alt-<arrow_key>
 
 
+#### ls files, grep -v, xargs gvim to open;
+ls rpts/* | grep -v mod | xargs gvim; # list all filenames without "*mod*", open them;
+
 #### wget  xargs urls
 cat url-list.txt | xargs wget –c
 
@@ -136,7 +139,7 @@ zgrep -a -E '*pattern1*|*pattern2*|...' *file*
 
 
 #### sort by time, check *_deleted *copied files;
-# search & sort files by modification date
+# search & sort files by modification date; search latest and oldest files;
 find . -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-
 foreach file (`find .  -type f -printf '%T@ %p\n' | sort -n | cut -d' ' -f2-`)
         set mod_date = `date -r "$file" +"%Y-%m-%d"`
@@ -147,7 +150,6 @@ echo "Syncing $1 to $2"
 rsync -avh --delete "$1" "$2"
 
 find "$1" -type f -printf '%T@ %p\n' | sort -n | tail -1
-
 #
 sort -k1.4 -n f.txt
 
