@@ -86,35 +86,60 @@ timing report not in it, timing path;
 # sudong bsub ptsession;
 
 bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm & ; # sudong
-# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
-csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp;
-
-csh> source ~sdhe/.cshrc; module load primetime/2022.03-SP5-2-T-20230819;
+# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75v*.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
+csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
+~/git/aliases
+# module load primetime/2022.03-SP5-2-T-20230819;
+csh> source ~sdhe/.cshrc; module load primetime/2023.12-SP5
 csh> pt_shell; 
-pt_shell> restore_session rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
+pt_shell> restore_session rpts/PtGfxFuncTT0p75v*/ptsession
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
 pt_shell> trace_clk_path -inst_map inst_tile.map; # save *.csv files into clk_trace;
-# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_trace/ GC_GFXCLK.csv
-# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/inst_tile.map
-pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl; # save into ./clk_sink_numbers.csv
+# /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/inst_tile.map
+# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_trace/GC_GFXCLK.csv
 # /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_sink_numbers.csv
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl; # save into ./clk_sink_numbers.csv
 
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/check_clk_branches_talk.tcl
 pt_shell> check_clk_branches_talk -top_nets_list Cpl_USB_HOST_CLK ;  # check different top clock nets sinks talk information.
 
 # fct workbook scripts
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/analyze_path_lol_length.tcl
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/analyze_path_lol_length.tcl
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
 
-source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/
+\\ # /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/*
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/fx_gen_inst2inst_min_distance.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_bi_net_rep.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_timing.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/estimate_norep_pretiming.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/report_no_rep_timing.tcl
+python3 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/gen_summary_csv_traceflow_based.py
+
+\\ # /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/top_clock_net.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/gen_cfg.pl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/gen_clk_pm.pl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/get_tile_clock_latency_i2_summary.pl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/check_clk_branches_talk.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/dump_path_with_ccd_issue.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/summ_tile_clock_latency.py
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/summ_top_clock_latency.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/top_clock_net.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
+
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/PT_check_design.tcl*
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_all_top_nets.tcl
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl
+source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/gen_inst_tile_map.tcl
 
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
@@ -131,7 +156,10 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysi
 
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl; # check and dump 2tile timing with large RLOL.
- check_rlol_design_issue 
+# check_rlol_design_issue 
+pt_shell> mkdir ./rlol
+pt_shell> check_rlol_design_issue  -inst_map inst_tile.map -out_dir ./rlol -factor 15
+pt_shell> check_rlol_design_issue  -inst_map ../../inst_tile.map -out_dir ./rlol -factor 15
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/correlation/
@@ -154,11 +182,11 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/summary/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/tune_budget/
 
 \\\\\  aziz scripts
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -p 750 > trace_opt_nlc
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -p 750 > trace_opt_nlc
 # The value of 750 passed as argument p here is the repeater distance which we aim to achieve. The optimization + sorting is doable in a single step:
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -a algo3 -p 750 | \
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m > trace_opt_nlc_max
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -a algo3 -p 750 | \
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m > trace_opt_nlc_max
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/
 arrange_reps.py*
 buf2inv.pl*
 fct_tile_status.pl*
@@ -166,7 +194,7 @@ gen_early_trace.py*
 gen_rel_pos.py*
 histo.pl*
 histo_drv.pl*
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/measure_rep_dist.py*
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/measure_rep_dist.py*
 modify_bad_trans.pl*
 process_trace.py*
 qtop.pl*
@@ -186,23 +214,23 @@ summ_si_clktrans.pl*
 summ_si_datatrans.pl*
 summ_sort.py*
 
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/fct_early/
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/fct_monitor/
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/ml_eco/
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/fct_early/
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/fct_monitor/
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/ml_eco/
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
 
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_N6.aziz.tcl
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_N6.tcl
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_n5.tcl
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/path_manager.tcl
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delaycell_manager.tcl
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/fix_my_hold.tcl
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/strix_pt_hold_fix_config.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_N6.aziz.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_N6.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delay_table_n5.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/path_manager.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/delaycell_manager.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/fix_my_hold.tcl
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/strix_pt_hold_fix_config.tcl
 
 
-pt_shell> source          /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/path_manager.tcl
-pt_shell> source          /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/fix_my_hold.tcl
-pt_shell> init_hold_fixer /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/strix_pt_hold_fix_config.tcl
+pt_shell> source          /tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/path_manager.tcl
+pt_shell> source          /tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/fix_my_hold.tcl
+pt_shell> init_hold_fixer /tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/strix_pt_hold_fix_config.tcl
     pt_shell> set PHF(SETUP_PVT) ssg0p65v0c
     pt_shell> set PHF(SETUP_MARGIN) 80
     pt_shell> set PHF(FIX_PATH_TYPE) all
@@ -210,7 +238,7 @@ pt_shell> init_hold_fixer /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
 
 pt_shell> fix_my_hold {rpts/Pt*/si_LCLK_min.rpt.gz /proj/strix1/nonsi_fct_run/rpts/Pt*/LCLK_min.rpt.gz}
 
-You can provide /tool/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
+You can provide /tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
 
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ NLC release latest pkg,xml files
@@ -366,7 +394,6 @@ gc_rts_0_t0000.gc_gl1ac_t0: 53 viols, slack: -55~ -0.33 top_net:se0__WGP_SA0_WGP
   ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   statistical adjustment                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            0.00     -55.70
   slack (VIOLATED)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            -55.70
-
 ### Path from ./rpts/PtGfxFuncTT0p65vPlaceFlatTyprc100cTT0P65V0CStpTiming/report_timing_2tile_max.rpt.gz , slack = -54.030000, tns = -154.030000, margin = 100, clock = GC_GFXCLK
 
 \\\\\\\\\  xml file, by michael
@@ -480,7 +507,7 @@ q1c5 to q1c4: no feedthru;
 
 
 # pathform scripts
-color_xterm> /tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
+color_xterm> /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
 # pathform;
 select _2tile report file, check my_path; acv clock by owners; add comments; inherate comments; ref_comments:
 1st round: all violations, 2nd round: new violations
@@ -501,9 +528,144 @@ optional arguments:
   --dump_summary       Dump status summary to central file.
 
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\ meeting minutes
+\\\\ 0220 sudong tasks
+Hi Su Dong, Currently there 3 tasks:
+1.	Interface timing analysis for L2WD tiles, detail check the attached mail.
+  a.	Check if any path need relaxation for long path. File a jira if needed.
+  b.	Release tune file to tile team in NLC
+    i.	  Debanking startpoint or endpoint
+    ii.	  Bound file to bound start/end poinit of critical path to a more reasonable location
+    iii.  Tighten io
+    iv.	  If only flop need early or late skew
+2.	Special timing
+  a.	Currently the scripts is ready for fei, but we have not setup the flow yet
+  b.	Please load the pre-timing session, source the scripts to check if:
+    i.	  If any syntax
+    ii.	  If any input required
+    iii.  What is the output file, how to understand the output file
+    iv.	  How to determine the check is passed or not
+3.	Special timing  cdc check
+  a.	Co-work with Cannie to setup the flow
+  i.	Cannie has already setup the flow, but need check if corresponding reports is generated or not
+  b.	How to read the output
+  c.	How to determine the path is passed or failed
+4.	DRV
+  a.	Collect the script on how to summarize the drv violations
+
+\\\\ 0225 special timing check
+https://confluence.amd.com/display/TSG/Check+special+timing
+
+# Launch script :
+FUNC mini-GCH : //soc15/canis/main/pd/tiles/CHIP/special_timing/LaunchScript/SpecialTiming_MiniGCH_Func_Level_Run.tcl #1  report_max_trans_net.tcl and  gfx_dldo_chargeInj_skew_check.tcl not ready 
+FUNC top  :     //soc15/canis/main/pd/tiles/CHIP/special_timing/LaunchScript/SpecialTiming_GC_Func_Level_Run.tcl      #1
+FUNC tile :     //soc15/canis/main/pd/tiles/CHIP/special_timing/LaunchScript/SpecialTiming_Tile_Func_Level_Run.tcl    #2   run tiles : gc_cpg_t gc_gl2c_2_t gc_pc_sx_t gc_rlc_t gc_vmw_t gc_gdfll_t
+SCAN top :      //soc15/canis/main/pd/tiles/CHIP/special_timing/LaunchScript/SpecialTiming_GC_Scan_Level_Run.tcl      #1
+
+# Script info :
+Excel link : Canis_GFX_special_timing_check_list.xlsx
+
+GFX:
+Script File Name	         Purpose                  	IP owner/content reviewer	MV Run	Run Order  Update_Timing Run Level	Run Mode View	SI/Non-SI Comments        	Signoff Rules Signoff Reports	    Script Path
+report_max_trans_net.tcl	CHARZ Transition Delay Checks	Lui, Alvin	            No Req.	No Req.	   No	         mini-GCH	Func	 setup	Non-SI	  Check clock transition 	No  FAIL  AVFSCLK.csv CHARZ.csv	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/report_max_trans_net.tcl#2
+review_gdfll_tile_clock_paths.tcl	GDFLL Clock Path Review	Lui, Alvin	            No Req.	No Req.	   Yes           Tile 	    Func	 setup	Non-SI	  Manual review by GDFLL designer to ensure critical clock paths do not have unnecessary CTS buffers, logic, etc.	No "Error" Manual review by GDFLL designer	*/rpts/Pt*/special_timing_check.rpt	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/review_gdfll_tile_clock_paths.tcl #2
+addition_gdfll_check.tcl    DFLLMaxDelaySignalAlignmentChecks Lui, Alvin	        No Req.	No Req.    No	         mini-GCH	Func	 setup	Non-SI	  Additional max delay and signal alignment checks for DFLL I/Os, as required by DFLL IP	All script checks pass 	Summary: */rpts/Pt*/gch_gdfll_pins_summary.rpt Details: */rpts/Pt*/gch_gdfll_pins_detail.rpt	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/addition_gdfll_check.tcl#1
+gfx_dldo_chargeInj_skew_check.tcl	                        Shao, Kai	            No Req.	No Req.    No           mini-GCH	Func	setup	Non-SI	No failure in report	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gfx_dldo_chargeInj_skew_check.tcl#1
+asyncfifo.GC.tcl  & asyncfifo.run.tcl                       Shao, Kai       No Req.	Run asyncfifo.run.tcl first	No	Tile Func	 setup	Non-SI	No failure in report	
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.GC.tcl#4
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.run.tcl#1
+script_repeater_timing.tcl	                                Shao, Kai               No Req.	No Req.	No	mini-GCH	Func	setup	Non-SI	No failure in report	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/script_repeater_timing.tcl#2
+gch_special_timing.tcl	                                    Shao, Kai               No Req.	No Req.	No	mini-GCH	Func	setup	Non-SI	No failure in report	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gch_special_timing.tcl#2
+stc_max_delay_and_signal_alignment_proc.tcl
+stc_max_delay_and_signal_alignment_SE.tcl
+stc_max_delay_and_signal_alignment_L2WD.tcl	                Shao, Kai       No Req.	Run *_proc.tcl first No dependency between *_SE.tcl and *_L2WD.tcl	Yes	
+                                                                            SE check run in mini-GCH L2WD check run in mini-GCH first , for remaining part which cannot be reported in mini-GCH level , run in chip level 	
+                                                                                                                                 Func	setup	Non-SI	No failure in report or all failures are waiveable in report	max_delay_*.rpt signal_alignment_*.rpt	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_proc.tcl#1
+
+//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_L2WD.tcl#1
+//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_SE.tcl#1
+gdfll_signal_same_mcp.tcl	                                Shao, Kai	            No Req.	No Req.	No	mini-GCH	Func	setup	Non-SI	No failure in report	
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gdfll_signal_same_mcp.tcl#1
+
+DFX Script File Name Purpose IP owner/content reviewer MV Run Run Order Update_Timing Run Level Run Mode View SI / Non-SI Comments Signoff Rules Signoff Reports script path 
+1 check_alttap_hold.tcl; Special timing check run to cover Alttap hold timing   Ding,Jie No Req.  No Req.  Yes GC/SOC Func hold SI & Non-SI 
+   Stac_PipelineEn = 0 and Stac_AltTapEn = 1 -> special timing check run to cover Alttap hold timing ; zegrep -v VIOLATED alttap_hold.rpt.gz ; alttap_hold.rpt ;si_alttap_hold.rpt
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/check_alttap_hold.tcl#3
+2 sms_special_check.tcl; Check the max delay from mrk_sfp_resetb in fuse_if block to memories RRSRST pin   Ding,Jie No Req.  No Req.  Yes GC/SOC Func setup & hold SI & Non-SI
+   The max delay from mrk_sfp_resetb in fuse_if block to memories RRSRST pin should be less than 30 mrk_sfp_resetb clock cycles No "FAIL" ; sms_special_check.rpt ;si_sms_special_check.rpt
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/sms_special_check.tcl#1
+3 pll_charz_mpw_tran_delay_check.tcl; check CLK_OBS min_pulse_width and differential_skew   Ding,Jie No Req.  No Req.  Yes GC/SOC Func setup & hold SI & Non-SI 
+   check CLK_OBS min_pulse_width > 35% and differential_skew <15ps ; zegrep -v VIOLATED and No "FAIL" ; refclk_mpw_clk_obs_summary.rpt ;charz_skew_stp.rpt
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/pll_charz_mpw_tran_delay_check.tcl#5
+4 check_xtrig_max_delay.tcl; Check the max delay for xtrig   Ding,Jie No Req.  No Req.  Yes GC/SOC Func setup SI & Non-SI 
+   The max delay for xtrig should be less than 25ns; zegrep -v VIOLATED xtrig_special_check.rpt si_xtrig_special_check.rpt;
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/check_xtrig_max_delay.tcl#1
+5 scanchannel.skew.max.tcl; Max scanchannel skew check    Liu,Shizhe No Req.  No Req.  No GC/SOC Scan setup & hold SI & Non-SI 
+   Max scanchannel skew check; zegrep -v FAIL scanchannel.out.max.skew.rpt scanchannel.in.max.skew.rpt;
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/scanchannel.skew.max.tcl#1
+
+6 scanchannel.skew.min.tcl; Min scanchannel skew check   Liu,Shizhe No Req.  No Req.  No GC/SOC Scan setup & hold SI & Non-SI 
+   Min scanchannel skew check; zegrep -v FAIL scanchannel.out.min.skew.rpt scanchannel.in.min.skew.rpt 
+  //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/scanchannel.skew.min.tcl#1
+
+
+\\ special_timing_check copied from xls file; 
+
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
+/proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
+csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
+
+
+CHARZ.csv"	//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/report_max_trans_net.tcl#2
+review_gdfll_tile_clock_paths.tcl	GDFLL Clock Path Review	Lui, Alvin	No Req.	No Req.	Yes	Tile 	Func	setup	"Non-SI	"	Manual review by GDFLL designer to ensure critical clock paths do not have unnecessary CTS buffers, logic, etc.	"No ""Error""
+Manual review by GDFLL designer"	*/rpts/Pt*/special_timing_check.rpt	//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/review_gdfll_tile_clock_paths.tcl#2
+addition_gdfll_check.tcl	DFLL Max Delay and Signal Alignment Checks	Lui, Alvin	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"	Additional max delay and signal alignment checks for DFLL I/Os, as required by DFLL IP	All script checks pass 	"Summary: */rpts/Pt*/gch_gdfll_pins_summary.rpt
+Details: */rpts/Pt*/gch_gdfll_pins_detail.rpt"	//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/addition_gdfll_check.tcl#1
+gfx_dldo_chargeInj_skew_check.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gfx_dldo_chargeInj_skew_check.tcl#1
+"asyncfifo.GC.tcl
+asyncfifo.run.tcl"		Shao, Kai	No Req.	Run asyncfifo.run.tcl first	No	Tile 	Func	setup	"Non-SI	"		No failure in report		"//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.GC.tcl#3
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.run.tcl#1"
+script_repeater_timing.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/script_repeater_timing.tcl#2
+gch_special_timing.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gch_special_timing.tcl#2
+stc_max_delay_and_signal_alignment_proc.tcl; stc_max_delay_and_signal_alignment_SE.tcl; stc_max_delay_and_signal_alignment_L2WD.tcl;
+Shao, Kai	No Req.	"Run *_proc.tcl first.  No dependency between *_SE.tcl and *_L2WD.tcl"	Yes	"SE check run in mini-GCH
+L2WD check run in mini-GCH first , for remaining part which cannot be reported in mini-GCH level , run in chip level "	Func	setup	"Non-SI	"		No failure in report or all failures are waiveable in report	"max_delay_*.rpt
+
+signal_alignment_*.rpt"	"//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_proc.tcl#1
+
+//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_L2WD.tcl#1
+//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_SE.tcl#1"
+gdfll_signal_same_mcp.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gdfll_signal_same_mcp.tcl#1
+
+
+  
+
+# large RLOL issue.  # check and dump 2tile timing with large RLOL.
+csh> module load primetime/2023.12-SP5;
+csh> cd ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/;  ls rpts/PtGfxFunc*0p75*/ptsession
+csh> pt_shell;
+
+pt_shell> restore_session rpts/PtGfxFuncTT0p75v.*/ptsession;
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl
+pt_shell> check_rlol_design_issue  -inst_map inst_tile.map -out_dir ./rlol -factor 15
+   [-buf_keyword BUF]     (buffer keyword in ref_name. default: BUF)
+   [-inv_keyword INV]     (Inverter keyword in ref_name. default: INV)
+   [-cell_dly value]      (typical cell delay value. set a number. default is auto)
+   [-factor value]        (adjust target RLOL with it. default 1.0)
 
 \\\\ 0218 meeting
 
+
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_spi_s_bci0_cac_t0.sorted.gz
+\\  bci1.bci0: path_1: slack -272ps;  371 violations; bundle: se0__SA1WGP00_SQG_msg_order_2;    LE 7;  top_net: FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_msg_valid (net) 
+               path_371: slack -0.1ps;                bundle: se0__SA1WGP00_SQG_ttrace_order_2; LE 7 ; top_net: FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_ttrace_data__42 
 CPF_SE0SA0TA0_texstat
 CPF_SE0SA0TA2_texstat
 CPF_SE0SA0TA6_texstat
@@ -515,17 +677,12 @@ se0__SA1WGP00_SQG_msg
 se0__SA1WGP00_SQG_ttrace
 se0__SA1_RIE_CAC_sig2
 se0__SA1_SP_CAC_sig4
-\\  bci1.bci0: path_1: slack -272ps;  371 violations; bundle: se0__SA1WGP00_SQG_msg_order_2;    LE 7;  top_net: FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_msg_valid (net) 
-               path_371: slack -0.1ps;                bundle: se0__SA1WGP00_SQG_ttrace_order_2; LE 7 ; top_net: FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_ttrace_data__42 
-
-/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_spi_s_bci0_cac_t0.sorted.gz
 
   gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK519_bundle_se0__SA1WGP00_SQG_msg_order_2/CP (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            34.35       1.84 &   733.87 r
   gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK519_bundle_se0__SA1WGP00_SQG_msg_order_2/Q (CKOR2LNQAN2LPSD4AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             22.53      26.70 &   760.57 r
   gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK519_bundle_se0__SA1WGP00_SQG_msg_order_2Net (net)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  7    12.34 
   gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK26065_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26181_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26201_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26089_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26175_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26179_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26075_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26011_bundle_se0__SA1WGP00_SQG_msg_order_2/CP (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVTLL)                   25.57       5.03 &   765.60 r
   gc_sc_bci1_t0/FCFPRepFFcgcg_Cpl_GFXCLK26065_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26181_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26201_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26089_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26175_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26179_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26075_bundle_se0__SA1WGP00_SQG_msg_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK26011_bundle_se0__SA1WGP00_SQG_msg_order_2/Q5 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVTLL)                    9.75      47.88 &   813.48 r
-
   FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_msg_valid (net) 
 
   gc_sc_bci1_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK521_bundle_se0__SA1WGP00_SQG_ttrace_order_2_28_MPCTS_SPLIT/CP (CKOR2LNQAN2LPSD2AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     29.31       5.43 &   684.64 r
@@ -538,25 +695,26 @@ se0__SA1_SP_CAC_sig4
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pc_sx_t0.gc_spi_s_bci0_cac_t0.sorted.gz
-path_1: slack -272ps;  371 violations; bundle: se0__SA1WGP00_SQG_msg_order_2; LE 7; top_net: FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_valid  fanout:1255;
+se0__SA0SX_SPI_db_scbd1 , LE 9, pd=1,   
+se0__SA0SX_SPI_idx_scbd , LE 9, pd=1,    
+se0__SA0WGP00_SQG_msg  , LE 9, pd=1,    
+se0__sa0__DbgBusOut_wgp00, LE 9, pd=1,    
 
-  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         36.86       9.86 &   711.97 r
-  gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/Q (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          13.18      17.93 &   729.90 r
+path_1: slack -272ps;  371 violations; bundle: se0__SA0WGP00_SQG_msg; LE 9; top_net: FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_valid  ;
   gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24310_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24772_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24688_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24716_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24240_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24366_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24429_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24191_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (MB8SRLSDFQSXG4844D2BWP143M286H3P48CPDLVT)                   35.95       5.68 &   755.66 r
   gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24310_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24772_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24688_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24716_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24240_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24366_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24429_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24191_bundle_se0__SA0WGP00_SQG_msg_order_7/Q3 (MB8SRLSDFQSXG4844D2BWP143M286H3P48CPDLVT)                    8.57      39.08 &   794.74 r
-
   FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_valid (net) 
 
-path_371: slack -0.1ps; bundle: se0__SA1WGP00_SQG_ttrace_order_2; LE 7 ; top_net:   FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_spi_s_bci0_cac_t__se0__SA1WGP00_SQG_ttrace_data__42 
+path_461: slack -0.45ps; bundle: se0__SA0WGP00_SQG_msg; LE 9 ; top_net:   FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_data__46 
   gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                   36.86       9.86 &   711.97 r
   gc_pc_sx_t0/FCFPRepCLKGATEcgcg_Cpl_GFXCLK510_bundle_se0__SA0WGP00_SQG_msg_order_7/Q (CKOR2LNQAN2LPSD1AMDBWP143M286H3P48CPDULVT)                                                                                                                                                                                                                                                                                                                                                                                    13.18      17.93 &   729.90 r
   gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24289_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24331_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24394_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24408_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24485_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24100_bundle_se0__SA0WGP00_SQG_msg_order_7/CP (MB6SRLSDFQSXG4644EQBD2BWP143M286H3P48CPDULVTLL)                   29.72       3.48 &   754.40 r
   gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK24289_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24331_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24394_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24408_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24485_bundle_se0__SA0WGP00_SQG_msg_order_7_MB_FCFPRepFFcgcg_Cpl_GFXCLK24100_bundle_se0__SA0WGP00_SQG_msg_order_7/Q4 (MB6SRLSDFQSXG4644EQBD2BWP143M286H3P48CPDULVTLL)                   52.36      63.97 &   818.37 f
-
   FE_FEEDX_MFT__4__gc_pc_sx_t__gc_spi_s_bci0_cac_t__se0__SA0WGP00_SQG_msg_data__46 (net) 
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gl1ac_t0.gc_pc_sx_t0.sorted.gz
+
   FE_FEEDX_SHARE__gc_gl1ac_t0__gc_pc_sx_t0__se0__GRBMH_TA_soft_resetb (net) 
   Endpoint: gc_pc_sx_t0/FCFPRepFFMFNCpl_GFXCLK407/D (rising edge-triggered flip-flop clocked by GC_GFXCLK)
                                                                                                                                                      3    12.77 
@@ -690,31 +848,41 @@ clk_gate repeater;  top_net: cpwd0__ipx_dldo_top__gpu_dldo; bundle: cpwd0__ipx_d
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_imu_t.gc_sdma_t.sorted.gz
-  cpwd0__SEM_SDMA1_resp_send (net) 
-  FE_FEEDX_MFT__1__gc_rlc_t__gc_sdma_t__cpwd0__SEM_SDMA1_resp_send (net) 
+cpwd0__SEM_SDMA0_resp_send 
+cpwd0__SEM_SDMA1_resp_send 
+cpwd0__SEM_SDMA1_resp_status__0 
+cpwd0__SEM_SDMA1_resp_status__1 
 
-  cpwd0__SEM_SDMA0_resp_send (net) 
+  FE_FEEDX_MFT__1__gc_rlc_t__gc_sdma_t__cpwd0__SEM_SDMA1_resp_send (net) 
   FE_FEEDX_MFT__1__gc_rlc_t__gc_sdma_t__cpwd0__SEM_SDMA0_resp_send (net) 
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_cpf_t.sorted.gz
+gc__SE0SA1TA_CPF_texstat0
+
   FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_pix_min_lod__1 (net) 
-  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__SE0SA1TA_CPF_texstat0_pix_min_lod__1 (net) 
+  FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_cntr_bank_id__7 (net) 
   gc_cpf_t/FCFPRepFFcgcg_Cpl_GFXCLK327871_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327931_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327841_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327811_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327836_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327801_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327806_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327926_bundle_SE0SA1TA_CPF_texstat0_order_5/D3 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                           23.37       8.75 &  1288.25 f
 
-
   FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_cntr_bank_id__0 (net) 
-  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__SE0SA1TA_CPF_texstat0_cntr_bank_id__0 (net) 
   gc_cpf_t/FCFPRepFFcgcg_Cpl_GFXCLK327901_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327856_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327861_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327881_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327866_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327896_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327916_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327921_bundle_SE0SA1TA_CPF_texstat0_order_5/D7 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                   24.64       9.80 &  1198.65 f
 
   FE_FEEDX_MFT__2__gc_sc_bci1_t__gc_cpg_t__SE0SA1TA_CPF_texstat0_pix_lod_clamp_cnt__2 (net) 
-  FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__SE0SA1TA_CPF_texstat0_pix_lod_clamp_cnt__2 (net) 
   gc_cpf_t/FCFPRepFFcgcg_Cpl_GFXCLK327901_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327856_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327861_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327881_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327866_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327896_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327916_bundle_SE0SA1TA_CPF_texstat0_order_5_MB_FCFPRepFFcgcg_Cpl_GFXCLK327921_bundle_SE0SA1TA_CPF_texstat0_order_5/D6 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                         22.51       8.33 &  1219.07 f
 
 
-
-
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_utcl2_t.gc_cpg_t.sorted.gz
+cpwd0__CH_ACV0_ret
+cpwd0__CH_CPF_ret
+cpwd0__CH_RLC_ret
+cpwd0__CPF_CH_req_free
+
+  Startpoint: gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK2275_bundle_cpwd0__CH_RLC_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK104440_bundle_cpwd0__CPF_CH_req_order_1/CP (rising edge-triggered flip-flop clocked by GC_GFXCLK)
+  Endpoint:   gc_cpg_t/FCFPRepFFcgcg_Cpl_GFXCLK104441_bundle_cpwd0__CPF_CH_req_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK104439_bundle_cpwd0__CPF_CH_req_order_2/D1 (rising edge-triggered flip-flop clocked by GC_GFXCLK)
+  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK2275_bundle_cpwd0__CH_RLC_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK104440_bundle_cpwd0__CPF_CH_req_order_1/CP (MB2SRLSDFQ2222D2AMDBWP143M286H3P48CPDLVT)                          33.96       3.49 &   699.48 r
+  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK2275_bundle_cpwd0__CH_RLC_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK104440_bundle_cpwd0__CPF_CH_req_order_1/Q2 (MB2SRLSDFQ2222D2AMDBWP143M286H3P48CPDLVT)                          10.56      43.17 &   742.65 r
+  FE_FEEDX_MFT__1__gc_utcl2_t__gc_rlc_t__cpwd0__CPF_CH_req_free__0 (net) 
+
   FE_FEEDX_MFT__1__gc_utcl2_t__gc_rlc_t__cpwd0__CH_ACV0_ret_data__168 (net) 
   cpwd0__CH_ACVIO_ACV0_ret_data[168] (net) 
   gc_cpg_t/FCFPRepFFcgcg_Cpl_GFXCLK470753_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470666_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470468_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470867_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470627_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470087_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470774_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK470642_bundle_cpwd0__CH_ACVIO_ACV0_ret_order_1/D1 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVT)                   43.31       9.33 &  1320.50 f
@@ -723,6 +891,20 @@ clk_gate repeater;  top_net: cpwd0__ipx_dldo_top__gpu_dldo; bundle: cpwd0__ipx_d
   FE_FEEDX_MFT__2__gc_rlc_t__gc_cpg_t__cpwd0__CH_CPF_ret_data__254 (net) 
   gc_cpg_t/FCFPRepFFcgcg_Cpl_GFXCLK433372_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433302_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433656_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433686_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433172_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433326_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433600_bundle_cpwd0__CH_CPF_ret_order_2_MB_FCFPRepFFcgcg_Cpl_GFXCLK433248_bundle_cpwd0__CH_CPF_ret_order_2/D5 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                   55.26      28.02 &  1225.12 f
 
+/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpg_t.gc_utcl2_t.sorted.gz
+cpwd0__ACV0_ACVIO_CH_src
+cpwd0__ACV0_ACVIO_CH_req
+cpwd0__CH_ACVIO_ACV0_ret
+
+
+  FE_FEEDX_MFT__3__gc_cpg_t__gc_rlc_t__cpwd0__ACV0_ACVIO_CH_src_last (net) 
+  cpwd0__ACV0_CH_src_last (net) 
+  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK468115_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467908_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467953_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468020_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467957_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467907_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468111_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467975_bundle_cpwd0__ACV0_CH_src_order_1/D4 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVT)                                                                      54.22      26.88 &  1245.18 f
+  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK468164_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468120_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467906_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468033_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468176_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467921_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468063_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467930_bundle_cpwd0__ACV0_CH_src_order_1/D8 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                                                               44.15      20.19 &  1206.66 r
+
+  cpwd0__ACV0_CH_src_last 
+  cpwd0__ACV0_CH_src_data
+  cpwd0__ACV0_CH_src_mask
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pa_spi_m_ra_t0.gc_pc_sx_t0.sorted.gz
@@ -734,15 +916,6 @@ clk_gate repeater;  top_net: cpwd0__ipx_dldo_top__gpu_dldo; bundle: cpwd0__ipx_d
   FE_FEEDX_SHARE__gc_gl1ac_t0__gc_pc_sx_t0__se0__RLC_BPM_gfx_3d_en (net) 
   gc_pc_sx_t0/FCFPRepFFMFNCpl_GFXCLK316/D (SDFQTXGOPTBBD4BWP143M169H3P48CPDULVTLL)                                                                                                                                    32.30      14.12 &  1208.43 f
 
-/proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpg_t.gc_utcl2_t.sorted.gz
-  FE_FEEDX_MFT__3__gc_cpg_t__gc_rlc_t__cpwd0__ACV0_ACVIO_CH_src_last (net) 
-  cpwd0__ACV0_CH_src_last (net) 
-  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK468115_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467908_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467953_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468020_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467957_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467907_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468111_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467975_bundle_cpwd0__ACV0_CH_src_order_1/D4 (MB8SRLSDFQ4464D2AMDBWP143M1144H3P48CPDLVT)                                                                      54.22      26.88 &  1245.18 f
-  gc_utcl2_t/FCFPRepFFcgcg_Cpl_GFXCLK468164_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468120_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467906_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468033_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468176_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467921_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK468063_bundle_cpwd0__ACV0_CH_src_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK467930_bundle_cpwd0__ACV0_CH_src_order_1/D8 (MB8SRLSDFQTXGLP4444D1AMDBWP143M572H3P48CPDLVT)                                                               44.15      20.19 &  1206.66 r
-
-  cpwd0__ACV0_CH_src_last 
-  cpwd0__ACV0_CH_src_data
-  cpwd0__ACV0_CH_src_mask
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sdma_t.gc_pa_spi_m_ra_t0.sorted.gz
@@ -756,8 +929,32 @@ clk_gate repeater;  top_net: cpwd0__ipx_dldo_top__gpu_dldo; bundle: cpwd0__ipx_d
   FE_FEEDX_MFT__3__gc_gds_oa_t__gc_pa_spi_m_ra_t__CPG_SE0SPI_csdata1_data__ (net) 
   CGP_SE0_SPI_csdata 
 
+\\\ for web pages;
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/
+gc_cpf_t.gc_cpg_t/cpwd0__CPC_CH_req
+.histo  
+
+
+
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_rb_t001.gc_rb_t000/se0__SCT0_SA0DB0_tile.histo
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_rb_t001.gc_rb_t000/se0__SPI_SA0WGP00SP0_vdata.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_gds_oa_t.gc_spi_s_bci0_cac_t0/GDS_SE0SPI_addr.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_ch_t.gc_rlc_t/gc__cpwd0__CHC1_CAC_2_active.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_ch_t.gc_rlc_t/gc__cpwd0__CHC1_CAC_1_active.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_pc_sx_t0.gc_rts_0_t0100/se0__gl1cc__GL1A_GL1IR_WGP_SA1_WGP0_2_SQC_harvest.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_pc_sx_t0.gc_rts_0_t0100/se0__gl1cc__GL1A_GL1IR_WGP_SA1_WGP0_1_SQC_rep_fgcg.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_pc_sx_t0.gc_rts_0_t0100/se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_pc_sx_t0.gc_rts_0_t0100/se0__gl1cc__GL1A_WGP_SA1_WGP0_3_GL1R_SRC0_rep_fgcg.histo  
+
+
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_pc_sx_t0.gc_rts_0_t0100.sorted.gz
+
+se0__gl1cc__GL1A_GL1IR_WGP_SA1_WGP0_2_SQC_harvest  
+se0__gl1cc__GL1A_GL1IR_WGP_SA1_WGP0_1_SQC_rep_fgcg 
+se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg 
+se0__gl1cc__GL1A_WGP_SA1_WGP0_3_GL1R_SRC0_rep_fgcg
+
   Startpoint: gc_pc_sx_t0/FCFPRepFFcgcg_Cpl_GFXCLK473204_bundle_se0__gl1cc__GL1A_WGP_SA1_WGP0_2_GL1R_RET0_rep_fgcg_order_2/CP (rising edge-triggered flip-flop clocked by GC_GFXCLK)
   Endpoint: gc_rts_0_t0100/FCFPRepFFcgcg_Cpl_GFXCLK473268_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473184_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473226_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473109_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473235_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET1_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473193_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_RET0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473100_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_2_GL1R_SRC0_rep_fgcg_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK473277_bundle_se0__gl1cc__GL1A_WGP_SA0_WGP0_3_GL1R_SRC1_rep_fgcg_order_3/D2 (rising edge-triggered flip-flop clocked by GC_GFXCLK)
 
@@ -777,19 +974,79 @@ clk_gate repeater;  top_net: cpwd0__ipx_dldo_top__gpu_dldo; bundle: cpwd0__ipx_d
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpg_t.gc_cpf_t.sorted.gz
+slack -50.8,  skew -100,
+
+cpwd0__CH_CPC_ret, LE 3 , pd =3,lol=26;
+
   FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__cpwd0__CH_CPC_ret_data__131 (net) 
   FE_FEEDX_MFT__3__gc_cpg_t__gc_cpf_t__cpwd0__CH_CPC_ret_data__254 (net) 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_cpf_t.gc_cpg_t.sorted.gz
+slack -46.8, skew -102, 
+cpwd0__CPC_CH_src, LE 3 , pd =3, lol=25
+cpwd0__CPC_CH_req, LE 3 , pd =3, lol=25
+
+
+  FE_FEEDX_MFT__1__gc_cpf_t__gc_cpg_t__cpwd0__CPC_CH_src_data__13 (net) 
+  FE_FEEDX_MFT__1__gc_cpf_t__gc_cpg_t__cpwd0__CPC_CH_req_addr__8 (net) 
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_rb_t001.gc_rb_t000.sorted.gz
 
+bundles: 
+se0__SCT0_SA0DB0_tile   LE 9, pd = 7; slack -39.7 skew -113;
+  FE_FEEDX_MFT__3__gc_rb_1_t__gc_rb_t_0__se0__SCT0_SA0DB0_tile_context_id__2 (net) 
+  FE_FEEDX_MFT__3__gc_rb_1_t__gc_rb_t_0__se0__SCT0_SA0DB0_tile_context_id__1 (net) 
+se0__SPI_SA0WGP00SP0_vdata EQ 3, pd=3;  slack -5, skew -115;
+  FE_FEEDX_MFT__2__gc_rb_1_t__gc_rb_t_0__se0__SPI_SA0WGP00SP0_vdata_we__20 (net) 
+
+se0__SCT0_SA0DB0_tile  gc_rb_t000/db/udb_scdb_tile_io_no_redundancy/sc_db_tile_rtindex_reg_13__MB_sc_db_tile_rtindex_reg_8__MB_sc_db_tile_rtindex_reg_7__MB_sc_db_tile_rtindex_reg_6__MB_sc_db_tile_rtindex_reg_12__MB_sc_db_tile_rtindex_reg_11__MB_sc_db_tile_rtindex_reg_10__MB_sc_db_tile_rtindex_reg_9_/D1	-26.77
+se0__SPI_SA0WGP00SP0_vdata  gc_rb_t000/FCFPRepFFcgcg_Cpl_GFXCLK272630_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK273560_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK273032_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK273302_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK274169_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK273383_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK273089_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3_MB_FCFPRepFFcgcg_Cpl_GFXCLK271943_bundle_se0__SPI_SA0WGP00SP0_vdata_order_3/D4	-4.93
+
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_gds_oa_t.gc_spi_s_bci0_cac_t0.sorted.gz
+slack -37 skew -117 lol 22 
+bundle: GDS_SE0SPI_addr  LE 10 pd=1;  add 1 repeater, or tune sdc/constraint;
+top_net:  GDS_SE0SPI_addr_valid (net) 
+gc_gds_oa_t/FCFPRepFFcgcg_Cpl_GFXCLK452301_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452290_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452284_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452299_bundle_GDS_SE0SPI_addr_order_1/CP	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_1__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_730_MPCTS_SPLIT/E	-37.21
+gc_gds_oa_t/FCFPRepFFcgcg_Cpl_GFXCLK452301_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452290_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452284_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452299_bundle_GDS_SE0SPI_addr_order_1/CP	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_0__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_698_MPCTS_SPLIT/E	-23.50
+gc_gds_oa_t/FCFPRepFFcgcg_Cpl_GFXCLK452301_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452290_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452284_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452299_bundle_GDS_SE0SPI_addr_order_1/CP	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_1__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_730_MPCTS_SPLIT/E	-22.18
+gc_gds_oa_t/FCFPRepFFcgcg_Cpl_GFXCLK452301_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452290_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452284_bundle_GDS_SE0SPI_addr_order_1_MB_FCFPRepFFcgcg_Cpl_GFXCLK452299_bundle_GDS_SE0SPI_addr_order_1/CP	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_0__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_698_MPCTS_SPLIT/E	-9.86
+
+GDS_SE0SPI_addr	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_1__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_730_MPCTS_SPLIT/E	-37.21
+GDS_SE0SPI_addr	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_0__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_698_MPCTS_SPLIT/E	-23.50
+GDS_SE0SPI_addr	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_1__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_730_MPCTS_SPLIT/E	-22.18
+GDS_SE0SPI_addr	gc_spi_s_bci0_cac_t0/spi_s/ugfx_icg_spis_vgpr_wr_ctl_genblk_0__ugfx_icg_spis_vgpr_wr_ctl/clock_gater_0__u_dyn_oclk/d0nt_clkgate_cell_698_MPCTS_SPLIT/E	-9.86
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_ch_t.gc_rlc_t.sorted.gz                       
+slack=-35.9, skew=-67; sdc/constraint;
+top_net: 
+  cpwd0__CHC1_CAC_1_active (net) 
+  cpwd0__CHC1_CAC_2_active (net) 
+
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-35.92
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-33.53
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-33.14
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-33.09
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-32.97
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig2/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-32.76
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig2/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-32.18
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D2	-29.52
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig2/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-27.23
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig2/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-24.38
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D1	-22.85
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig2/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D3	-22.58
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D1	-21.29
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D1	-20.85
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D2	-20.04
+gc_ch_t/chc1/CHC_CAC_0_active_reg_MB_CHC_CAC_2_active_reg/CP	gc_rlc_t/gc_cac/lcac_CHC_sig0/activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0_/D1	-14.76
+gc_ch_t/chc1/CHC_CAC_1_active_reg/CP	                        gc_rlc_t/gc_cac/lcac_CHC_sig1/FxPlace_activity_value_d_reg_MB_num_active_reg_1__MB_num_active_reg_0__bank_2__734980/D	-0.41
+bundles: 
+gc__cpwd0__CHC1_CAC_2_active, EQ 0, pd=0;
+gc__cpwd0__CHC1_CAC_1_active, EQ 0, pd=0;
+# gc__cpwd0__CHC1_CAC_0_active
+
 
 
 
@@ -838,6 +1095,41 @@ cannie xue create CDC env based on NLB , run CDC;
 special timing; lihuan, flush flow; check error; 
 drv: soundwave drv report summary; 
 1 corner;
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.maxdelay_setting.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+cdc.maxdelay_setting.rpt.gz.header
+cdc.relaxed_delay_inst.rpt.gz
+cdc.techind_delay_inst.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.waived_inst.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+cdc.zerodelay_inst.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+cdcmax.json
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdcmultibit.json
+report.cdc.csv.gz
+report.cdc.path.rpt.gz
+report.cdc.summary.rpt.gz
+report.cdc.waivers.csv.gz
+report.cdc.warning.rpt.gz
+report.cdc_samedomain.csv.gz
+report.cdc_samedomain.path.rpt.gz
+report.fmt.path.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.multibit.csv.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.multibit.path.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.multibit_sync.path.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.csv.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.path.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.summary.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.waivers.csv.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.warning.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync_samedomain.csv.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync_samedomain.path.rpt.gz
+sync.maxdelay_setting.rpt.gz
+sync.maxdelay_setting.rpt.gz.header
+sync.relaxed_delay_inst.rpt.gz
+sync.techind_delay_inst.rpt.gz
+sync.waived_inst.rpt.gz
 
 \\\\\\\\ canis  drv
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/
@@ -897,26 +1189,18 @@ ls: cannot access ./rpts/Pt*/clock_si.rpt.gz:                          No such f
  ./rpts/Pt*/*si*; ./rpts/Pt*Stp*/si*
 
 
-Traceback (most recent call last):
-  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module>
-    check_rc('RC-011')
-Traceback (most recent call last):
-  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module>
-    check_rc('RC-011')
-  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2110, in check_rc
-    cell_pin, slack = extract_rc(row)
-  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2095, in extract_rc
-    slack = matchall.group().split('rpt.gz')[1].replace(',', '.')
-IndexError: list index out of range
-
+Traceback (most recent call last): File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module> check_rc('RC-011')
+Traceback (most recent call last): File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module> check_rc('RC-011')
+  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2110, in check_rc cell_pin, slack = extract_rc(row)
+  File "/home/jiaguo12/soc/drv/fix_drv.py", line 2095, in extract_rc slack = matchall.group().split('rpt.gz')[1].replace(',', '.')
 
 Reference method
 Script to summarize DRV: developed by Feng1, Jian1 
 
-/tool/pandora/bin/python3.9  /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py -instMap inst_tile.map
+/tools/pandora/bin/python3.9  /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py -instMap inst_tile.map
+                              /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
 
-/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
-~/soc/drv/fix_drv.py
+/tools/pandora/bin/python3.9  ~/soc/drv/fix_drv.py
 usage: fix_drv.py [-h] [--nonsi] [--si] [--rc] [-instMap INSTMAP] [-fix FIX] [-lib_cell_file LIB_CELL_FILE] [-waiver WAIVER]
 optional arguments:
   --nonsi               enable nonsi option to fix nonsi drv
@@ -927,17 +1211,20 @@ optional arguments:
   -lib_cell_file LIB_CELL_FILE     inst lib cells which can be used when fix drv
   -waiver WAIVER        add waiver when fixing drv
 
+
 For SI bottlneck report si_bottleneck_nets_cells_for_eco.rpt.gz , use scripts 
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/report_si_bottleneck.tcl    
 in tune/PtTim/PtTim.general.extrasirpts.tcl .
 # /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/tune/PtTim/PtTim.general.extrasirpts.tcl 
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0094_20250207_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_WithRDL/tune/PtTim/PtTim.general.extrasirpts.tcl 
 /proj/canis_pd_gfx_fct04/fct_runs/
-
-/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/
-
-/proj/canis_pd_gfx_fct02/fct_runs/
-
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/FCFP_REP_TILE_LOC_start_end_reps_io_budget/
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/bound/
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/tighten_io/tighten_io.GC_GFXCLK.guanwang.list
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/tighten_io/tighten_io.GC_GFXCLK.joanling.list
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/repeaterRelPos.txt
+/proj/canis_pd_gfx_fct01/FCT/release/to_budget/NLC/repflag
+# /proj/canis_pd_gfx_fct02/fct_runs/
 
 # Below scripts implemented above methods. developed by Ren, Qilin 
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/
@@ -966,14 +1253,7 @@ rpts/${TARGET_NAME}/check_DRV_RC012.postwaived.rpt
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.postwaived_report.rpt.gz
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/check_DRV_RC012.postwaived_fix.rpt.gz
 
-
-
-
-
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/
-
-
-
 
 
 nlc release; dft release is discussing
@@ -984,7 +1264,6 @@ tile-level work:
 nlb: reroute database
 focus on 098/099 run:  read clock design , match may be incorect
 fct099 check timing, feedback to tile team;  bundle, clock_latency, io,
-
 
 
 \\\\   0121 meeting:
@@ -1025,6 +1304,9 @@ debanking endpoint cell;
 add bounds: on internal timing, local congestions;
 memory channel: was only buffer, no flop; now has flop;
 early skew; 
+# NA /proj/murano/a0/floorplan/rel_NLD_DFT_SOC/pf_top_t/fp_00/pf_top_t.cts.early_skew.tcl
+# empty /proj/murano/
+
 /proj/canis_pd_gfx_fct01/guanwang/repeater/LSCm/gen_2tile.rpt.gz
 /proj/canis_pd_gfx_fct01/guanwang/repeater/scripts/filter_bad_nets.tcl
 /proj/canis_pd_gfx_fct01/guanwang/repeater/scripts/filter_cant_meet.tcl
@@ -1333,12 +1615,12 @@ gc_sq*	944	950
 
 
 
-/tool/aticad/1.0/src/zoo/SCBU_PD/FCT/flow/post_report/sort_mpu.sh
-/tool/aticad/1.0/flow/TileBuilder/supra/scripts/timing/sortTimingPaths
+/tools/aticad/1.0/src/zoo/SCBU_PD/FCT/flow/post_report/sort_mpu.sh
+/tools/aticad/1.0/flow/TileBuilder/supra/scripts/timing/sortTimingPaths
 /home/zyang2/home_backup/sort_davlu_si.csh
-/tool/aticad/1.0/src/zoo/SCBU_PD/FCT/flow/configs/canis/a0/SOC/flow_scripts/sort.csh
+/tools/aticad/1.0/src/zoo/SCBU_PD/FCT/flow/configs/canis/a0/SOC/flow_scripts/sort.csh
 /home/zyang2/home_backup/Mi350/Tile_SPT/spt_web_11244.pl 
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
 
 /tools/aticad/1.0/flow/TileBuilder/supra/scripts/timing/sortTimingPaths -outdir $outdir -tmpdir $outdir -groups -gzip -clockinfo -extrainfo -prefix fullchip -inst "(acp_.*?) (athub_.*?) (chnl_*) (dce_.*?) (df_.*?) (dfx_.*?) gc/(se0/gc_.*?) gc/(se1/gc_.*?) gc/(se0/*?) gc/(se1/*?) gc/(.*?) (se0/.*?) (se1/.*?) gc_top_t/gc/(.*?) gc_top_t/(se0/.*?) gc_top_t/(se1/.*?) gc_top_t/(.*?) (gc_*?) (io_usb_s5_t) (mmhub_.*?) (nbio_.*?) (oss_.*?) (stat.*?) (serdes.*?) (smu_.*?) (umc_.*?) (uvd_.*?) (vdci.*?) (usb_t_hc_0/.*?) (usb_t_hc_1/.*?) (io_t/.*?) (mp4_top_t/.*?) (dcn_top_t/.*?) (vcn_top_t/.*?) (ddrss_top_t/.*?) (ddrss_top_h_t/.*?)" $1 -limit $limit
 #/tools/aticad/1.0/src/zoo/SCBU_PD/FCT/flow/post_report/sortTimingPaths -outdir $outdir -tmpdir /tmp -groups -gzip -clockinfo -extrainfo -prefix fullchip -inst "(acp_.*?) (athub_.*?) (chnl_*) (dce_.*?) (df_.*?) (dfx_.*?) gc/(se0/gc_.*?) gc/(se1/gc_.*?) gc/(se0/*?) gc/(se1/*?) gc/(.*?) (se0/.*?) (se1/.*?) gc_top_t/gc/(.*?) gc_top_t/(se0/.*?) gc_top_t/(se1/.*?) gc_top_t/(.*?) (gc_*?) (io_usb_s5_t) (mmhub_.*?) (nbio_.*?) (oss_.*?) (stat.*?) (serdes.*?) (smu_.*?) (umc_.*?) (uvd_.*?) (vdci.*?) (usb_t_hc_0/.*?) (usb_t_hc_1/.*?) (io_t/.*?)" $1 -limit $limit
@@ -1348,27 +1630,27 @@ gc_sq*	944	950
 #foreach group $group_list {
 #report_timing -delay_type max -nets -cap -tran -input_pins -nosplit -group $group -max_paths 500000 -unique_pins  -nworst 10 -slack_lesser_than 50 > ./davlu/$group/${group}_max.rpt.gz
 #}
-  #      /tool/aticad/1.0/bin/perl -w /home/djlu/Greenland/FCT/filter_pt.pl -e FCFPRep -e FCFP_AXI  $timing_report_files_nossb > rpts/$TARGET_NAME/sort_timing/report_norep_timing.rpt.gz
+  #      /tools/aticad/1.0/bin/perl -w /home/djlu/Greenland/FCT/filter_pt.pl -e FCFPRep -e FCFP_AXI  $timing_report_files_nossb > rpts/$TARGET_NAME/sort_timing/report_norep_timing.rpt.gz
 #
 set TARGET_NAME = PtIlmFUNCSSG0P65VRCWORSTCCWORST100CSSG0P65V0CHldXtiming
 
 ls -lrt $base_dir/rpts/$TARGET_NAME/*DBG*max.rpt* |grep -v clock_gating_default_max| awk '{if ($5>310) print $9}'|sort > $base_dir/rpts/$TARGET_NAME/ssb_list_DBG
 ls -lrt $base_dir/rpts/$TARGET_NAME/*max.rpt* |zgrep -v "DBG" | grep -v clock_gating_default_max| awk '{if ($5>310) print $9}'|sort > $base_dir/rpts/$TARGET_NAME/ssb_list_noDBG
 
-/tool/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/SSB_report_noDBG.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
-/tool/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/si_clock_gating_default_max.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
+/tools/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/SSB_report_noDBG.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
+/tools/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/si_clock_gating_default_max.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
 
 bsub -P v20-pd -q regr_high -Is -R "rusage[mem=50000]" -R "select[type==RHEL4_64 || type==RHEL5_64]" sortTimingPaths -extrainfo -gzip -clockinfo -params tile.params -prefix fullchip -hvt "*SVT08*" -outdir ./rpts/davlu/manual/$TARGET_NAME/ -inst "compute_array0/\w+ compute_array1/\w+ compute_array2/\w+ compute_array3/\w+ \w+" $base_dir/rpts/$TARGET_NAME/SSB_report_all.rpt.gz
 
 /home/hhelong/createOwnershipTables.pl -nickname $TARGET_NAME -sort rpts/davlu/manual/$TARGET_NAME -rel_dir $base_dir -prefix H -path_type all rpts/davlu/manual/$TARGET_NAME/fullchip.report.gz
-cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncSSG0p65vRCWORST --web Main --file=- -d
+cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tools/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncSSG0p65vRCWORST --web Main --file=- -d
 
-#/tool/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/si_clock_gating_default_max.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt.gz
+#/tools/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/si_clock_gating_default_max.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt.gz
 
 #bsub -P v20-pd -q regr_high -Is -R "rusage[mem=20000]" -R "select[type==RHEL4_64 || type==RHEL5_64]" sortTimingPaths -extrainfo -gzip -clockinfo -params tile.params -prefix fullchip -hvt "*ur" -outdir ./rpts/davlu/$date/$TARGET_NAME/ -inst "compute_array0/\w+ compute_array1/\w+ compute_array2/\w+ compute_array3/\w+ \w+" $base_dir/rpts/$TARGET_NAME/SSB_report_all.rpt.gz
 
 #/home/hhelong/createOwnershipTables.pl -nickname $TARGET_NAME -sort rpts/davlu/$date/$TARGET_NAME -rel_dir $base_dir -prefix H -path_type all rpts/davlu/$date/$TARGET_NAME/fullchip.report.gz
-#cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncFFG1p05vRCWORST --web Main --file=- -d
+#cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tools/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncFFG1p05vRCWORST --web Main --file=- -d
 
 
 set TARGET_NAME = PtIlmFUNCFFG1P05VRCWORSTCCWORST100CFFG1P05V100CHldXtiming
@@ -1386,23 +1668,23 @@ foreach CLK (`cat $base_dir/rpts/$TARGET_NAME/ssb_list_noDBG`)
 cat $CLK >> rpts/$TARGET_NAME/SSB_report_noDBG.rpt.gz
 end
 
-/tool/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/SSB_report_noDBG.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
-/tool/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/si_clock_gating_default_max.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
+/tools/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/SSB_report_noDBG.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
+/tools/aticad/1.0/bin/perl -w  /home/djlu/Greenland/FCT/filter_pt.pl -r FCFP_SSB rpts/$TARGET_NAME/si_clock_gating_default_max.rpt.gz >> rpts/$TARGET_NAME/SSB_report_all.rpt
 
 
 bsub -P v20-pd -q regr_high -Is -R "rusage[mem=50000]" -R "select[type==RHEL4_64 || type==RHEL5_64]" sortTimingPaths -extrainfo -gzip -clockinfo -params tile.params -prefix fullchip -hvt "*SVT08*" -outdir ./rpts/davlu/manual/$TARGET_NAME/ -inst "compute_array0/\w+ compute_array1/\w+ compute_array2/\w+ compute_array3/\w+ \w+" $base_dir/rpts/$TARGET_NAME/SSB_report_all.rpt.gz
 
 /home/hhelong/createOwnershipTables.pl -nickname $TARGET_NAME -sort rpts/davlu/manual/$TARGET_NAME -rel_dir $base_dir -prefix H -path_type all rpts/davlu/manual/$TARGET_NAME/fullchip.report.gz
-cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncSSG0p65vRCWORST --web Main --file=- -d
+cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tools/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncSSG0p65vRCWORST --web Main --file=- -d
 
 #/home/hhelong/createOwnershipTables.pl -nickname $TARGET_NAME -sort rpts/davlu/$date/$TARGET_NAME -rel_dir $base_dir -prefix H -path_type all rpts/davlu/$date/$TARGET_NAME/fullchip.report.gz
-#cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tool/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncFFG1p05vRCWORST --web Main --file=- -d
+#cat rpts/davlu/$date/$TARGET_NAME/fullchip.report.twiki | /tools/sysadmin/scripts/twikiedit --create --modify --topic ${day}_Ilm_Si_FuncFFG1p05vRCWORST --web Main --file=- -d
 
 \\\\\\\\\ RepeaterTraceFlow
 #### Creating a repeater trace from GenEnhanced xmls file
 create an FCFP repeater trace from GenEnhancedRepeater XML, with following script (typically included as a FINISH script to repeater insertion target).
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x data/GenEnhancedRepeaterXML.xml -t <top_module>  > data/early_trace_preopt.txt
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/doc/nl_repeaters.xml  -t gc > data/early_trace_preopt.txt
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x data/GenEnhancedRepeaterXML.xml -t <top_module>  > data/early_trace_preopt.txt
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/gen_early_trace.py -x /proj/canis/a0/floorplan/rel_LSCm_GFX/gc/fp_latest/doc/nl_repeaters.xml  -t gc > data/early_trace_preopt.txt
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/
 /proj/canis_pd_gfx_fct04/fct_release/FCT0061_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10/ 
@@ -1416,7 +1698,7 @@ The design input in this case is the list of def files.  Floorplan def files can
 These def files can be the final def files, after collapse. 
 Super tiles are flattened at this stage, hence this offers a true picture at the interface of the tiles. 
 Other inputs are configured via the measure_xmls.py file which is located in the current run directory. An example is provided here:
-/tool/aticad/1.0/src/zoo/azmohamm/doc/measure_xmls.py
+/tools/aticad/1.0/src/zoo/azmohamm/doc/measure_xmls.py
 The file format can be kept simple (even though this is executed as a python script, so can include python code) like:
 var=value
 The most important input here are the XMLs:
@@ -1427,7 +1709,7 @@ but as I have learnt the hardway those files don't have all the info, so it does
 The first thing is to have this environment variable set:
 setenv TILEMAP_CSV fcfp.csv
 The command to generate the trace file (unprocessed):
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/measure_rep_dist.py -d clk -l def_list -f fcfp.csv -c ./all_conn  -t trace.out -p measure_xmls.py
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/measure_rep_dist.py -d clk -l def_list -f fcfp.csv -c ./all_conn  -t trace.out -p measure_xmls.py
 clk here is a regex for the clocks of interest ("." will get the trace for all the clocks)
 def_list is a comma separate values of tile,path_to_def
 trace.out is the name of the trace file generated
@@ -1444,20 +1726,20 @@ foreach_in_collection p [get_pins se1/*] {
 }
 close $ac
 We would normally want to sort the net traces in decreasing order of max repeater distance. The below script comes in handy.
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m trace_fp_nlc > trace_fp_nlc_max
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m trace_fp_nlc > trace_fp_nlc_max
 Raw viewEdit
 Optimizing the trace
 The trace file generated at the floorplan stage uses placement locations which are going to be quite different from the final placement. This is likely to show lots of distance violations which are not real since the placement of repeaters within the tile is not optimal. To find out the real violations, we simulate the best case - this is called the optimization step. The repeaters within the tile are relocated to fix the repeater distance violations. It is important to point out that the repeater topology is not changed - that is, the trace flow never moves a repeater from one tile to another.
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -p 750 > trace_opt_nlc
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -p 750 > trace_opt_nlc
 The value of 750 passed as argument p here is the repeater distance which we aim to achieve. The optimization + sorting is doable in a single step:
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -a algo3 -p 750 | \
-          /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m > trace_opt_nlc_max
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/arrange_reps.py -i trace_fp_nlc_max -a algo3 -p 750 | \
+          /tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m > trace_opt_nlc_max
 Raw viewEdit
 Generating the relpos file
 The relpos file is consumed by the budgeting step. However, there is another important reason to run this step. Until the previous stage, repeaters are all considered unique. This might create some optimism in case of reuse tiles (the effect of collapse isn't captured). It is at this stage that the reuse repeaters are de-uniquified. The final trace and the relpos file are generated with this command:
 
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_rel_pos.py -i trace_opt_nlc_max -o repeaterRelPos.txt -d relpos.dbg -t rel_trace_opt_nlc 
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m rel_trace_opt_nlc > rel_trace_opt_nlc_max
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/gen_rel_pos.py -i trace_opt_nlc_max -o repeaterRelPos.txt -d relpos.dbg -t rel_trace_opt_nlc 
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m rel_trace_opt_nlc > rel_trace_opt_nlc_max
 Raw viewEdit
 Processing the trace file
 filter_pt.pl comes in very handy when working with the trace file. The command below for example filters out all EQ0 and LE0 contracts:
@@ -1470,19 +1752,19 @@ filter_pt.pl -s "Trace of" -o 'domain=.*SMNCLK' -o 'domain=Cpl_LCLK' trace_nld_f
 filter_pt.pl -s "Trace of" -r 'domain=Cpl_DCLK' trace_nld_fp_merged > trace_dclk
 
 # Now optimize..
-/tool/aticad/1.0/azmohamm/scripts/arrange_reps.py  -i trace_lclk_smnclk -p 1150 -f   /home/azmohamm/mero/fcfp.csv   |  \
-      /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_lclk_smnclk_opt
+/tools/aticad/1.0/azmohamm/scripts/arrange_reps.py  -i trace_lclk_smnclk -p 1150 -f   /home/azmohamm/mero/fcfp.csv   |  \
+      /tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_lclk_smnclk_opt
 
-/tool/aticad/1.0/zoo/azmohamm/scripts/arrange_reps.py  -i trace_dclk -p 1300 -f   /home/azmohamm/mero/fcfp.csv   |  \
-       /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_dclk_opt
+/tools/aticad/1.0/zoo/azmohamm/scripts/arrange_reps.py  -i trace_dclk -p 1300 -f   /home/azmohamm/mero/fcfp.csv   |  \
+       /tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_dclk_opt
 
-/tool/aticad/1.0/zoo/azmohamm/scripts/arrange_reps.py  -i trace_hsp_shubclk -p 1500 -f   /home/azmohamm/mero/fcfp.csv   |  \
-       /tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_hsp_shubclk_opt
+/tools/aticad/1.0/zoo/azmohamm/scripts/arrange_reps.py  -i trace_hsp_shubclk -p 1500 -f   /home/azmohamm/mero/fcfp.csv   |  \
+       /tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  > trace_hsp_shubclk_opt
 
 cat trace_lclk_smnclk_opt trace_dclk_opt trace_hsp_shubclk_opt > trace_for_rel
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/gen_rel_pos.py -i trace_for_rel -o full_relpos.txt -d relpos.dbg -t trace_postrel
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/gen_rel_pos.py -i trace_for_rel -o full_relpos.txt -d relpos.dbg -t trace_postrel
 
-/tool/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  trace_postrel >  trace_postrel_max
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/sort_trace.pl -m  trace_postrel >  trace_postrel_max
 Raw viewEdit
 Generating bounds based on the trace file
 Even if the optimal trace does not contain any repeater distance violations, the post placement trace can. This happens because the placer choses a repeater placement different from the optimized trace. Repeaters which are close to violating the distance requirement in the optimal trace are likely to go well over the edge and cause a large distance issue. As an additional protection step, graphics fcfp teams create bounds on these critical repeaters to prevent any such large displacement from the optimal trace.
@@ -1566,11 +1848,11 @@ cd ../FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort
 gvim SortPtGfxFuncTT0p6vReRouteFlatTyprc100cTT0P6V0CStpTiming/fullchip.Grp.GC_MTAP_Wrck.gc_vmem_rt_0_t0000.sorted.gz
 cd ../../../FCT0038_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB/
 resolve ../FCT0040_20241216_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_NLB_nosp/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/fullchip.
-/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
-bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
-bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
-bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py .&'
-bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py'
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]   select[type==RHEL7_64||type==RHEL6_64]' '/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py . &'
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py .&'
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=3200]   select[type==RHEL7_64||type==RHEL6_64]' '/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py'
     
 
 
@@ -1756,32 +2038,24 @@ Advanced Tcl History
 
  gui_start
  current_design
- help *no_clock*; help *clock*;
- help report*; help *skew*; 
+ help *no_clock*; help *clock*; help report*; help *skew*; 
  puts $argv; puts $argc; set argc;
  report_clocks
  get_clock
- report_clock
- report_clock_crossing
- report_clock_gate_savings
- report_clock_gating_check
+ report_clock; report_clock_crossing; report_clock_gate_savings; report_clock_gating_check;
 
  restore_session rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
  set {worst.endpts.default.GC_ACVCLK.setup.paths} [::get_timing_paths -delay_type max -path_type full_clock_expanded -to [get_selection] -max_paths 999999 -nworst 1 -slack_lesser_than 0 -include_hierarchical_pins -group {GC_ACVCLK}]
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
- check_repeater_bundle_cycle.tcl -inst_map inst_tile.map
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
- trace_clk_path
- trace_clk_path -inst_map inst_tile.map -clks GC_ACVCLK
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl
+ trace_clk_path -inst_map inst_tile.map -clks GC_ACVCLK; # clk_trace/*;  trace_clk_path.log;
+ check_repeater_bundle_cycle -inst_map inst_tile.map -nl_xml pd_repeaters.xml
  list_sink_numbers_by_clk
- ls -al ./clk_sink_numbers.csv
- sh gvim clk_sink_numbers.csv
+ # sh gvim clk_sink_numbers.csv
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_bi_net_rep.tcl
  check_bi_net_rep -inst_map inst_tile.map -nl_xml pd_repeaters.xml
- ls -al bi_nets.rpt; sh gvim bi_nets.rpt;
- source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
- check_repeater_bundle_cycle -inst_map inst_tile.map -nl_xml pd_repeaters.xml
+ #  sh gvim bi_nets.rpt;
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC011.tcl
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/check_RC012.tcl
  ls -al rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ -t
@@ -1790,20 +2064,18 @@ Advanced Tcl History
  source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
  report_min_period -help
  report_analysis_coverage -help
+
  ls ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteHdmTyprc100cTT0P75V100CStpTiming/ptsession/
  restore_session rpts/PtGfxFuncTT0p75vReRouteHdmTyprc100cTT0P75V100CStpTiming/ptsession
 
 
-
-csh> TileBuilderIntPrimetime cmds/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.cmd
-csh> source ~sdhe/.cshrc
-csh> which module
-csh> module load primetime/2022.03-SP5-2-T-20230819
-csh> pt_shell;
-csh> module unload primetime
-csh> module avail pt_shell
+# csh> TileBuilderIntPrimetime cmds/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming.cmd
+csh> source ~sdhe/.cshrc; which module;
+# csh> module load primetime/2022.03-SP5-2-T-20230819
+# csh> module unload primetime; module avail pt_shell
 csh> module load primetime/2023.12-SP5
 csh> cd ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/;  ls rpts/PtGfxFunc*0p75*/ptsession
+csh> pt_shell;
 
 csh>  ps -w `whoami`
 csh>  ps -u jiaguo12
