@@ -2,9 +2,304 @@
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
 /proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.maxdelay_setting.rpt.gz
+# CDCEFPM  : cdc enhanced flipflop with metastability;
+# set maxdelay = max (CdcDestSetup, DestClkCnt * the period of its fastest fanout clocks)
 /proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
 /proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
 
+
+\\\\\\\\ timing verification CDC SOC .doc
+
+Timing Verification for CDC Paths in Large-scale SOCs
+
+
+
+Sambasivan Narayan, Michael J. Tresidder
+
+
+
+
+AMD
+Boxborough, Mass., USA and Markham, Ont., Canada
+
+www.amd.com
+
+
+
+
+
+
+
+
+
+ABSTRACT
+
+
+
+Signals undergoing asynchronous transfers and crossing clock-domain boundaries are typically flagged and checked with static tools at the register-transfer or gate level. The conventional methodology of false-pathing these signals during implementation and STA stages potentially violates certain temporal assumptions associated with these crossings that need to be met to produce an error-free design. Manually verifying these assumptions is not a scalable approach for a large SOC with millions of such signals. In this paper, we detail our methodology of embedding these timing assumptions into the RTL, which allows the timing requirements to be verified during functional simulation and carried forward into the implementation and STA stages, and focus on our approach to timing these paths efficiently using virtual clocks in PrimeTime for very large SOC designs.
+
+
+ 
+Table of Contents
+
+1.	Introduction	3
+2.	Requirements during RTL Creation	3
+3.	Requirements during Synthesis and Physical Design	7
+4.	Requirements during Logical Equivalence Checking	7
+5.	Performing STA Analysis	8
+6.	Gray-coded Pointer checking	11
+7.	Summary	12
+8.	References	12
+
+Table of Figures
+
+Figure 1 : Use of CDCBUFEN Cells in Conjunction With SYNCHRONIZERS.	4
+Figure 2 : Timing for Circuit of Figure 1.	5
+Figure 3 : Use of input delay on synchronizers.	6
+
+
+ 
+Introduction
+
+Our SOC designs contain a variety of IPs created by independent teams using different methodologies during non-overlapping time periods. As a result, in a typical SOC, there are multiple cases of clock-domain crossings signals (CDC paths) employing differing synchronization schemes [1]. An error-free tapeout requires that these paths and synchronization schemes undergo structural and static checking [3] and be modeled with appropriate uncertainty during the RTL functional verification [2].
+
+Traditionally, during the static timing analysis (STA) stage these paths have been treated as false paths requiring error-prone manual checks, entailing schedule burden or risk to the final silicon. As SOC complexity scales up, there is a need to provide automated solutions that address the timing requirements of these clock-domain crossing paths in a manner that is consistent with the assumptions used at the front-end and functional-verification stages.
+
+In this paper, we outline our methodology that embeds the requirements for the CDC paths during the RTL creation stage, allowing the automation of the necessary functional verification and structural checking in the front end of the design. We explain the requirements as the design progresses to the final STA step and the technique adapted to ensure these paths are automatically timed in a scalable fashion, consistent with the front-end assumptions.
+
+1.	Requirements during RTL Creation 
+
+When the RTL for the design is created, the designers are required to deploy specific marker cells in the CDC paths based on their underlying functionality (pseudo-static, asynchronous, or domain-crossing signal) and the synchronization scheme that is being used. These cells cover the traditional multi-stage flip-flop synchronizer (SYNCHRONIZER) and special elements called CDCBUF and CDCBUFEN, which logically act as combinational BUFFER and AND gates. Behaviorally, each marker allows for the modeling of the inherent uncertainty in the paths during functional simulation [7]. The marker instances are parameterized to support multi-bit usage and act appropriately when used as such, for example in cases like gray-coded pointers [2]. Associated with these marker cells, the designer sets parameters representing the nature of, and period of uncertainty to be modeled in the path [7]. Figures (1) and (2) illustrate some representative use cases.
+
+When this RTL is checked with the static CDC tools, the marker cells are appropriately recognized as valid synchronizer cells and no missing synchronizer errors are generated. Further, the fanin and fanout of these paths are checked for any additional structural issues [4].
+
+During the functional simulation, the uncertainty parameters in the marker cells are used by the associated behavioral view to introduce equivalent periods of uncertainty to the output of these marker cells whenever their inputs transition [2]. Associated assertion-checking ensures that the synchronization scheme does not fall prey to undersampling issues nor does the scheme allow the capture of any data during the periods of uncertainty. For example, for the circuit in Figure (1), the CDCBUFEN behavioral model can check to ensure that when the EN pin is asserted, the input data DATA_S0 is stable and outside its uncertainty window when sampled by the destination clock, Figure (2). For the purposes of audit and review, these parameters are further logged into the output file of the simulation.
+
+Based on the uncertainty parameters, at the onset of physical implementation, each marker cell has an associated time period that was exercised in functional simulation to ensure that the synchronization scheme is robust within that period of uncertainty and the circuit has undergone static analysis with sign-off by the RTL designer. To ensure proper design closure and to avoid repeating the checks at the gate level, the implementation in physical design must avoid introducing any additional structural violation and ensure that the timing never exceeds the uncertainty period qualified during functional simulation.
+
+
+ 
+
+Figure 1 : Use of CDCBUFEN Cells in Conjunction With SYNCHRONIZERS.
+As a general guideline, CDCBUF and CDCBUFEN cells are used for domain crossing on the datapath and synchronizers are used on the control path. CDCBUF and CDCBUFEN cells provide the structural integrity of the datapath under the assumption of stability while the SYNCHRONIZER communicates stability of the data.
+Ignoring clock skews in the source domain between the control and data launch registers, the time requirement through the DATA_D0 and DATA_D1 marker cells is:
+Delay(DATA_S0->DATA_D0) < delay(RDY_S) + 3 cycles of DEST_CLK
+ 
+Figure 2 : Timing for Circuit of Figure 1.
+RDY_S and RDY_D signals serve as a handshake between source and destination domains, indicating when data is available for transfer.
+Proper transfer of data requires that the data at the output of the CDCBUFEN be stable whenever sampled in the destination domain. When the EN pin is asserted, the propagated DATA_S* must have settled prior to DATA_D* being sampled in the destination domain.
+The total propagation time available for each DATA_S* to DATA_D* depends on the minimum latency through the synchronizer.
+Here the  minimum latency of the synchronizer is two clock cycles, plus an allotment of just less than the following setup cycle.
+
+
+ 
+ 
+
+Figure 3 : Use of Input Delay on SYNCHRONIZERS.
+In a real, physical implementation signals take time to propagate from the source launch flop to where it is first sampled in the destination domain. In many cases, the physical separation of the SYNCHRONIZER from the launch flop is small and the propagation time is insignificant. However, where separation distances are significant, the uncertainty in this propagation must also be taken into consideration. While this is true for performance modeling of singularly synchronized signals, its effect is most poignant when a signal is fanned out to multiple synchronization points.
+Here, consider the case in which multiple fanouts of a single signal are synchronized into multiple IPs throughout the SOC. The arrival time difference between the two IPs could cause simulation of inter-IP communication to be modeled incorrectly. In addition to the synchronization uncertainty, the arrival uncertainty at the input of the SYNCHRONIZER should also be modeled where it is significant enough to potentially create additional skew relative to the DEST_CLK period.
+For this reason, the propagation time to the SYNCHRONIZER input is modeled as a delay parameter to the input of the SYNCHRONIZER. Additional cycles of uncertainty, up to the limit of the delay parameter, can be added to signal propagation latency during functional simulation.
+
+
+
+
+
+
+
+
+2.	Requirements during Synthesis and Physical Design
+
+In the synthesis view, the modules representing the marker cells translate into instances of special gate cells from the technology library. These gate cells are recognized as dont_touch by the synthesis tools and flows, and thus any logic restructuring across these marker cells is avoided.
+
+To facilitate the association of the RTL delay values with the gate instances, we also exploit the in-built naming scheme used by most synthesis tools when expanding parameterized modules; namely, the parameter values are appended to the expanded gate module name in the gate netlist.
+
+// Source RTL for the marker cell model
+module cdcbuf_wrapper(A,Z,DSTCLK);
+parameter delay = 100000;  // large default
+input A, DSTCLK; 
+output Z;
+`ifndef SYNTHESIS
+// behavioral model that randomizes the output on every input   // transition for `delay` timesteps
+`else
+// Note the RTL only pin DSTCLK pin that allows recognizing 
+//	this as a synchronizer during the static checks and not
+// used in the gate view
+		cdcbff1x d0nt_CDCFPM(.A(A), .Z(Z));
+`endif
+endmodule
+
+// IP named IPX‘s RTL excerpt that instantiates the module
+cdcbuf_wrapper #(.delay(300)) inst33(.A(src_data), .Z(dst_data), .DSTCLK(clk2));
+
+// Synthesized gate netlist
+module IPX_cdcbuf_wrapper_delay300(A, Z);
+input A;
+output Z;
+cdcbff1x d0nt_CDCFPM(.A(A), .Z(Z));
+endmodule
+
+// Finally the synthesized instance inside IPX module
+cdcbuf_wrapper_delay300 inst33(.A(src_data), .Z(dst_data));
+
+
+3.	Requirements during Logical Equivalence Checking
+
+Any logic restructuring that occurs across the input of the marker cells could introduce gate-specific structural violations that invalidate the sign-off that occurred in the front end. By treating the marker cells as dont_touch during synthesis, we can avoid the repetition of the CDC structural checking at the gate level. There is still the case of designs implemented using custom methodologies or potential tool or flow bugs that disregard the dont_touch attribute. Hence, a check is introduced in the logical equivalence step that treats these marker cell inputs as cutpoints or black boxes, and the logic at the fanin and fanout cone of the marker cells is matched between the RTL and gate implementation.
+
+As part of this logical equivalence checking, a report that maps the gate and RTL instances of the marker cells is produced. This facilitates the mapping of RTL delay values to gates for custom or other non-standard designs in which the module name encoding did not occur by allowing us to look up these values in the simulation output file for each RTL instance.
+
+4.	Performing STA Analysis
+
+When we begin STA analysis, we have the gate netlist with instances of the marker cells and their associated delay values. During regular STA, the CDC paths through these marker cells are typically false-pathed due to the presence of inter-clock set_false_path commands or, increasingly, the set_clock_groups command. The delay values associated with the marker cells can notionally be expressed as set_max_delay values. This requires that the clock insertion delays at the source and destination points be discarded by declaring the clocks as ideal. Further, the false paths between the clocks must be disabled for the max_delay to apply. This approach does not lend itself to automation without affecting follow-on steps and reports. In particular, the removal of the false paths causes a dramatic and unacceptable increase in run-time and memory usage.
+
+Our technique to time these paths in STA is based on creating a virtual clock and constraining the CDC paths on this virtual clock using a combination of set_max_delay or set_multicycle_path through the markers and set_input_delay and set_output_delay on the startpoint and endpoints of the path. The steps involved are as follows:
+
+1.	Collect and create a collection of the marker pins. The filter command is shown only for a subset of cell types for brevity.
+
+set MARKER_PINS [get_pins –of \
+[get_cells –h .* -regexp \
+–filter {ref_name =~ cdc.*}] \
+     –filter {pin_name == A}]
+
+2.	Define a new virtual clock named CDC_VIRTCLOCK with no clock network or clock latencies. Any pre-existing inter-clock set_false_path or set_clock_group would not apply to this clock.
+
+create_clock –name CDC_VIRTCLOCK –period $PERIOD
+
+3.	Declare this clock as physically_exclusive to avoid creating interfering arrival windows during SI analysis or impacting the timing of the real design clocks.
+
+set_physically_exclusive –group CDC_VIRTCLOCK
+
+4.	Set the input delay on the startpoints of the CDC paths to zero (including ports and CLK pin of registers). This allows the timing to be performed without including any clock latencies at the startpoint in the delay calculation.
+
+set_input_delay 0 –add_delay –clock CDC_VIRTCLOCK \
+							[all_fanins –startpoints –flat –to $MARKER_PINS]
+
+5.	Set the output delay on the endpoints of the CDC paths to zero (including ports and D pins of registers). This allows the timing to be performed without including any clock latencies at the endpoint in the delay calculation. 
+
+set_output_delay 0 –add_delay –clock CDC_VIRTCLOCK \
+[all_fanouts –endpoints –flat –from $MARKER_PINS]
+
+6.	Set the timing requirement for the paths through the marker cells using set_max_delay to match the RTL value. The TCL procedure lookup_delay_value accomplishes this by parsing the module name of the parent module of the marker cell or using the simulation output and the logical equivalence mapping file mentioned before.
+
+# The following returns 300 in simulation time units
+# [get_attr $cell full_name]
+# 											 = UNITX0/IPX0/inst33/d0nt_CDCFPM
+# [file dirname ...] = UNITX0/IPX0/inst33
+# [get_attr [get_cell ...] ref_name] 
+# 									 	   = IPX_cdcbuf_wrapper_delay300
+# lookup_delay_value \
+# 		[get_pin UNITX0/IPX0/inst33/d0nt_CDCFPM]
+
+proc lookup_delay_value { cell } {
+regexp {cdcbuf_wrapper_delay(\d+)$} \
+[get_attr \
+[get_cell [file dirname [get_attr $cell full_name]]] \
+ ref_name] => delay_value
+return $delay_value	
+}
+
+foreach_in_collection pin $MARKER_PINS {
+set_max_delay –from CDC_VIRTCLOCK \
+–through $pin –to CDC_VIRTCLOCK \
+[lookup_delay_value [get_cell –of $pin]]
+     }
+	 
+7.	The constraints created in steps (2) through (6) get written out to a file that gets sourced just before the main update_timing step occurs to avoid any unnecessary updates to the timing graph due to the all_fanin and all_fanout commands.
+
+# source <virtual constraints file>
+update_timing
+
+8.	Gather all the paths violating the timing requirements that have only inter-clock false paths between their source and destination real clocks. This step effectively converts the CDC timing problem from one involving false paths and manual calculation of slacks (see the next step) to that of reporting the slack for the virtual clock group, which is performed very efficiently in Primetime.
+
+set paths1 [get_timing_path –slack_lesser_than 0 \
+-to [all_fanout –endpoints ...]
+–group CDC_VIRTCLOCK –max_paths $BIGNUM]
+
+9.	Checks paths with other kinds of false paths (Ex. set_false_path –through pins, set_false_path –from pins, etc.) that will continue to apply to the virtual clock group. 
+
+set paths2 [get_timing_path –slack_greater_than 99999 \
+-to [remove_from_collection \
+[all_fanout –endpoints ...] \
+[get_attr $paths1 endpoint]] \
+                    –group CDC_VIRTCLOCK –max_paths $BIGNUM]
+
+10.	The paths generated in Step (9) will always have a slack of INFINITY and the slack must be calculated using the arrival and points attributes of the timing_path object.
+set pts [get_attr $path points]
+set fp_time [get_attr \
+[index_collection $pts \
+[expr [sizeof_collection $pts] – 1]] \
+						[get_attr [index_collection $pts 0] arrival]
+set marker_pins {}
+     foreach_in_collection pin \
+[filter_collection \
+[get_attr [get_attr $path points] object] \
+{object_class == pin}] {
+if { 0 != [sizeof_collection \
+[filter_collection [get_cell –of $pin] \
+–regexp {ref_name =~ cdc.*}]] } {
+	append_to_collection marker_pins $pin
+}
+}
+set slack [expr $fp_time - \
+[lookup_delay_value $marker_pins]]
+
+Note that this command can be used repeatedly without utilizing this virtual clock methodology to perform the same check, albeit with significant runtime penalty.
+
+These steps perform timing to the D pin of registers only and the associated setup time of the register does not get included in the slack calculation. This can be handled by margining the calculated slack on the paths or using the following refinement:
+
+a.	Collect the fanouts that are pin endpoints to facilitate the get_timing_arcs command. 
+
+set fanouts [filter_collection \
+[all_fanout –from $MARKER_PINS –flat \
+–endpoints_only] \
+{object_class == pin}]
+
+b.	Collect the setup arcs (all the possible arcs senses are not shown for brevity) and the setup times associated with each endpoint and store it in the MAX_SETUP_TIMES array.
+
+set MAX_SETUP_TIMES *
+foreach_in_collection arc \
+[get_timing_arcs –to $fanouts \
+–filter {is_cell_arc && (sense == setup_clk_rise ||
+sense == setup_clk_fall || … )}] {
+lappend MAX_SETUP_TIMES([get_attr $arc to_pin]) \
+[get_attr $arc delay_max_rise]
+		 lappend MAX_SETUP_TIMES([get_attr $arc to_pin]) \
+[get_attr $arc delay_max_fall]
+}
+
+c.	The maximum (or average) of these setup times can now be used with the set_output_delay command at the endpoints in step (5) above.
+
+foreach {ep values} [array get MAX_SETUP_TIMES] {
+set_output_delay [lindex [lsort –real $values] end] \
+–add_delay –clock CDC_VIRTCLOCK			
+     }
+
+Querying the timing_arc attributes may induce a timing_update, so the setup time is better margined into the slack than explicitly calculated.
+
+Lastly, to facilitate review of the results, the reporting is done using the actual design clocks on the startpoint and endpoint rather than the virtual clock. This step also allows filtering out paths between mutually exclusive clocks or paths that have the same or synchronous source and capture clocks, which get timed synchronously.
+
+5.	Gray-coded Pointer checking
+
+The case of synchronizers used for gray-coded pointers has been covered in several recent publications [5] [6]. In general, the concept of the delay associated with arrival at individual synchronizers no longer applies to gray-coded pointers (or any unit-coded pointers synchronized with multi-bit synchronizers). Instead, the check has to focus on ensuring that the overall skew does not cause the consecutive bit changes at the source domain from being reordered at the destination domain.
+
+6.	Summary
+
+Our approach to timing these circuits was tested on a recent SOC with nearly 2 million marker cells and more than 50 million paths. The runtime was 15 times faster compared to previous techniques (which was to use Step 9 iteratively), allowing us to perform this timing with a 10-20% runtime penalty and insignificant increase in memory usage. Even this additional run-time is dominated by Step 9; namely, extracting paths with false paths that do not specify clocks (nearly 80% of the additional run-time). This shows that the elimination of broad false paths, especially those that do not specify the associated source and destination clocks, enables very efficient runtime for these checks.
+
+Looking ahead to potential software enhancements, we echo the suggestion in [5] to enhance the set_max_delay and set_multicycle_path commands to ignore clock insertion delays. Ideally, the design intent captured by the set_clock_groups command should be leveraged and the clock insertion delays ignored when the source or destination clocks are defined to be asynchronous.
+
+7.	References
+
+[1] W. Dally & J. Poulton, Digital System Engineering, Chapter 10, Cambridge University Press 1998.
+[2] P. Parakh & S. J. Kommrusch, “A Smart Synchronizer – Pragmatic way to cross asynchronous clock domains,” DVCON 2010.
+[3] P. Parakh, “Achieving CDC Verification in the Billion-Transistor Chip Era,” Electronic Design, April 19, 2011. 
+[4] R. Ginosar, “Fourteen ways to fool your Synchronizer,” Proceedings, Ninth International Symposium on Asynchronous Circuits & Systems, 2003.
+[5] P. Zimmer, “No Man’s Land – Constraining Async Clock Domain Crossings,” SNUG 2013.
+[6] E. Masson, “An efficient timing method for checking asynchronous gray code transfers,” SNUG 2007.
+[7] M. J. Osborn, M. J. Tresidder, A. J. Grenat, J. Kidd, P. Parakh, & S. J. Kommrusch, “Clock domain crossing buffer,” USPTO Application 12/938,125, https://www.google.com/patents/US20120110529.
+
+
+\\\\\\\\\
 
 Gate Level Timing Checks for CDC Syncs & Markers -- Main.SambasivanNarayan - 15 Feb 2013
 Motivation
