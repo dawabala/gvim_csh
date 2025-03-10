@@ -193,6 +193,10 @@ g/^/m 0           # revert all lines;
 :% s/\<four\>/4/g
 :% s/\<four\>/4/gc
 
+### search & replace, from line head;
+:%s/\%100c\%5v//
+:%s/^\(.........\)//g
+
 ## exchange 
 :% s/\([^,]*\),\(.*\)/\2\1/
 

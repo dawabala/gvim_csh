@@ -111,24 +111,31 @@ alias pf    "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[typ
 alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer ./ &' "
 alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ' "
 
-# sudong bsub ptsession;
-# alias xtermpt "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 )&&(csbatch||tmpshortrr||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell ; restore_session" 
-# alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
-
+# xterm 200G 
 alias term200 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
 alias term100 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=100000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
 alias term150 "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=100000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
-alias pt        'source ~sdhe/.cshrc; module load primetime/2023.12-SP5; which pt_shell; pt_shell -file rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; "
-alias ptsession 'source ~sdhe/.cshrc;  module load primetime/2023.12-SP5; which pt_shell; pt_shell; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession "
-alias ptsession 'source ~sdhe/.cshrc;  module load primetime/2023.12-SP5; which pt_shell; pt_shell -file rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; "
 
-# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75v*TT0P75V100CStpTiming.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
+# sudong bsub ptsession;
+# alias xtermpt "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 )&&(csbatch||tmpshortrr||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell ; restore_session" 
+# alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
+#### michael bsub ptsession;
+# source ~sdhe/.cshrc; module load primetime/2023.12-SP5 ; cd ~/soc/rpts/runs_0115; # michael ptsession
+# bsub -Ip -q regr_high -n 8 -P canis-pd -R 'rusage[mem=255000] select[(csbatch||gb32||gb64||gb128||gb256||gb512||gb1024||type==RHEL7_64||type==RHEL6_64)]' 'pt_shell ' ;# michael ptsession
+# pt_shell> set host cpu 8; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; # michael ptsession;
+
+alias ptsession "source ~sdhe/.cshrc; module load primetime/2023.12-SP5; which pt_shell; pt_shell; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession "
+
+# zgrep PT_SHELL ./logs/PtGfxFuncTT0p75v*TT0P75V100CStpTiming.log.gz;           setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
+# zgrep primetime ./rpts/GfxFuncTT0p75v*TT0P75V100CStpTiming*/ptsession/readme; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
 # module load primetime/2022.03-SP5-2-T-20230819
 # module load primetime/2023.12-SP5
-# cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp; module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
+# module load primetime/2022 ; pt_shell Pt*0p75v*StpTiming/pt_session;
+alias pt5  'module load primetime/2023.12-SP5'
 
 #### module load aliases; module list;
-alias module '/tool/pandora/bin/modulecmd tcsh !*'
+# alias module '/tool/pandora/bin/modulecmd tcsh !*'
+alias module '/tool/pandora/bin/modulecmd'
 
 # module avail verdi; module unload verdi; 
 #        csh> verdi -sv -f /proj/at2_til22_nobackup/doudouye/at2_code/data/SynRtl/SynRtl.vf;

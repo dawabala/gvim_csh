@@ -1,3 +1,11 @@
+\\\\\\\\\\\\\\\\\\\\\\\\
+
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.maxdelay_setting.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
+/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+
+
 Gate Level Timing Checks for CDC Syncs & Markers -- Main.SambasivanNarayan - 15 Feb 2013
 Motivation
 Checks Supported
@@ -23,7 +31,6 @@ Example
  In the above circuit, the data input to the capturing flop, NDATA_B should be stable when capturing clock rises. Since it is blocked by the READY_B signal from sync, it should be stable at ffb/D before the READY_B signal arrives at ffb/D. Since sync is a 3 stage synchronizer, NDATA_B should be stable within 2 capture clock (CLKB) cycles. The timing check is for the path from ffa/CLK to ffb/D to be less than 2 (number of cycles for control - 1) cycles of CLKB (or whatever value was used in the RTL model) If a value is not specified in RTL, the flow picks the most conservative value possible of 1 destination cycle.
 NOTE: The check does not yet account for any potential clock skew between sync and the launching data flop ffad on the source domain CLKA. Similarly, it does not account for the setup time on the capturing flop ffbd. These should be suitably margined.
 
-
 Margining
 The check does not account for two additional factors that impact the proper functioning of the path:
 The skew between the flops launching the data and the control on the source domain (CLKA)
@@ -40,12 +47,10 @@ In RTL simulations, circuits like this can be modeled with different TransportDe
 
 NOTE: This example is not a good design practice (in fact a simple circuit like this would cause violation when the 0in tool is run) But this topology can easy occur in real designs. For example, the two synchronizers could in multiple tiles and on multiple clock domains. As long as the output of the synchronizer reconverges at any point there is a potential circuit risk. A real example would be reset signals that get synchronized into multiple domains/tiles and the mismatch in their arrival times could cause some parts of the system to arrive out of reset earlier than others.
 
-
 Waivable paths
 There a few use cases that can be automatically waived for this check.
 If the signal that is synchronized has exactly one capturing synchronizer and no other flop or synchronizer endpoints, then the transport delay is irrelevant.
 If the signal is being synchronized into multiple synchronizers all on the same clock domain, then the relevant timing value is the overall skew between the arrival times (transport delay) across all the synchronizers. If this is less than one destination cycle - setup time of the synchronizers , then the circuit can function safely (Note such a circuit should properly trigger a 0in violation)
-
 
 
 CDCMAX Implementation Details
@@ -95,12 +100,10 @@ Note the first foreach iteration can be performed before the first functional ti
 
 This can also be run after the functional timing completes (aka standalone mode) where the first foreach loop will not trigger any update_logic in PT, but would have to incur the additional overhead of an unique update_timing. Further, for large designs, the creation of the virtual clock confuses the incremental nature of update_timing and a full update_timing is required (using v2011.06 of Primetime)
 
-
 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 >GateCdcTimingChecks (2023-08-04, DavidNewmark) EditAttach
 Gate Level Timing Checks for CDC Syncs & Markers
 
-Gate Level Timing Checks for CDC Syncs & Markers
 Purpose
 Presentations
 Implementation Details
@@ -146,35 +149,33 @@ Implementation Details
 CAD flow implementation details
 
 Tilebuilder Parameters
-Parameter Name	Type	Description
-EDC_CDC_ENABLE_TIMING	Optional	Non-zero value enables the generation of CDC timing reports during a regular non-si timing run
-EDC_CDC_ENABLE_TIMING_SI	Optional	Non-zero value enables the generation of CDC timing reports during a si timing run
-EDC_CDC_SKIP_CDC_TIMING	Optional	Zero value enables the generation of CDC reports in GateCDC Run
-EDC_CDC_SKIP_SYNC_TIMING	Optional	Zero value enables the generation of SYNC reports in GateCDC Run
-EDC_CDC_CONSIDER_CLOCK_GROUPS	Optional	Non-zero value enables Skipping of exclusive clock paths & generates seperate report for sync-paths
-EDC_CDC_VCSLOG	Optional	Filename that points to a VCS (RTL functional simulation) log file generated with the +logCdcBufTiming run flag
-EDC_CDC_PTSESSION	Optional	Primetime saved session directory
-EDC_CDC_USE_STARTENDFLAG	Optional	Primetime saved session where the false paths are disabled so that -start_end_pair can be used with the get_timing_path command
-EDC_CDC_LECMAP	Optional	Mapping file generated using the formal equivalence flow between gate and RTL instances
-EDC_CDC_ENABLE_ILM_MODEL	Optional	Non-zero enables the creation and use of ILM model files to obtain the constraints for CDCBUF*/SYNC* in the boundary of ILMs. This should be enabled at the tile level as well as the SOC level.
-EDC_CDC_FULLPATH_REPORT	Optional	Enable to generate an additional report that dumps the full path for all failing paths
+Parameter Name	                      Type        Description
+EDC_CDC_ENABLE_TIMING               Optional	Non-zero value enables the generation of CDC timing reports during a regular non-si timing run
+EDC_CDC_ENABLE_TIMING_SI	        Optional	Non-zero value enables the generation of CDC timing reports during a si timing run
+EDC_CDC_SKIP_CDC_TIMING	            Optional	Zero value enables the generation of CDC reports in GateCDC Run
+EDC_CDC_SKIP_SYNC_TIMING	        Optional	Zero value enables the generation of SYNC reports in GateCDC Run
+EDC_CDC_CONSIDER_CLOCK_GROUPS	    Optional	Non-zero value enables Skipping of exclusive clock paths & generates seperate report for sync-paths
+EDC_CDC_VCSLOG	                    Optional	Filename that points to a VCS (RTL functional simulation) log file generated with the +logCdcBufTiming run flag
+EDC_CDC_PTSESSION	                Optional	Primetime saved session directory
+EDC_CDC_USE_STARTENDFLAG	        Optional	Primetime saved session where the false paths are disabled so that -start_end_pair can be used with the get_timing_path command
+EDC_CDC_LECMAP	                    Optional	Mapping file generated using the formal equivalence flow between gate and RTL instances
+EDC_CDC_ENABLE_ILM_MODEL	        Optional	Non-zero enables the creation and use of ILM model files to obtain the constraints for CDCBUF*/SYNC* in the boundary of ILMs. This should be enabled at the tile level as well as the SOC level.
+EDC_CDC_FULLPATH_REPORT	            Optional	Enable to generate an additional report that dumps the full path for all failing paths
 EDC_CDC_MULTIBIT_FULLPATH_REPORT	Optional	Enable to generate an additional report(report.multibit_sync.path.rpt.gz) that dumps the full path for all sync-cells, which are defined in group
-EDC_CDC_INCLUDE_PASSPATH	Optional	Generates a report including the passing paths (by default these are not reported)
-EDC_CDC_FULLPATH_REPORT_OPTIONS	Optional	UBTS552159, allow user options in report_timing
+EDC_CDC_INCLUDE_PASSPATH	        Optional	Generates a report including the passing paths (by default these are not reported)
+EDC_CDC_FULLPATH_REPORT_OPTIONS	    Optional	UBTS552159, allow user options in report_timing
 EDC_CDC_MULTIBIT_FULLPATH_REPORT_OPTIONS	Optional	Allow user options in report_timing for additional report(report.multibit_sync.path.rpt.gz)
-EDC_CDC_VALID_CELLS	Optional	Valid TCL command (ex. [get_cells] or [list]) that can be executed in primetime to get the list of cells for which the check is performed
-EDC_CDC_USE_START_END	Optional	Use -start_end_pairs option when thie param is set to 1. Normally we would recommend -cover_design (EDC_CDC_USE_START_END set to 0, this is the default value), -start_end_pairs will increase runtime. But signoff should be done with -start_end_pairs option
+EDC_CDC_VALID_CELLS	                Optional	Valid TCL command (ex. [get_cells] or [list]) that can be executed in primetime to get the list of cells for which the check is performed
+EDC_CDC_USE_START_END	            Optional	Use -start_end_pairs option when thie param is set to 1. Normally we would recommend -cover_design (EDC_CDC_USE_START_END set to 0, this is the default value), -start_end_pairs will increase runtime. But signoff should be done with -start_end_pairs option
 EDC_CDC_REPORT_ALL_PATHS_HFOUTCDC	Optional	Normally for regular runs, we would recommend to set this param to zero, as enabling this param will increase runtime. When we set this param to zero, only few paths(100) will be reported for high-fanout CDCBUF's. But signoff should be done by keeping this param to 1
-EDC_CDC_CONSIDER_ADD_MULTI_CDC	Optional	When this param is set to 1, flow will take the subtotal of all the delays of CDC-BUF's in the required timing-path
-EDC_CDC_CONSIDER_ADD_CDC_SYNC	Optional	was set to 1 in your override.params, then flow will take the total of the delays of CDC-BUF cells & SYNC - cell in the timing-paths
+EDC_CDC_CONSIDER_ADD_MULTI_CDC	    Optional	When this param is set to 1, flow will take the subtotal of all the delays of CDC-BUF's in the required timing-path
+EDC_CDC_CONSIDER_ADD_CDC_SYNC	    Optional	was set to 1 in your override.params, then flow will take the total of the delays of CDC-BUF cells & SYNC - cell in the timing-paths
 If EDC_CDC_CONSIDER_ADD_MULTI_CDC was set to 1 in your override.params, then flow will take the subtotal of all the delays of CDC-BUF's in the required timing-path. This param will add max_delays from a CDCBUF only (Not MCBUF). By Default, flow will take min of all the delays of CDC-BUF's in the required timing-path If one CDCBUF is using DestClkCnt and another CDCBUF is using CdcDestSetup, then flow will have below behaviour with EDC_CDC_CONSIDER_ADD_MULTI_CDC = 1
 
 set total_cycles = DestClkCnt1 + DestClkCnt2 + ... + DestClkCntn for all the CDCBuf's defined DestClkCnt
-
 set total_max-delays = CdcDestSetup1 + CdcDestSetup2 + ... + CdcDestSetupn for all the CDCBuf's defined CdcDestSetup
 
 Final constrained max-delay = min ( $total_cycles*Dst_Clk_Cycle, total_max-delays)
-
 
 If EDC_CDC_CONSIDER_ADD_CDC_SYNC was set to 1 in your override.params, then flow will take the total of the delays of CDC-BUF cells & SYNC - cell in the timing-paths. In General Gate-CDC treats synchronizer and CDCBuf timing checks as two separate checks. But there was a request to combine both delays, so that CDCBuf's in series with synchronizers have their Transport-Cycles & Max-delays added together and accounted for properly. Verification SIMs already do this addition causing a huge burden on the PD team to waive all of the synchronizer timing fails which happen to be driven by cdcbufs.
 
