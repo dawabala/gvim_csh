@@ -1,4 +1,10 @@
 #### cdc script trial run
+~/soc/cdc.csh
+
+D K, Prateek
+# use script to kick off CDC run;
+/proj/canis_pd_fct04/fct_runs/NLC_test/soc_only.flat.cdcmax.csh
+
 # NA /proj/mi400_hcf_vol3/user/jialwang/fcnlconstraints_hcfvcn2/main/pd/tiles/CHIP_MID/constraints/process_scripts/cdc_analysis;
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/ToF_calculator_polygon.pl ./
 cp -pr /home/jialwang/hcf_vcn/fp_analysis/combine_report_with_distances.pl ./
@@ -161,6 +167,17 @@ pt_shell> mkdir ./rlol
 pt_shell> check_rlol_design_issue  -inst_map inst_tile.map -out_dir ./rlol -factor 15
 pt_shell> check_rlol_design_issue  -inst_map ../../inst_tile.map -out_dir ./rlol -factor 15
 
+# large RLOL issue.  # check and dump 2tile timing with large RLOL.
+csh> module load primetime/2023.12-SP5;
+csh> cd ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/;  ls rpts/PtGfxFunc*0p75*/ptsession
+csh> pt_shell -f rpts/PtGfxFuncTT0p75v.*/ptsession; # pt_shell> restore_session rpts/PtGfxFuncTT0p75v.*/ptsession;
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl
+pt_shell> check_rlol_design_issue  -inst_map inst_tile.map -out_dir ./rlol -factor 10
+   [-buf_keyword BUF]     (buffer keyword in ref_name. default: BUF)
+   [-inv_keyword INV]     (Inverter keyword in ref_name. default: INV)
+   [-cell_dly value]      (typical cell delay value. set a number. default is auto)
+   [-factor value]        (adjust target RLOL with it. default 1.0)
+
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/correlation/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/
@@ -247,6 +264,11 @@ You can provide /tools/aticad/1.0/src/zoo/azmohamm/scripts/pt_hold_fix/
 /proj/canis_pd_gfx_fcfp01/qilinren/LSC/1230/main/pd/tiles/run6_hollow/pd_repeaters.xml
 /proj/canis_pd_gfx_fcfp_rel02/rel_LSC_GFX_bbox/gfx.pkg
 /proj/canis_pd_gfx_fcfp_rel02/ rel_LSC_GFX_bbox/
+
+/proj/canis/a0/floorplan/rel_NLC_GFX/gfx.pkg
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_top_t/fp_00/fcfp.Final.pkg
+
+/proj/canis_pd_gfx_tile045/yongjing/NLC_acv_sp/main/pd/tiles/gc_acv_sp_sq_t_acv_sp_run1_formal_TileBuilder_Feb14_0615_77281_GUI/
 
 
 
@@ -513,8 +535,7 @@ select _2tile report file, check my_path; acv clock by owners; add comments; inh
 1st round: all violations, 2nd round: new violations
 default: 200 warnings; fanout lol si,
 machine_learning_comments: machine learning targets;
-
-ask kyle and cannie on pathform;
+# ask kyle and cannie on pathform;
 cd fct04/rel61;
 usage: pathform.py [-h] [--rundir RUNDIR] [--config CONFIG] [--report REPORT] [--rep_xml REP_XML] [--ft_xml FT_XML] [--inst_map INST_MAP] [--gen_db_only] [--dump_summary]
 Parse timing reports and show with a friendly way. just run it under rundir.
@@ -554,6 +575,27 @@ Hi Su Dong, Currently there 3 tasks:
 
 \\\\ 0225 special timing check
 https://confluence.amd.com/display/TSG/Check+special+timing
+~/soc/special_timing_check/p4sync_soc15.csh
+~/soc/special_timing_check/dfx.tcl
+
+
+\\ jianshu p4 sync tcl files;
+
+/proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/LaunchScript/
+/proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/NLC/GFX/gfx_dldo_chargeInj_skew_check.tcl
+/proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/NLC/GFX/
+
+/proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/LaunchScript_test/
+# /proj/canis_pd_gfx_fct01/jiaguo12/special_timing_test/
+
+
+# michael bsub ptsession;
+module load primetime/2023.12-SP5 ; cd ~/soc/rpts/runs_0115; 
+bsub -Ip -q regr_high -n 8 -P canis-pd -R 'rusage[mem=255000] select[(csbatch||gb32||gb64||gb128||gb256||gb512||gb1024||type==RHEL7_64||type==RHEL6_64)]' 'pt_shell ' &;
+cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession;
+pt_shell> set_host_options -max_cores 8 ;restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession;
+
+
 
 # Launch script :
 FUNC mini-GCH : //soc15/canis/main/pd/tiles/CHIP/special_timing/LaunchScript/SpecialTiming_MiniGCH_Func_Level_Run.tcl #1  report_max_trans_net.tcl and  gfx_dldo_chargeInj_skew_check.tcl not ready 
@@ -622,42 +664,37 @@ DFX Script File Name Purpose IP owner/content reviewer MV Run Run Order Update_T
 csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
 
 
-CHARZ.csv"	//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/report_max_trans_net.tcl#2
-review_gdfll_tile_clock_paths.tcl	GDFLL Clock Path Review	Lui, Alvin	No Req.	No Req.	Yes	Tile 	Func	setup	"Non-SI	"	Manual review by GDFLL designer to ensure critical clock paths do not have unnecessary CTS buffers, logic, etc.	"No ""Error""
-Manual review by GDFLL designer"	*/rpts/Pt*/special_timing_check.rpt	//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/review_gdfll_tile_clock_paths.tcl#2
-addition_gdfll_check.tcl	DFLL Max Delay and Signal Alignment Checks	Lui, Alvin	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"	Additional max delay and signal alignment checks for DFLL I/Os, as required by DFLL IP	All script checks pass 	"Summary: */rpts/Pt*/gch_gdfll_pins_summary.rpt
-Details: */rpts/Pt*/gch_gdfll_pins_detail.rpt"	//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/addition_gdfll_check.tcl#1
-gfx_dldo_chargeInj_skew_check.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gfx_dldo_chargeInj_skew_check.tcl#1
-"asyncfifo.GC.tcl
-asyncfifo.run.tcl"		Shao, Kai	No Req.	Run asyncfifo.run.tcl first	No	Tile 	Func	setup	"Non-SI	"		No failure in report		"//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.GC.tcl#3
-//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.run.tcl#1"
-script_repeater_timing.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/script_repeater_timing.tcl#2
-gch_special_timing.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gch_special_timing.tcl#2
-stc_max_delay_and_signal_alignment_proc.tcl; stc_max_delay_and_signal_alignment_SE.tcl; stc_max_delay_and_signal_alignment_L2WD.tcl;
-Shao, Kai	No Req.	"Run *_proc.tcl first.  No dependency between *_SE.tcl and *_L2WD.tcl"	Yes	"SE check run in mini-GCH
-L2WD check run in mini-GCH first , for remaining part which cannot be reported in mini-GCH level , run in chip level "	Func	setup	"Non-SI	"		No failure in report or all failures are waiveable in report	"max_delay_*.rpt
+CHARZ.csv
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/report_max_trans_net.tcl#2
+# review_gdfll_tile_clock_paths.tcl	GDFLL Clock Path Review	Lui, Alvin	No Req.	No Req.	Yes	Tile 	Func	setup	"Non-SI	"	Manual review by GDFLL designer to ensure critical clock paths do not have unnecessary CTS buffers, logic, etc.	"No ""Error""
+# Manual review by GDFLL designer"	*/rpts/Pt*/special_timing_check.rpt	
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/review_gdfll_tile_clock_paths.tcl#2
+# addition_gdfll_check.tcl	DFLL Max Delay and Signal Alignment Checks	Lui, Alvin	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"	Additional max delay and signal alignment checks for DFLL I/Os, as required by DFLL IP	All script checks pass 	"Summary: */rpts/Pt*/gch_gdfll_pins_summary.rpt
+# Details: */rpts/Pt*/gch_gdfll_pins_detail.rpt"	
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/addition_gdfll_check.tcl#1
+# gfx_dldo_chargeInj_skew_check.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gfx_dldo_chargeInj_skew_check.tcl#1
+# "asyncfifo.GC.tcl
+# asyncfifo.run.tcl"		Shao, Kai	No Req.	Run asyncfifo.run.tcl first	No	Tile 	Func	setup	"Non-SI	"		No failure in report		" //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.GC.tcl#3
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/asyncfifo.run.tcl#1
+# script_repeater_timing.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/script_repeater_timing.tcl#2
+# gch_special_timing.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gch_special_timing.tcl#2
+# stc_max_delay_and_signal_alignment_proc.tcl; stc_max_delay_and_signal_alignment_SE.tcl; stc_max_delay_and_signal_alignment_L2WD.tcl;
+# Shao, Kai	No Req.	"Run *_proc.tcl first.  No dependency between *_SE.tcl and *_L2WD.tcl"	Yes	"SE check run in mini-GCH
+# L2WD check run in mini-GCH first , for remaining part which cannot be reported in mini-GCH level , run in chip level "	Func	setup	"Non-SI	"		No failure in report or all failures are waiveable in report	"max_delay_*.rpt
 
-signal_alignment_*.rpt"	"//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_proc.tcl#1
-
+# signal_alignment_*.rpt"	"
+//soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_proc.tcl#1
 //soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_L2WD.tcl#1
 //soc15/canis/main/pd/tiles/CHIP/special_timing/GFX/stc_max_delay_and_signal_alignment_SE.tcl#1"
-gdfll_signal_same_mcp.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gdfll_signal_same_mcp.tcl#1
+//soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/GFX/gdfll_signal_same_mcp.tcl#1
+# gdfll_signal_same_mcp.tcl		Shao, Kai	No Req.	No Req.	No	mini-GCH	Func	setup	"Non-SI	"		No failure in report		
 
 
   
 
-# large RLOL issue.  # check and dump 2tile timing with large RLOL.
-csh> module load primetime/2023.12-SP5;
-csh> cd ../FCT0101_20250210_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_ReRoute_LSB10_NoRDL/;  ls rpts/PtGfxFunc*0p75*/ptsession
-csh> pt_shell;
-
-pt_shell> restore_session rpts/PtGfxFuncTT0p75v.*/ptsession;
-pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl
-pt_shell> check_rlol_design_issue  -inst_map inst_tile.map -out_dir ./rlol -factor 15
-   [-buf_keyword BUF]     (buffer keyword in ref_name. default: BUF)
-   [-inv_keyword INV]     (Inverter keyword in ref_name. default: INV)
-   [-cell_dly value]      (typical cell delay value. set a number. default is auto)
-   [-factor value]        (adjust target RLOL with it. default 1.0)
 
 \\\\ 0218 meeting
 
@@ -1091,40 +1128,75 @@ gc__cpwd0__CHC1_CAC_1_active, EQ 0, pd=0;
 
 
 \\\\ 0211 meeting
+cdctiming 
+~/soc/cdc.csh
+
 cannie xue create CDC env based on NLB , run CDC; 
 special timing; lihuan, flush flow; check error; 
 drv: soundwave drv report summary; 
 1 corner;
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.maxdelay_setting.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
-cdc.maxdelay_setting.rpt.gz.header
-cdc.relaxed_delay_inst.rpt.gz
-cdc.techind_delay_inst.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.waived_inst.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
-cdc.zerodelay_inst.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
-cdcmax.json
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdcmultibit.json
-report.cdc.csv.gz
-report.cdc.path.rpt.gz
-report.cdc.summary.rpt.gz
-report.cdc.waivers.csv.gz
-report.cdc.warning.rpt.gz
-report.cdc_samedomain.csv.gz
-report.cdc_samedomain.path.rpt.gz
-report.fmt.path.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.multibit.csv.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.multibit.path.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.multibit_sync.path.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.csv.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.path.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.summary.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.waivers.csv.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync.warning.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync_samedomain.csv.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/report.sync_samedomain.path.rpt.gz
+
+rpts/PtTimFuncSS0p72vtyprc0css0p72v0cReRouteSxStp/CdcTiming
+rpts/CdcMaxDefault/
+The following files are generated:
+report.cdc.summary.rpt.gz -- The summary report of the cdc timing
+report.sync. summary.rpt.gz -- The summary report of the sync cell timing
+report.sync.csv.gz -- SYNC cell paths that fails to meet one cycle (or transport delay specified in RTL) to the input D pin.
+report.cdc.csv.gz -- Paths that fails to meet the destination clock count or destination time value as determined above, through a CDCBUF* marker cell.
+report.sync.waivers.csv.gz -- Waived SYNC cell paths.
+report.cdc.waivers.csv.gz -- Waived CDC Paths.
+report.sync.path.rpt.gz -- The detail path report for the failed sync path.
+report.cdc.path.rpt.gz -- The detail path report for the failed sync path.
+sync.maxdelay_setting.rpt.gz -- File containing parameter value used for each SYNC* cell.
+cdc.maxdelay_setting.rpt.gz -- File containing parameter values used for each CDC* cell.
+report.multibit.csv.gz -- The raw data for multibit check.
+report.path.rpt.gz -- The detail report for the failed multibit groups.
+report.cdc.warning.rpt.gz -- The warning message generated during cdc timing
+report.sync.warning.rpt.gz -- The warning message generated during sync cell timing
+
+The flow also generates several informational and warning messages. A clean RTL (0in clean) should not have any warnings. These messages are captured in the following files (or the CdcMaxDefault? .log file in standalone mode)
+
+Sync_timing.log.gz -- Messages generated while checking SYNC cell paths.
+Sync_timing.si.log.gz -- Same as above but generated during the timing using si run.
+Cdc_timing.log.gz -- Messages generated while checking CDCBUF cell paths.
+Cdc_timing.si.log.gz -- Same as above but generated during the timing using si run.
+
+~/soc/rpts/cdc_rel_0105/CdcTiming/
+
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.summary.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.path.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.path.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.summary.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.waivers.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.warning.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz
+# CDCEFPM  : cdc enhanced flipflop with metastability;
+# set maxdelay = max (CdcDestSetup, DestClkCnt * the period of its fastest fanout clocks)
+# NA /proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz.header
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.techind_delay_inst.rpt.gz
+# DestClkCnt 
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.waived_inst.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.zerodelay_inst.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdcmax.json
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdcmultibit.json
+~/soc/rpts/cdc_rel_0105/
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.path.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.summary.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.waivers.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.warning.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc_samedomain.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc_samedomain.path.rpt.gz
+
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync_samedomain.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync_samedomain.path.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.fmt.path.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.multibit.csv.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.multibit.path.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/report.multibit_sync.path.rpt.gz
+
 sync.maxdelay_setting.rpt.gz
 sync.maxdelay_setting.rpt.gz.header
 sync.relaxed_delay_inst.rpt.gz
@@ -1199,6 +1271,10 @@ Script to summarize DRV: developed by Feng1, Jian1
 
 /tools/pandora/bin/python3.9  /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py -instMap inst_tile.map
                               /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
+/tools/pandora/bin/python3.9  /home/jiaguo12/soc/drv/fix_drv.py -instMap inst_tile.map
+
+cd /proj/canis_pd_gfx_fct04/fct_release/FCT0122_20250225_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_DRV_ReRoute_LSB10_WithRDL;
+
 
 /tools/pandora/bin/python3.9  ~/soc/drv/fix_drv.py
 usage: fix_drv.py [-h] [--nonsi] [--si] [--rc] [-instMap INSTMAP] [-fix FIX] [-lib_cell_file LIB_CELL_FILE] [-waiver WAIVER]
@@ -1394,11 +1470,32 @@ dfx_dftcnr2_t00gc_acv_lds_t00gc_acv_sp_sq_t00gc_acvi_t00gc_ch_t00gc_cpc_t00gc_cp
 
 
 # repeater insertion already have;
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[(type==RHEL8_64||type==RHEL7_64)&&tmpshortrrforce]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py &'
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer ./ &'
+bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ./ &'
+
 \\\\\\\\ fct_explorer
 fct use fct_explorer; to check tile path directions;
 alias fcte  '';
 cd release/0071*; 
 fcte;
+
+FCT Explorer expects to find a specific database within a FCT TileBuilder run directory. 
+The database is created by FCT Explorer in batch mode by TileBuilder target "GenFctExplorerDb".
+# fct working dir;
+/proj/canis_pd_gfx_fct04/fct_release/FCT0126_20250303_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC_nosp/back2userworkspace/
+# fct timing report
+/proj/canis_pd_gfx_fct04/fct_release/FCT0126_20250303_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC_nosp/rpts/sort_rpts/ *0p75v*_2t/rlc.gdfll
+\\\\\\\\\ fcfp_explorer fcfpe
+
+/proj/canis_pd_gfx_tile045/yongjing/NLC_acv_sp/main/pd/tiles/gc_acv_sp_sq_t_acv_sp_run1_formal_TileBuilder_Feb14_0615_77281_GUI
+
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_top_t/fp_00/doc/nl_repeaters.xml
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_top_t/fp_00/doc/pd_repeaters_bk.xml
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_top_t/fp_00/doc/pd_repeaters.xml
+/proj/canis/a0/floorplan/rel_NLC_GFX/gfx.pkg
+/proj/canis/a0/floorplan/rel_NLC_GFX/gc_top_t/fp_00/fcfp.Final.pkg
+
 
 
 # xml file, MCI, by kyle

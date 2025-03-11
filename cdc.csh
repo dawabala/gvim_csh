@@ -1,44 +1,19 @@
 \\\\\\\\\\\\\\\\\\\\\\\\
 
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.maxdelay_setting.rpt.gz
+find *rel
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz
 # CDCEFPM  : cdc enhanced flipflop with metastability;
 # set maxdelay = max (CdcDestSetup, DestClkCnt * the period of its fastest fanout clocks)
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
-/proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/
 
 
 \\\\\\\\ timing verification CDC SOC .doc
-
 Timing Verification for CDC Paths in Large-scale SOCs
-
-
-
-Sambasivan Narayan, Michael J. Tresidder
-
-
-
-
-AMD
-Boxborough, Mass., USA and Markham, Ont., Canada
-
-www.amd.com
-
-
-
-
-
-
-
-
+Sambasivan Narayan, Michael J. Tresidder, AMD, Boxborough, Mass., USA and Markham, Ont., Canada ,www.amd.com
 
 ABSTRACT
-
-
-
 Signals undergoing asynchronous transfers and crossing clock-domain boundaries are typically flagged and checked with static tools at the register-transfer or gate level. The conventional methodology of false-pathing these signals during implementation and STA stages potentially violates certain temporal assumptions associated with these crossings that need to be met to produce an error-free design. Manually verifying these assumptions is not a scalable approach for a large SOC with millions of such signals. In this paper, we detail our methodology of embedding these timing assumptions into the RTL, which allows the timing requirements to be verified during functional simulation and carried forward into the implementation and STA stages, and focus on our approach to timing these paths efficiently using virtual clocks in PrimeTime for very large SOC designs.
-
-
  
 Table of Contents
 
@@ -56,7 +31,6 @@ Table of Figures
 Figure 1 : Use of CDCBUFEN Cells in Conjunction With SYNCHRONIZERS.	4
 Figure 2 : Timing for Circuit of Figure 1.	5
 Figure 3 : Use of input delay on synchronizers.	6
-
 
  
 Introduction
@@ -78,8 +52,6 @@ During the functional simulation, the uncertainty parameters in the marker cells
 Based on the uncertainty parameters, at the onset of physical implementation, each marker cell has an associated time period that was exercised in functional simulation to ensure that the synchronization scheme is robust within that period of uncertainty and the circuit has undergone static analysis with sign-off by the RTL designer. To ensure proper design closure and to avoid repeating the checks at the gate level, the implementation in physical design must avoid introducing any additional structural violation and ensure that the timing never exceeds the uncertainty period qualified during functional simulation.
 
 
- 
-
 Figure 1 : Use of CDCBUFEN Cells in Conjunction With SYNCHRONIZERS.
 As a general guideline, CDCBUF and CDCBUFEN cells are used for domain crossing on the datapath and synchronizers are used on the control path. CDCBUF and CDCBUFEN cells provide the structural integrity of the datapath under the assumption of stability while the SYNCHRONIZER communicates stability of the data.
 Ignoring clock skews in the source domain between the control and data launch registers, the time requirement through the DATA_D0 and DATA_D1 marker cells is:
@@ -91,20 +63,10 @@ Proper transfer of data requires that the data at the output of the CDCBUFEN be 
 The total propagation time available for each DATA_S* to DATA_D* depends on the minimum latency through the synchronizer.
 Here the  minimum latency of the synchronizer is two clock cycles, plus an allotment of just less than the following setup cycle.
 
-
- 
- 
-
 Figure 3 : Use of Input Delay on SYNCHRONIZERS.
 In a real, physical implementation signals take time to propagate from the source launch flop to where it is first sampled in the destination domain. In many cases, the physical separation of the SYNCHRONIZER from the launch flop is small and the propagation time is insignificant. However, where separation distances are significant, the uncertainty in this propagation must also be taken into consideration. While this is true for performance modeling of singularly synchronized signals, its effect is most poignant when a signal is fanned out to multiple synchronization points.
 Here, consider the case in which multiple fanouts of a single signal are synchronized into multiple IPs throughout the SOC. The arrival time difference between the two IPs could cause simulation of inter-IP communication to be modeled incorrectly. In addition to the synchronization uncertainty, the arrival uncertainty at the input of the SYNCHRONIZER should also be modeled where it is significant enough to potentially create additional skew relative to the DEST_CLK period.
 For this reason, the propagation time to the SYNCHRONIZER input is modeled as a delay parameter to the input of the SYNCHRONIZER. Additional cycles of uncertainty, up to the limit of the delay parameter, can be added to signal propagation latency during functional simulation.
-
-
-
-
-
-
 
 
 2.	Requirements during Synthesis and Physical Design
@@ -290,7 +252,7 @@ Looking ahead to potential software enhancements, we echo the suggestion in [5] 
 
 7.	References
 
-[1] W. Dally & J. Poulton, Digital System Engineering, Chapter 10, Cambridge University Press 1998.
+# [1] W. Dally & J. Poulton, Digital System Engineering, Chapter 10, Cambridge University Press 1998.
 [2] P. Parakh & S. J. Kommrusch, “A Smart Synchronizer – Pragmatic way to cross asynchronous clock domains,” DVCON 2010.
 [3] P. Parakh, “Achieving CDC Verification in the Billion-Transistor Chip Era,” Electronic Design, April 19, 2011. 
 [4] R. Ginosar, “Fourteen ways to fool your Synchronizer,” Proceedings, Ninth International Symposium on Asynchronous Circuits & Systems, 2003.
@@ -298,8 +260,869 @@ Looking ahead to potential software enhancements, we echo the suggestion in [5] 
 [6] E. Masson, “An efficient timing method for checking asynchronous gray code transfers,” SNUG 2007.
 [7] M. J. Osborn, M. J. Tresidder, A. J. Grenat, J. Kidd, P. Parakh, & S. J. Kommrusch, “Clock domain crossing buffer,” USPTO Application 12/938,125, https://www.google.com/patents/US20120110529.
 
+\\\\ a smart synchronizer pragmatic
+A Smart Synchronizer - Pragmatic way to cross asynchronous clock domains.
+Priyank Parakh Advanced Micro Devices, Inc.  90 Central Street, Boxborough, MA, USA.  (1)-978-795-2500
+Steven J Kommrusch Advanced Micro Devices, Inc.  2950 E. Harmony Rd, Fort Collins, Co 80582 (1)-970-226-9500
 
-\\\\\\\\\
+ABSTRACT
+In order to achieve satisfactory verification coverage in an asynchronous design, it is highly desirable to model a synchronizer with all the checks that can help catch the problem. 
+Modeling uncertainty caused by metastable values at the output of the synchronizer is one of them. 
+Due to the inherent determinism in RTL-level simulations, it is necessary to take explicit steps to model the inbuilt uncertainty associated with the act of synchronization.
+However, the task of effectively modeling this uncertainty in a manner that draws out design flaws can be a challenge.
+Many papers published so far have emphasized the usage of very aggressive ways to model various checks inside the synchronizer but what they failed to do is to consider the overhead, 
+like performance issues, false negatives etc, caused by these aggressive techniques.
+This paper explains a more balanced approach which is smart enough to regulate the aggression of the synchronizer based on different synchronization activities.
+
+Keywords:
+Metastability, clock domain crossing, random delay, aggressive techniques, gray-encoded pointers, FIFO.
+
+1. INTRODUCTION
+Clock domain crossing (CDC) verification of the current generation of complex, deep sub-micron (DSM) designs has become a critical step in the design process. 
+Today’s large silicon devices are comprised of a growing number of IPs which in turn contain an ever increasing number of asynchronous clock domains from which stem
+a large number of cross over signals and a variety of design styles for synchronization of CDC signals. 
+In order to achieve adequate verification coverage in a design like this, it is highly desirable to model a synchronizer with all the checks that can help catch problems. 
+In hardware, the effects of metastabilty [1-6] are unpredictable, but normal simulation provides predictable results.
+Hence, due to the inherent determinism in RTL-level simulations, it is necessary to take explicit steps to model the inbuilt uncertainty associated with the act of synchronization.
+
+2. PROBLEM STATEMENT
+Modeling a clock-domain-crossing (CDC) synchronizer is a more involved process than initially meets the eye. 
+Generally speaking, modeling techniques must strive to meet multiple goals, some of which can be at odds with each other. 
+In addition, since simulation is a crucial medium to validate and debug design flaws, it is essential that reproducibility be an innate characteristic of the solution chosen.
+Various design teams across different companies have handled this task in a variety of ways which has caused misunderstandings and bugs found late in the design process. 
+Many papers published so far have emphasized the usage of very aggressive ways to model various checks inside the synchronizer but what they failed to do is to consider the overhead caused by these aggressive techniques. 
+For example, the most aggressive way to model a synchronization event is to randomly introduce an extra latency of one destination clock-cycle when propagating any transition. 
+Unlike the real-life behavior of flip-flops, using this behavior will introduce synchronization uncertainty in cases well outside the “setup/hold” window that characterizes the physical design. 
+This technique can be very effective for simple synchronization activities, but for more sophisticated ones like a “bussed” event with gray encoding this technique is at odds with the property that makes gray-coded counters so effective – only one bit changes per update.
+
+2.1 Aggressive technique
+Ultimately, the goal of a synchronizer model is to expose all clock domain crossing design flaws as quickly and efficiently as possible.
+In order to accomplish this goal, it is necessary to strive for an aggressive behavior in the model in case the design is left with undiscovered flaws. 
+Out of all the modeling techniques discussed so far in the design world, one of the most commonly used techniques is to randomize the data with respect to the destination clock.
+
+always @( posedge CK )
+prevD <= currD;
+currD <= D;
+// The net effect of this is to randomly decide whether to
+// take the current value of the signal to be synchronized,
+// or the value that was presented before the last transition.
+//
+Q <= ( random_evaluation ) ? prevD : currD;
+Using this simplistic technique can be very effective for simple
+synchronization activities, but simplistic synchronization techniques
+tend to lead to design inefficiencies that can result in performance
+limitations or bloat to the design in an effort to recoup performance.
+To combat this, designers will often leverage properties of “bussed”
+events to achieve their CDC synchronization goals. A common
+example of a “bussed” event that is leveraged is that of gray-coded
+counters. Unfortunately, the simple technique described above is at
+odds with exactly the property that makes gray-coded counters so
+effective – only one bit changes per update.
+3. SOLUTION
+When considering an approach to modelling a synchronizer, two
+important criteria must be taken into account. To begin with we must
+know when to model the uncertainty and then how to model the
+uncertainty.
+3.1 Modelling Uncertainty
+It is the belief of the authors that the proposal outlined below
+achieves the goals in a manner that is as aggressive as possible while
+still yielding to the properties that are leveraged for “bussed” events.
+The proposal is divided into two layers. Basic layer which essentially
+is a single-bit synchronizer that classifies candidate events for
+randomized uncertainty modelling, and a filter layer which is a
+multi-bit level that provides a filter to qualify the candidates elected
+by the basic level. Each of these levels will be described using
+pseudo code, but the intent of the code snippet is to impart an
+understanding of the technique and not to present final code.
+Basic layer
+reg currD;
+reg prevD;
+reg prevVld;
+initial begin
+currD = D;
+prevD = D;
+prevVld = 1'b0;
+end
+always @( D or posedge CK ) begin
+if ( posedge CK )
+// We are taking a sample, so past transitions are moot
+// for future samples as they would be stable by the time
+// that the next sample edge arrives.
+prevVld <= 1'b0; // clear our candidacy for uncertainty
+else begin
+// When we see a transition in the data, we mark our
+// candidacy for uncertainty modeling. This is our aggressive
+// mode of modeling.
+//
+// Note, the use of non-blocking assignments. Since the
+// clock edge takes precedence, we are not executing this
+// code concurrently with a clock edge. Consequently, the
+// choice of blocking vs. non-blocking should be a matter
+// of which simulates faster.
+prevVld <= 1'b1;
+prevD <= currD;
+currD <= D;
+end
+end
+always @( posedge CK )
+// Note, the signal 'transitionVld' is an input to this
+// level of the model and is the hook for the higher-level
+// filter to "dial-back"; the aggressiveness of the modeling
+// of "when"; to apply randomized uncertainty in the delay.
+if ( prevVld && transitionVld ) begin
+// Here, the technique for the random evaluation is not
+// detailed. The technique for this is discussed later.
+//
+// Nevertheless, it is important, for performance reasons,
+// to understand that the random stream should only be
+// pulled when an actual randomization decision is required.
+//
+// The net effect of this is to randomly decide whether to
+// take the current value of the signal to be synchronized,
+// or the value that was presented before the last transition.
+//
+// Note, it would have been simpler to use ~CurrD without
+// storing prevD, but that technique limits
+// us to { 0, 1 } as signal values, whereas the technique
+// outlined here is specifically capable of dealing with
+// { 0, 1, X } as signal values without polluting the results.
+Q <= ( random_evaluation ) ? prevD : CurrD;
+end else
+// Data not flagged for randomization was stable at ‘currD’
+Q <= CurrD;
+Multi-bit filter
+input [(VEC_SIZE-1):0] D;
+...
+reg [(VEC_SIZE-1):0] currD;
+reg [(VEC_SIZE-1):0] prevD;
+reg [(VEC_SIZE-1):0] transitionVld;
+integer idx;
+initial begin
+currD = D;
+prevD = D;
+end
+always @( D ) begin
+prevD = currD;
+currD <= D;
+for ( idx = 0; idx < VEC_SIZE; idx = idx+1 )
+// any bit that has changed since the last time the
+// data vector changed will be marked as a valid bit
+// for synchronization candidacy. Any bit that remains
+// unchanged will have its "candidacy" overridden since
+// it is known to be stable, thus preserving the
+// leveraged property of the "bussed" event.
+//
+// this signal is then passed down to the individual
+// lower-level synchronization models.
+transitionVld[idx] = ( prevD[idx] !== currD[idx] );
+end
+As can be seen from the code samples above, transitions on the input
+data are the primary means for determining when the capture should
+or should not be randomized. By sensitizing the code to transitions
+of the input data, we are inferring the source clock domain since
+each data transition should follow a clock edge in the source clock
+domain. Using this property, the aggression is “dialed-back” for
+bussed synchronization events by permitting randomization for only
+those bits that have changed in the most recent update. Any bits that
+have remained stable during the most recent update are blocked from
+having their capture randomized, even if the lower-level
+synchronizer has detected a transition since the last capture edge.
+This “filter” leverages the fact the property that a signal that has
+been stable for at least one source clock cycle will have been stable
+at the sample flop for a sufficiently long time that its capture will be
+certain.
+4. CASE STUDY
+Consider a FIFO, as shown above, used to transfer multi-bit data
+across a clock domain. Now, imagine a scenario where the
+destination clock is known to always be at least half as fast as the
+source clock. The designer might assume that the gray code counter
+could never change by more than two counts. But if the source clock
+is writing every cycle and destination clock is exactly half the source
+clock rate, then in real silicon, we might see a case where the counter
+jumps three counts in one cycle.
+If the designer is using the aggressive technique described in this
+paper, his randomizer will try to process the data at every edge of the
+destination clock and will randomize any changed bit at the capture
+time.
+Now as can be seen above, the simulation data at the first destination
+clock is 000 and in the consecutive edge, due to the frequency
+relationship between the clock and the fact that we are gray encoded
+the pointers, the simulation data will be 011. This implies that in
+between two destination clock transition two bits have changed
+which means after standard aggressive randomization, simulation
+can see any of the four shown choices 000, 001, 010 and 011. If the
+simulation were to process 010 then it might eventually lead to false
+functional failures as that entry has not even been written yet. This
+false negative might cause simulation errors and might consume both
+time and resource to fix.
+To avoid this overhead, a designer sometimes takes a “drastic step”
+including shutting down the randomization model completely, hence
+using just back to back flops and gray encoded pointers. Following is
+the waveform of the “Resolved” value with randomization disabled.
+Shown below is the case which might slip through the cracks if we
+were to follow the “drastic step” and how our synchronizer model
+will expose that.
+In zero time delay simulation, the first Rd Clk rising edge sees 000
+from the source domain, but the last bit to change was 1 (from 100),
+so in silicon, this bit might go metastable and hence our smart
+synchronizer will capture the transition and will introduce a random
+delay and will produce either 000 or 100. Similarly when the Rd clk
+captures 011, the actual value could be 001 or 011 and then the next
+destination clock cycle might produce 001 or 011, and the next
+might produce 010 or 110. So there is a random way to produce the
+sequence 000, 001, 110. This could actually happen in real silicon
+based on metastability resolution and so our smart synchronizer will
+correctly expose a design problem if the design could not handle a 3-
+step increment in the counter
+5. SUMMARY
+With a growing number of clocks in today’s SOC designs, increased
+design complexity, and pressure for first silicon success, all clock
+and timing issues have become a verification challenge.
+Existing techniques used to model uncertainty in synchronizers are
+too aggressive to be used effectively with all different
+synchronization schemes forcing the user to make a choice when it is
+safe to turn off and on this feature. The technique presented in this
+paper eliminates that decision making process and makes clock
+domain verification more stable and sustainable.
+6. ACKNOWLEDGEMENT
+The authors are grateful to the many imaginative designers whose
+innovations ended up in this paper. Their names are kept in
+confidence. The anonymous referees have provided interesting
+viewpoints which together have improved the quality of the paper;
+the authors alone should be blamed for any remaining mistake.
+7. REFERENCE
+[1] Chris Kwok, et al, “Using Assertion based Verification to verify Clock domain crossing”, DVCON 2003
+[2] Clifford E. Cummings, “Clock domain crossing design and
+Verification techniques using System Verilog”, SNUG 2008
+[3] Clifford E. Cummings, “Synthesis and Scripting techniques for
+Designing Multi- Asynchronous clock designs”, SNUG 2001.
+[4] Ginsor Ran, “Fourteen ways to fool your synchronizer”
+Asynchronous Circuits and Systems, 2003.
+[5] Parakh Priyank, Sabbagh Roger, “Clock domain crossing
+verification of a CPU/GPU design”, DVCON 2010.
+[6] Patil, Girish, IFV Division, Cadence Design Systems. Clock
+Synchronization Issues and Static Verification Techniques. Cadence
+Technical Conference 2004
+
+'
+
+\\\\\\\\\ fourteen ways
+
+Fourteen Ways to Fool Your Synchronizer
+Ran Ginosar VLSI Systems Research Center, Technion—Israel Institute of Technology Haifa 32000, Israel
+[ran@ee.technion.ac.il]
+
+Abstract
+Transferring data between mutually asynchronous clock domains requires safe synchronization. 
+However, the exact nature of synchronization sometimes eludes designers, and as a result synchronization circuits get “optimized” to the point where they do no longer operate correctly. 
+This paper reviews a number of such cases, analyzes the causes of the errors, and offers a correct synchronizer circuit for each case. 
+A correct two-flop synchronizer is presented. 
+After discussing cases that avoid synchronization, the following synchronizers are reviewed: 
+one flop, sneaky path, greedy path, wrong protocol, global reset, async clear, DFT leakage, pulse, slow-to-fast, metastability blocker, parallel and shared flop synchronizers.
+
+1. Introduction
+Transferring data between mutually asynchronous clock domains requires safe synchronization [1-6]. 
+The operation of synchronization circuits has been recognized for a long time as being delicate and easy to disturb [1-3, 7-12], 
+but at the same time robust synchronizer design does guarantee safe operation for all practical purposes.
+However, the exact nature of synchronization sometimes eludes designers, and as a result synchronization circuits get “optimized” to the point where they do no longer operate correctly. 
+This paper reviews a number of such cases, analyzes the causes of the errors, and offers a correct synchronizer circuit for each case. 
+The author has encountered those interesting cases while teaching, while working with various SOC (System on Chip) design teams, and while reviewing certain papers submitted for publication.
+The paper starts by presenting a (hopefully) correct two-flop synchronizer. Validation means and tools are discussed. 
+Section 3 describes the various synchronizers, analyzes the errors and pitfalls, and offers suggestions.
+This paper focuses on the most general synchronization of two mutually-asynchronous clock domains. 
+More aggressive synchronization circuits, which achieve high throughput data transfer between clock domains having the same or related frequencies, are not discussed here.
+
+2. A Correct Two Flop Synchronizer
+The simplest and safest method for the transfer of data between two mutually-asynchronous clock domains requires a two-flop synchronizer [2-4]. 
+A “push” synchronizer is shown in Figure 1, but the principles apply also to pull, push-pull, and control-only synchronizers.
+SENDER RECEIVER R A
+Figure 1: A push synchronizer
+
+Bundled data is employed. The “synchronizer” actually comprises two synchronization circuits that envelope the data lines, implementing a complete handshake protocol. 
+The Request (R) and Acknowledge (A) lines are synchronized by the receiver and sender, respectively. 
+The settling window T (namely the time separation between the two clock inputs to the two flops of the synchronizers) could be a whole clock cycle or a fraction thereof, and could be different for each side, 
+as long as the desired reliability is obtained. 
+Synchronizer reliability is typically expressed in terms of Mean Time Between Failures [2]:
+MTBF = e **(T/τ) /(Tw * fA *fD )
+where τ is the settling time constant of the flop, TW a parameter related to its time window of susceptibility, 
+fA the synchronizer’s clock frequency (the receiver’s clock frequency for the R synchronizer and the sender’s for the A synchronizer), and fD is the frequency of pushing data across the clock domain boundary. 
+Typically, MTBF is designed to be at least ten times the expected life of the product. If latency is not an issue, T is simply set to be a
+# Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03) 1522-8681/03 $17.00 © 2003 IEEE Authorized licensed use limited to: XILINX. 
+# Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+whole clock cycle, and for most SOCs it implies MTBF of many eons.
+The two synchronizers connect two simple finite state
+machines that implement the required protocol. A fourphase
+protocol is specified by means of a generalized STG
+in Figure 2, where “DD” means that the data is available
+(at the sender), “UU” means that it may be removed, and
+“LL” means data latched by the receiver. (A two-phase
+protocol may also be employed; the circuits are a bit more
+complex [13, 14], and this is typically used in order to
+minimize latency on long lines.) The complete logic and
+FSM are shown in Figure 3. A send request (V, true for a
+single cycle) latches data into REGS and starts the
+sender’s FSM. The synchronized request (R2) latches the
+data into REGR and triggers the receiver’s FSM. The
+receiver is given a single-cycle “data received” (D) signal.
+The protocol is sometimes modified so that A is set as
+soon as the received data are latched, but removed only
+after the receiver has had an opportunity to use the data.
+
+R+ DD A+ UU RAR+ LL A+ RAFigure
+
+2: Four-phase handshake push synchronization protocol STG 
+To consider the synchronizer’s behavior in cases of conflicts, assume that T equals a whole clock cycle. 
+Upon a potential clock-data conflict on R, one of three possible outcomes may happen (Figure 4):
+a. The rising edge of R is sampled high. R2 goes high on cycle 2, and data is latched into REGR by the beginning of cycle 3.
+b. The rising edge of R is sampled low. Since the protocol assures that R stays high as long is A is low,
+it will be sampled high on cycle 2, when it is surely stable high. R2 will go high on cycle 3, and data is latched into REGR by cycle 4.
+c. The first flop goes metastable. With a probability of 1-e-T/τ (which is infinitesimally close to 1), the flop
+has exited metastability by the next clock, and has arbitrarily settled to either high or low (the thick traces of R1 in the figure). 
+If high, then R2 goes high on cycle 2. If low, it will surely go high on the next cycle, when the input R is already stable high, and R2 goes high on cycle 3.
+
+A word of caution is due here: Although outcome c
+above implies that metastability typically disappears
+within a single clock cycle, the second flop is still
+required. An exception is discussed in Section 3.2 below.
+REG S R A RX FSM TX R2 FSM A2 V L IDLE REQ/R=1 V WAIT A2 IDLE ACK/A=1 R2 R2 D F R1 A1 REG R L A2
+Figure 3: Push synchronizer logic and
+protocol FSM
+CLOCK R R1 R2
+CYCLE 1 CYCLE 2 CYCLE 3
+a b c a b c c
+Figure 4: Three synchronization scenarios
+
+A VHDL specification of the synchronizer is shown in Figure 5. This is a highly sensitive code, where minor modifications may render the synchronizer useless. 
+Some such innovative but often fatal modifications are reviewed in the rest of this paper.
+Logic validation tools are typically incapable of detecting any errors in such synchronizers. 
+When reasonable logic assumptions are made, many erroneous synchronizers appear to operate perfectly well.
+Synchronizer-specific verification algorithms are required for this analysis.
+Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03)
+1522-8681/03 $17.00 © 2003 IEEE
+Authorized licensed use limited to: XILINX. Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+3
+-- TRANSMITTER (inputs V, A, output R)
+if rising_edge(tx_clock) then
+A2 <= A1; A1 <= A; -- 2 flop
+A3 <= A2; F <= not A3 and A2; -- 1 shot
+case (tx_fsm_state) is
+when idle =>
+if (V = '1') then
+tx_fsm_state <= req;
+R <= '1';
+end if;
+when req =>
+if (A2 = '1') then
+tx_fsm_state <= waiting;
+R <= '0';
+end if;
+when waiting =>
+if (A2 = '0') then
+tx_fsm_state <= idle;
+end if;
+when others =>
+tx_fsm_state <= idle;
+R <= '0';
+end case;
+end if;
+-- RECEIVER (input R, output A)
+if rising_edge(rx_clock) then
+R2 <= R1; R1 <= R; -- 2 flop
+R3 <= R2; D <= not R3 and R2; -- 1 shot
+case (rx_fsm_state) is
+when idle =>
+if (R2 = '1') then
+rx_fsm_state <= ack;
+A <= '1';
+end if;
+when ack =>
+if (R2 = ‘0') then
+rx_fsm_state <= idle;
+A <= '0';
+end if;
+when others =>
+rx_fsm_state <= idle;
+A <= '0';
+end case;
+end if;
+Figure 5: Push 2-way 4-phase synchronizer
+VHDL specification
+One tool has been developed specifically for validating
+synchronization. The Avant! Clock Domain Checker [15]
+is a decent first attempt at addressing this issue. However,
+it has a number of drawbacks: First, the control and data
+signals that cross domain boundaries must be named in a
+manner that facilitates these checks. Second, it validates
+only one-sided transfers and does not examine complete
+two-sided protocols and the protocol state machines.
+Third, it only validates a limited set of pre-defined rules,
+mostly covering a simple two-flop synchronizer and data
+lines protected by it; for instance, it does not check the
+synchronization of asynchronous reset. Fourth, it only
+handles “push” (and control-only) synchronizers, but
+neither “pull” nor “push-pull” ones. Another such tool is
+@Verifier from @HDL [16].
+3. The Interesting Synchronizers
+3.1 Avoiding the Synchronizer
+The most common synchronization error is the transfer
+of a signal from one clock domain into another without
+any synchronization. In some cases the designer felt that
+failure probability was too low to worry about (he has
+learned about MTBF in the range of 10100 years, so why
+bother?). In other cases, the receiver operated at a much
+higher clock frequency than the sender, and the designer
+felt that the receiver would always be fast enough to catch
+the signal.
+The incoming data is used as a combinational input to
+a combinational circuit, which eventually feeds into a flipflop.
+Since the timing of the input is unknown, there is no
+way to guarantee the timing of the output of the
+combinational circuit. In particular, it may change
+simultaneously with the sampling edge of the clock, and
+the receiving flip-flop may enter metastability or take
+excessively long time to respond, hampering correct
+operation of the next stage of logic [2].
+How often does the receiving flop enter metastability?
+The rate of entering metastability is TW×fD×fC. For a
+0.18μm SOC (where TW≈50ps) with a clock domain
+operating at 200MHz and receiving data every 1000
+cycles, that rate is 2000/sec, namely two metastability
+events every millisecond. Ignoring such a high rate does
+take some courage!
+This error can sometimes evade detection by normal
+logic validation tools. Simulations may assume such
+timing relations among the different clocks that all timing
+constraints are met. Static timing analysis would generate
+setup and hold violation warnings for every signal that
+crosses domain boundaries, but due to the typically huge
+number of such warnings most designers treat them as
+chaff and ignore them, assuming that the synchronizers
+will handle all those issues anyway. Consequently,
+legitimate warnings can easily be overlooked.
+The error can be detected by the following clock
+domain crossing analysis, which can be performed using
+standard path analysis, e.g. as offered by logic
+synthesizers and by static timing analyzers. All possible
+pairs of clocks must be identified. For each pair, the CAD
+tool is made to report all logic paths that begin in a flop
+driven by the first clock and end in a flop driven by the
+second clock. The resulting list should be studied, either
+manually or with an automated script, and every reported
+path must be approved. Typically, the crossing lists are
+carefully maintained and are used as ‘false-path’
+specifications, instructing the analysis tool to ignore crossdomain
+paths that are already verified.
+Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03)
+1522-8681/03 $17.00 © 2003 IEEE
+Authorized licensed use limited to: XILINX. Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+4
+3.2 One Flop Synchronizer
+A deceptively effective means of cutting down on the
+two-flop synchronizer’s latency is to remove one of the
+flops (Figure 6).
+R
+A
+SENDER RECEIVER
+Figure 6: One-flop “synchronizer”
+The problem comes about, of course, when there is a
+clock-data conflict. As explained above, the synchronizing
+flop may take an excessively long time to respond [2]. Its
+output may be used in a standard combinational logic
+stage (the cloud in the figure), whose nominal propagation
+delay is typically close to a whole clock cycle. When the
+synchronizing flop fails (responding slowly), the input to
+the next flop will not be ready in time for the next clock
+cycle.
+The one-flop synchronizer can be detected by
+extending the analysis described above. The added step
+should validate that the output of every synchronizing flop
+feeds directly into the input of exactly one flop (driven by
+the same clock), without any logic in between.
+The one-flop synchronizer is acceptable when
+designed correctly. If the delay through the combinational
+‘cloud’ in Figure 6 is d, the settling time is T-d. If that
+time is sufficient to assure the required MTBF, then this
+synchronizer is legal.
+3.3 Sneaky Path
+Occasionally, a signal sneaks through a clock domain
+boundary unintentionally and unsynchronized. For
+instance, a signal has been moved from one clock domain
+to another as part of redesign, and some uses of the signal
+in its old domain are overlooked. It has also happened
+when a designer was unaware that a specific signal
+belonged to a different clock domain. In yet other cases, a
+signal S from a different clock domain is synchronized
+and renamed S_sync, but the designer has used S rather
+than S_sync by mistake.
+The situation is similar to case 3.1 above, and so are
+the solutions.
+3.4 Greedy Path Synchronizer
+The designer employed a good two-flop synchronizer,
+but decided to save a little latency with the arrival
+detector: D= R1× R2 (Figure 7). This is quite similar to
+the one-flop synchronizer: The problem is that D is used
+with additional combinational logic, and the timing of that
+combinational path is typically designed to fit within a
+single clock cycle. But in cases of clock-data conflict of
+R, R1 may take longer than the normal flop tPD to
+stabilize, and consequently the entire combinational path
+from R1 through D and to the last flop fails to converge
+during a single cycle. The right solution, obviously, is to
+add a flop and set D= R2× R3 (as in Figure 3).
+SENDER RECEIVER
+R
+R2
+D
+R1
+Figure 7: Greedy path “synchronizer”
+3.5 Wrong Protocol
+Consider the following example. The sender in a push
+synchronizer is a CPU that can be tuned to operate in the
+range of 60-100 MHz. The receiver is a communication
+modem based on a 55MHz clock. A push synchronizer is
+used to transfer data from the CPU to the modem. The
+designer has correctly realized that, once R is set, it would
+take at most four cycles of the receiver’s clock to latch the
+data into REGR (as in Figure 4). Based on the relative
+speeds, this would mean up to eight cycles of the faster
+sender’s clock. To save time and logic, the designer
+eliminated the A line and its synchronizer; instead, he
+inserted a nine-cycle delay in the sender’s FSM. After the
+delay, R is reset and the transfer is assumed finished.
+There were two problems with that novel design. First,
+the designer did not realize that he had violated the safety
+(or 1-boundedness) requirement of the protocol (namely,
+transitions must be acknowledged, or else an STG arc
+might accumulate multiple tokens [17, 18]). Although the
+data was safely latched into REGR, at times the receiver
+was busy doing something else and did not manage to
+make use of the data before a new set of data has arrived,
+over-writing the old.
+Second, while the modem remained at 55MHz, the
+CPU in a later chip generation was sped up to 200MHz.
+At that rate, nine sender’s clock cycles weren’t enough
+any more to cover four modem cycles, and the
+synchronizer broke down.
+There are other ways by which the protocol can be
+violated. A powerful protocol verification algorithm might
+provide a useful tool to weed out such innovations.
+3.6 Global Reset Synchronizer
+In a multi-frequency GALS (Globally Asynchronous,
+Locally Synchronous) SOC, a global reset signal is
+naturally asynchronous to at least some of the clock
+Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03)
+1522-8681/03 $17.00 © 2003 IEEE
+Authorized licensed use limited to: XILINX. Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+5
+domains. The leading edge of the reset signal is harmless,
+as it forces all circuits to a known starting state. The
+trailing edge, on the other hand, is the culprit in some
+chips. During global reset all the various clocks are started
+and all PLLs settle into their respective different
+frequencies. When the reset is removed, it can happen
+simultaneously with the sampling edge of one of the
+clocks. The global reset is typically connected into the
+asynchronous clear (or preset) input of many flip-flops,
+and its trailing edge must respect a setup constraint, or
+else the flops may enter metastability.
+A safe interface is shown in Figure 8. It belongs with
+each of the several clock generators of the SOC. While the
+leading edge is transferred without delay (when the clocks
+may be inoperative), the trailing edge is synchronized.
+RESET
+CLOCK
+RESET WITH
+SYNCHRONIZED
+TRAILING EDGE
+Figure 8: Global reset synchronizer
+3.7 Async Clear Synchronizer
+Occasionally (and contrary to the wisdom of typical
+synchronous design methodologies) asynchronous clear or
+preset of a flop may be employed as part of the logic
+(rather than for global reset, as discussed in Section 3.6).
+Some designers feel that, since this is an asynchronous
+clear, it needs not be synchronized even when it crosses
+clock domain boundaries (Figure 9).
+The problem is very similar to that described in
+Section 3.6: Removal of the asynchronous clear signal
+may concur with the rising edge of the receiver’s clock,
+potentially leading to metastability. The solution is either
+to synchronize the reset signal with two flops, or (when
+the leading edge must not be delayed) design an
+asymmetric synchronizer as in Figure 10.
+CLR
+RESET
+Figure 9: Asynchronous clear
+CLR
+RESET
+Figure 10: Synchronized-trail clear
+3.8 DFT Leakage
+Simple production testers may have only a single
+clock. To test a GALS SOC on such testers, all clocks are
+shorted together. Static faults (such as stuck-at) and some
+dynamic faults (speed testing of the individual clock
+domains) are properly tested that way. The clock shorts of
+course must be ignored during path analysis (by means of
+manually assembled ‘false-path’ lists or by instructing the
+analysis to ignore all paths that are conditioned upon a
+test-enable signal). But certain changes of the design may
+result in an error (sneaky) path masked by the list.
+The solution is to recheck the entire false-path list as a
+final check, after all design changes are completed.
+3.9 Pulse Synchronizer
+The pulse synchronizer (Figure 11) is designed to pass
+a single “pulse” (a logic signal that is set to ‘1’ for only a
+single clock cycle) from one clock domain to another. A
+pulse on P causes the sender’s flop to toggle. Eventually,
+D is set high for a single cycle of the receiver’s clock as a
+result.
+The designer was lucky to discover the problem when
+the circuit was tried on an FPGA, prior to tapeout.
+Sometimes the P input was set to ‘1’ for two consecutive
+cycles. At other times two pulses came in succession, with
+only one cycle in between. In both cases the synchronizer
+has generated undesirable results. The astute reader can
+easily figure out what they were. The situation was
+mended by replacing this with a standard control-only
+synchronizer, operating with a standard two—phase
+protocol.
+SENDER RECEIVER
+D
+P EN
+Figure 11: Pulse “synchronizer”
+3.10 Slow-to-Fast Synchronizer
+When the sender uses a slower clock than the receiver,
+designers can simplify the handshake protocol: The R line,
+when set for a single cycle of the sender’s clock, is
+sampled by at least two edges of the receiver’s clock. If
+the first edge misses, the second one is guaranteed to
+sample R. If the first one succeeds, further sampling is
+blocked (Figure 12), so that metastability during the
+second edge is avoided.
+Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03)
+1522-8681/03 $17.00 © 2003 IEEE
+Authorized licensed use limited to: XILINX. Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+6
+SLOW
+SENDER
+FAST
+RECEIVER
+EN
+R
+Figure 12: Slow-to-fast “synchronizer”
+Such a simplified synchronizer typically works just
+fine. Except that SOCs tend to evolve and change clock
+frequencies. Sometimes clocks are changed during the
+design, when certain frequencies turn out to be too fast. In
+other cases, when a new product generation is launched or
+when the SOC is ported to a different fabrication process,
+slow domains may be sped up, and the assumption of
+who’s faster may no longer hold. Hopefully the
+assumption has not been forgotten in the meantime, and
+the only adverse effect is that the chip needs to undergo a
+new logic and physical design, merely due to the
+‘optimized’ synchronizer.
+3.11 Metastability Blocker
+A designer has suggested blocking metastability by the
+circuit of Figure 13. RESET clears the SR latch and the
+synchronizing flop. When the clock is high, if INPUT
+rises, the latch is set. When the clock goes low, the
+asynchronous input is blocked and only the SR latch
+output is connected to the flop. When the clock rises, it
+samples the synchronous output of the latch, rather than
+the asynchronous input.
+MUX
+0
+1
+R
+S
+CLR
+D Q
+INPUT
+RESET SYNCHRONIZED
+INPUT
+CLOCK
+Figure 13: Metastability “blocker”
+The designer has missed two problem scenarios,
+though. If INPUT rises exactly when the clock goes low,
+the SR latch can become metastable. It will most likely
+settle by the next rising edge of the clock. In other words,
+the metastability risk has simply been transferred from the
+flop to the latch, and one-half clock cycle is allowed for
+settling. If the proper protocol is employed (e.g., INPUT
+stays high until acknowledged), the synchronization will
+function correctly.
+The second scenario is more dangerous. If INPUT
+rises exactly when the clock rises, the SR latch will
+probably miss it but the flop may become metastable.
+While the first scenario seems to be handled properly by
+the circuit (in spite of the designer’s ignorance), the latter
+case may cause damage in the circuit that follows the flop.
+Various “metastability blockers” or circuits that
+“eliminate” metastability are repeatedly reinvented and
+occasionally get published. Fortunately, most practitioners
+have learned to take them with a grain of salt.
+3.12 Parallel Synchronizer
+A careful designer assumed that more is better and,
+instead of using the recommended complex structure for a
+push synchronizer, he inserted a separate two-flop
+synchronizer on each data line (Figure 14). That scheme
+also seems to save one cycle time (no need to wait one full
+cycle after R2 is stable and until REGR latches the
+incoming data, as in Figure 3).
+...
+Figure 14: Parallel “synchronizer”
+This scheme is a yet another prescription for a sure
+disaster. On clock-data conflict, each of the several data
+synchronizers may end up doing something different:
+Some may sample the new data, others may miss it and
+retain the old data, while yet others may enter
+metastability. Of the metastable ones, some may settle to
+‘1’ while others may settle to ‘0’. There is no way of
+telling which is which, as all four options are equally
+legitimate and possible outcomes.
+To emphasize the severity of failure, recall that a
+typical single synchronizer may enter metastability twice
+every millisecond, as computed in Section 3.1. Thus, a 32
+bit parallel synchronizer faces a risk of failure every 16
+microseconds!
+Another incarnation of this problem employs three
+parallel synchronizers and takes a vote of their outputs. Is
+this any safer than the non-voting parallel synchronizer?
+3.13 Shared Flop Synchronizer
+The synchronization handshake protocol is sometimes
+implemented with a signaling latch, set by the sender and
+cleared by the receiver. A somewhat misleading example
+based on two signaling flops has been published by a
+leading FPGA vendor (Figure 15). The problem is that the
+RECEIVE signal, which is driven by the sender’s clock, is
+Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03)
+1522-8681/03 $17.00 © 2003 IEEE
+Authorized licensed use limited to: XILINX. Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+7
+never synchronized by the receiver’s (at least not in the
+schematics shown in the publication).
+D Q
+READY
+1
+CLR
+Q D
+ACK
+1
+CLR
+DATA
+TRANSMIT RECEIVE
+Figure 15: Shared flop “synchronizer”
+A better scheme for a shared latch synchronizer
+(Figure 16) has been shown by Dike [19] and has been
+employed successfully in a low-voltage product (low
+supply voltage increases the risk of metastability). The
+control signals generated by the shared latch are both
+carefully synchronized with their respective clocks.
+WRITE VALID
+Q D Q D D Q D Q
+S R
+Q
+WRITE
+CLK
+ACK
+READ VALID
+READ
+CLK
+REQ
+Figure 16: A correct shared latch
+synchronizer
+3.14 Conservative Synchronizer
+The careful designer occasionally wishes to be on the
+safe side and, when synchronization latency is not an
+issue, adds “just a few more stages” to the synchronizer
+(Figure 17). While this is not an error, it is interesting to
+learn what additional level of safety is thus obtained.
+Considering an SOC with two clock domains where the
+receiver operates at 200 MHz (a reasonable frequency for
+the 0.18μm technology), and where data is exchanged
+every ten clock cycles (as a worst case), and assuming
+TW=50ps, τ=10ps (all ‘conservative’ numbers), the normal
+two-flop MTBF is 500 5 204 e 2×10 = 10 years. This is rather
+safe, when we recall that the age of the universe is 1010
+years. The added cycle time provides an extra safety
+factor of 500 e , achieving a more comforting level of 10420
+years. Imagine how much better MTBF could have been if
+you used four flops, rather than three!
+SENDER RECEIVER
+R
+A
+Figure 17: Conservative synchronizer
+4. Conclusions
+A few examples of synchronization design errors have
+been presented and analyzed. As long as there are no foolproof
+algorithms and tools to validate synchronizers, the
+rules to safe design should be closely watched. A strict
+design methodology and discipline should be enforced,
+especially prohibiting arbitrary “improvements” of
+synchronizers and shortcuts in their design and
+implementation. Optimizations that may impede future
+design reuse should be avoided. Knowledgeable rigorous
+validation should be carried out to verify that all crossings
+of clock domains are understood and legitimate. Global
+signals that span multiple domains, such as reset and
+clocks, should be examined carefully. Such validation
+should be repeated after every design change and before
+final design closure.
+Present efforts to design synchronizer cell libraries and
+to develop rigorous tools for synchronization validation
+may help alleviate these issues and assure safe GALS
+SOCs.
+Synchronization issues may be more difficult to
+examine and validate with third-party IP cores, and
+especially “hard” cores whose internal logic design is
+unknown to the SOC designer. The architect should insist
+on at least a complete specification of their synchronizing
+circuits.
+A certain type of synchronizers has not been dealt with
+in this paper, namely fast synchronizers for multi-sync
+[20] or mesochronous [4, 5] clock domains. Their design
+and validation are more complex and deserve another
+paper.
+Acknowledgement
+The author is grateful to the many imaginative
+designers whose innovations ended up in this paper. Their
+names are kept in confidence. The anonymous referees
+added some interesting examples to this catalog and
+helped weed out some of the bugs; the author alone should
+be blamed for any remaining mistakes.
+Proceedings of the Ninth International Symposium on Asynchronous Circuits and Systems (ASYNC’03)
+1522-8681/03 $17.00 © 2003 IEEE
+Authorized licensed use limited to: XILINX. Downloaded on March 11,2025 at 03:21:49 UTC from IEEE Xplore. Restrictions apply.
+8
+References
+[1] J. Jex and C. Dike, "A fast resolving BiNMOS synchronizer for parallel processor interconnect," IEEE Journal of Solid-State Circuits, vol. 30, pp.  133-139, 1995.
+[2] C. Dike and E. Burton, "Miller and Noise Effects in a Synchronizing Flip-Flop," IEEE Journal of Solid-State Circuits, vol. 34, pp. 849-855, 1999.
+[3] D. J. Kinniment, A. Bystrov, and A. Yakovlev, "Synchronization Circuit Performance," IEEE Journal of Solid-State Circuits, vol. 37, pp. 202-- 209, 2002.
+[4] W. J. Dally and J. W. Poulton, Digital System Engineering(Eds.): Cambridge University Press, 1998.
+[5] T. H.-Y. Meng, Synchronization Design for Digital Systems(Eds.): Kluwer Academic Publishers, 1991.
+[6] D. J. Kinniment and J. V. Woods, "Synchronization and Arbitration Circuits in Digital Systems," Proceedings of the IEE, vol.  123, pp. 961--966, 1976.
+[7] T. J. Chaney and C. E. Molnar, "Anomalous Behavior of Synchronizer and Arbiter Circuits," IEEE Transactions on Computers, vol. C-22, pp.  421--422, 1973.
+[8] M. Pechoucek, "Anomalous Response Times of Input Synchronizers," IEEE Transactions on Computers, vol. 25, pp. 133--139, 1976.
+[9] W. Fleischhammer and O. Dortok, "The anomalous behavior of flip-flops in synchronizer circuits," IEEE Transactions on Computers, vol.  28, pp. 273--276, 1979.
+[10] H. J. M. Veendrick, "The Behavior of Flip-Flops Used as Synchronizers and Prediction of Their Failure Rate," IEEE Journal of Solid-State Circuits, vol. 15, pp. 169--176, 1980.
+[11] L. Kleeman and A. Cantoni, "Can redundancy and masking improve the performance of synchronizers," IEEE Transactions on Computers, vol. 35, pp. 643--646, 1986.
+[12] Y. Semiat and R. Ginosar, "Timing Measurements of Synchronization Circuits," under http://www.ee.technion.ac.il/~ran --> publications.
+[13] P. Day and J. V. Woods, "Investigation into Micropipeline Latch Design Styles," IEEE Transactions on VLSI Systems, vol. 3, pp. 264-- 272, 1995.
+[14] A. Peeters and K. v. Berkel, "Single-Rail Handshake Circuits," in Asynchronous Design Methodologies: IEEE Computer Society Press, 1995, pp. 53--62.
+[15] "Clock Domain Checker User Manual," Avant!  Corporation v2001.3, 2001.
+[16] atHDL, "Multiple Clock Domain Analysis," www.athdl.com.
+[17] A. V. Yakovlev, "On Limitations and Extensions of STG model for Designing Asynchronous Control Circuits," in Proc. International Conf.  Computer Design (ICCD): IEEE Computer Society Press, 1992, pp. 396--400.
+[18] Principles of Asynchronous Circuit Design: A Systems Perspective, S. Furber (Eds.): Kluwer Academic Publishers, 2001.
+[19] C. Dike, "Sychronization Tutorial," presented at Sixth International Symposium on Advanced Research in Asynchronous Circuits and Systems (ASYNC2000), 2000.
+[20] R. Ginosar and R. Kol, "Adaptive Synchronization," in Proc. International Conf.  Computer Design (ICCD), 1998, pp. 188--189.  
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+
+
+
 
 Gate Level Timing Checks for CDC Syncs & Markers -- Main.SambasivanNarayan - 15 Feb 2013
 Motivation
@@ -542,7 +1365,7 @@ rpts/CdcMaxDefault/
 The following files are generated:
 
 report.cdc.summary.rpt.gz -- The summary report of the cdc timing
-report.sync. summary.rpt.gz -- The summary report of the sync cell timing
+report.sync.summary.rpt.gz -- The summary report of the sync cell timing
 report.sync.csv.gz -- SYNC cell paths that fails to meet one cycle (or transport delay specified in RTL) to the input D pin.
 report.cdc.csv.gz -- Paths that fails to meet the destination clock count or destination time value as determined above, through a CDCBUF* marker cell.
 report.sync.waivers.csv.gz -- Waived SYNC cell paths.
