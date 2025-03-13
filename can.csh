@@ -1,69 +1,87 @@
 #### cdc script trial run
 ~/soc/cdc.csh
 
-D K, Prateek
+soc CDC owner: D K, Prateek
 # use script to kick off CDC run;
 /proj/canis_pd_fct04/fct_runs/NLC_test/soc_only.flat.cdcmax.csh
+/proj/canis_pd_fct01/prateedk/SYNC_rpts/NLC_PLACE/
+/proj/canis_pd_fct01/prateedk/
+# cdc results, JIRA;
+/proj/canis_pd_fct01/prateedk/cdc_check_paths_only_NBIF_TILE_DFX_all_data.rpt.gz; # DECANDFX-422; 
+cip_nbif_t/tile_dfx/scan_cntl/te_gater_ff_reg/CP,BP_BP[3],DFX_SCAN_SHIFT_CLK,3951,,SDFRPQTXGD1BWP143M286H3P48CPDLVT,DBGCLK,606,,port,0.000000,7134.254883,5000.0,,,Min delay of cip_nbif_t/tile_dfx/scan_cntl/mrk_TEST_CLK_EN_mcpm/umcpm_0_/genblk1_genblk1_genblk1_d0nt_MCPM_HC0_C0_D_5000_/A BUFFCDCD2AMDBWP143M117H3P48CPDLVT (Module:cip_nbif_t_techind_mcpm_single_driveSel3_DestClkCnt0_HoldCheck0_CdcDestSetup5000_2_0:CdcDestSetup:5000.000000) ,,-2134.254883,FAIL
+secip_art_t/tile_dfx/scan_cntl/async_rst_gater_ff_reg/CP,cip_nbif_t/tile_dfx/dft_clk_cntl_Cpl_SOCCLK/dft_clk_cntl_ono/dft_clk_cntl_status_tdr/reg_DFT_CLK_CNTL_STATUS/data/q_int_reg_0_/D,DFX_SCAN_SHIFT_CLK,3951,,SDFRPQSXGD4BWP143M286H3P48CPDLVT,MTAP_Wrck,15805,,DFQTXGD1BWP143M169H3P48CPDLVT,10.393300,47522.648438,47417.039064,,,Min delay of secip_art_t/sib_32_art_soc/sib_32_art_soc_rot_rst_top/d0nt_CDCBUF_ROT_SOC_PWROKRAW/u_techind_cdcfpm/ufpm_0_/genblk1_genblk1_d0nt_CDCFPM_C0_D_50000_/A BUFFCDCD2AMDBWP143M117H3P48CPDLVT (Module:secip_art_t_techind_cdcfpm_single_applyParams0_CdcDestSetup50000_DestClkCnt0_driveSel3_mode010_BufMetaWaiveMode2_SrcPath0_1_0:CdcDestSetup:50000.000000) ; cip_nbif_t/tile_dfx/dft_clk_cntl_Cpl_SOCCLK/dft_clk_cntl_ono/I_cdc_ext_clk_stop/u_tis_cdcefpm/uefpm_0_/genblk1_genblk1_genblk1_d0nt_CDCEFPM_HC0_C3_D_0_/A ND2CDCD2AMDBWP143M169H3P48CPDLVT (Module:cip_nbif_t_techind_cdcefpm_single_driveSel3_DestClkCnt3_CdcDestSetup0_HoldCheck0_SrcPath0_7_0:DestClkCnt:3.000000*15805.679688) ,,-116.002674,FAIL
 
-# NA /proj/mi400_hcf_vol3/user/jialwang/fcnlconstraints_hcfvcn2/main/pd/tiles/CHIP_MID/constraints/process_scripts/cdc_analysis;
-cp -pr /home/jialwang/hcf_vcn/fp_analysis/ToF_calculator_polygon.pl ./
-cp -pr /home/jialwang/hcf_vcn/fp_analysis/combine_report_with_distances.pl ./
-cp -pr /home/jialwang/hcf_vcn/fp_analysis/extractor.pl ./
-cp -pr /home/jialwang/hcf_vcn/fp_analysis/summarize_report_with_tiles.pl
-cp -pr /home/jialwang/hcf_vcn/fp_analysis/README
-# requirement on reports/logs files;
+/proj/canis_pd_fct01/prateedk/SYNC_rpts/NLC_PLACE/SYNC_check_paths_only_DF_all_data_detail.rpt.gz;
+    SYNC Path through
+    	df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D
+    StartClocks      : virtual_pad_clk
+    EndClock         : FCLK {Period: 827}
+    Other EndClocks  : 
+    Path Delay       : 6.8e+04
+    Reqd Max Delay   : 5e+04
+    MaxDelay setting : Min delay of df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT (TransportDelay from Instance_Name Last field:TransportDelay:50000.000000) 
+/proj/canis_pd_fct01/prateedk/SYNC_rpts/NLC_PLACE/SYNC_check_paths_only_DF_all_data_csv.rpt;  # DECANPD-417;
+    StartPoint,EndPoint,StartClock,StartClockPeriod,StartClockLatency,StartType,EndClock,EndClockPeriod,EndClockLatency,EndType,SetupTime,PathDelay,ReqdDelay,ReqdMaxDelay,ReqdDestCycles,Markers,Group,Slack,Result
+    BP_CLKIN_NOSS_L,df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D,AMD_SYNC_VIRTCLK,1,,port,FCLK,826,,SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT,6.418407,282275.09375,50000.0,,,Min delay of df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT (TransportDelay from Instance_Name Last field:TransportDelay:50000.000000) ,,-232281.512157,FAIL
+    ssr_msmu_t/soc_msmu0/msmu_cru/MSMUREGS/umsmucfgrb/oQ_MSMU_FUNC_CLK_EN_13_reg_7__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_6__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_5__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_4__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_3__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_2__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_1__MB_oQ_MSMU_FUNC_CLK_EN_13_reg_0_/CP,df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D,PWROK_S5_GEN_ROCLK,8000,,MB8SRLSDFQTXGLP3553D1AMDBWP143M1144H3P48CPDLVT,FCLK,826,,SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT,6.418407,276554.71875,50000.0,,,Min delay of df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT (TransportDelay from Instance_Name Last field:TransportDelay:50000.000000) ,,-226561.137157,FAIL
+
+csh> less report.cdc.path.rpt.gz | filter_pt.pl -s 'CDC Path through' -r "tile_dfx" | less
+
+\\\\\\\\ clock no-route list;
+Please check NLCp1 initial clock no-route list as below:
+Clock no-route file: 
+/proj/canis_pd_clk01/release/NLCp1/GFX/clk_noroute.list
+
+# This is initial NLCp1 clock implementation plan for GFX.
+Net	       source_tile	Num_of_tile_sinks	Manhhattan_length	implementation	Comment
+Cpl_GFXCLK	gc_gdfll_t	125	                  15554.53	         Mesh	 
+Cpl_ACVCLK	SOC	4	3543.12	Balance-multi-terminal	 
+gpu_dldo_LONO_clkout_cg	gc_dldo_t	9	5467.246	Balance-multi-terminal	 
+gpu_dldo_ONO_0_clkout_cg	gc_dldo_t	107	15385.504	Balance-multi-terminal	 
+Cpl_VDDCR_SOC_SMNCLK	SOC	3	6551.05	RDL only	Before entering GFX need BUF/INV to push (RDL)
+Cpl_VDDCR_SOC_GAP_REFCLK	SOC	2	6215.28	RDL only	Before entering GFX need BUF/INV to push (RDL)
+Cpl_VDDCR_SOC_REFCLK_100	SOC	3	6302.224	RDL only	Before entering GFX need BUF/INV to push (RDL)
+DFX_TARG_Shift_Clk_group4	SOC	3	6927.856	RDL only	Big Invx32/BUFx15 ~1600um unbal port place at mid RDL only net near boundary to SOC
+Cpl_DLDOCLK_SOC_400	SOC	3	6577.648	RDL only	~800um #Freq quite high
+BC1500_Wrck	SOC	1	5848.048	RDL only	 
+Cpl_FCLK_vdci_gc_df_ch0_t	SOC	1	5560.1475	RDL only	 
+Cpl_FCLK_vdci_gc_df_ch1_t	SOC	1	5397.128	RDL only	 
+Cpl_FCLK_vdci_gc_df_ch2_t	SOC	1	5350.1565	RDL only	 
+Cpl_FCLK_vdci_gc_df_ch3_t	SOC	1	5513.176	RDL only	 
+Cpl_FCLK_vdci_gc_df_ch4_t	SOC	1	7626.562	RDL only	 
+Cpl_FCLK_vdci_gc_df_ch5_t	SOC	1	7874.626	RDL only	 
+Cpl_FCLK_vdci_gc_dfcrest_t	SOC	1	6423.066	RDL only	 
+Cpl_SOCCLK	SOC	1	6215.28	RDL only	For SOC shielding need near boudnary
+DFX_TARG_Shift_Clk	SOC	1	6001.264	RDL only	 
+vdci_gc_syshub_t_xover_vddSOC_Cpl_GFXCLK_Bypass	SOC	1	5848.048	RDL only	 
+DFX_TARG_Shift_Clk_group1	SOC	2	5560.1475	RDL only	 
+DFX_TARG_Shift_Clk_group2	SOC	2	5513.176	RDL only	 
+DFX_TARG_Shift_Clk_group3	SOC	2	7874.626	RDL only	 
+Stac_Wrck_group1	SOC	2	5560.1475	RDL only	 
+Stac_Wrck_group2	SOC	2	5513.176	RDL only	 
+Stac_Wrck_group3	SOC	2	7874.626	RDL only	 
+Stac_Wrck_group4	SOC	5	6927.856	Unbalance-single-terminal	SOC tmac ~15um near to boundary 
+gc__Cpl_VDDCR_GFX_GFXAVFSCLK	gc_gdfll_t	11	13644.776	Unbalance-single-terminal	 
+soc_dft__remote_dft_soc_dft_gc_se0__BC1500_0_Wrck	gc_sc_bci1_t0	21	8078.1715	Unbalance-single-terminal	 
+soc_dft__remote_dft_soc_dft_gc_se1__BC1500_0_Wrck	gc_spi_s_bci0_cac_t0	21	8311.144	Unbalance-single-terminal	 
+soc_dft__remote_dft_soc_dft_gc_se2__BC1500_0_Wrck	gc_pa_t0	22	9673.65	Unbalance-single-terminal	 
+soc_dft__remote_dft_soc_dft_gc_se3__BC1500_0_Wrck	gc_pc_sx_t0	26	10427.534	Unbalance-single-terminal	 
+vdci_gc_dfcrest_t_xover_vddBE_MtapStac_Wrck	vdci_gc_dfcrest_t	131	15641.474	Unbalance-single-terminal	 
+vdci_gc_syshub_t_xover_vddFE_MtapStac_Wrck	vdci_gc_syshub_t	131	15641.474	Unbalance-single-terminal	 
+vdci_gch_soc_gfxm_t_xover_vddGFX_MtapStac_Wrck	vdci_gch_soc_gfxm_t	131	15641.474	Unbalance-single-terminal	 
+Cpl_DLDOCLK_GFX_400_MON	vdci_gc_syshub_t	1	3269.632	P2P-single-terminal	 
+vdci_gc_syshub_t_xover_vddFE_Cpl_GFXCLK_Bypass	vdci_gc_syshub_t	1	3269.632	P2P-single-terminal	 
+GCH_DFLL_PLLCHARZ_l 	SOC	0	2578.416	P2P-single-terminal	600-800um need a pair inv before send to SOC
+GCH_DFLL_PLLCHARZ_h	SOC	0	2578.416	P2P-single-terminal	600-800um need a pair inv before send to SOC
+MtapStac_Wrck	/	/	/	/	Floating port- https://ontrack-internal.amd.com/browse/DECANPD-166
+Dfx_SCAN_SHIFT_CLK	/	/	/	/	Floating port- https://ontrack-internal.amd.com/browse/DECANPD-166
+vdci_s5_soc_t_xover_vddSOC_MtapStac_Wrck_vddS5	/	/	/	/	Floating port same case to MtapStac_Wrck - https://ontrack-internal.amd.com/browse/DECANPD-166
 
 
-# CDC report csv
-#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv
-#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
-#NA # SYNC report csv 
-#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/unique.report.sync.fail.vcn.csv
-#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
-
-# CDCmaxdelay flow generated report FEINT analysis:
-report.cdc.csv.gz 
-report.sync.csv.gz
-#  FEINT analysis script generated unique marker-based report per IP (please start here for script testing as it has a smaller data set)
-VCN cdc: unique.report.cdc.fail.vcn.csv
-VCN sync: unique.report.sync.fail.vcn.csv
-# Running Floorplan Aware Analysis Scripts
-perl ToF_calculator_polygon.pl   //calculates the longest distance within one tile and between two tiles, requires top def and tile def files under the run directory
-perl extractor.pl //extract all the required  information from the provided report unique.report.cdc.fail.vcn.csv
-perl summarize_report_with_tiles.pl //adding tile information into the data extracted in the previous step
-perl combine_report_with_distances.pl <#ToFmm required to calculate ToF> //combines all the information we need to together
-
-# Run Reports
-#NA # HCF VCN NLBp8 Top Level DEF Location
-#NA /proj/cmb_release_vol1/a0/rapid_fcfp_meta_data/hcf_vcn_mid/rel_NLC/hcf_vcn_mid/rapid_fcfp_01/hcf_vcn_mid.def.gz
-#NA /proj/cmb_release_vol1/a0/rapid_fcfp_meta_data/hcf_vcn_mid/rel_NLC/vcn_*_0_t/rapid_fcfp_01/vcn_*_0_t.def.gz
-
-# Scripts Location:
-/proj/saw_fe_vol5/user/jialwang/fp_script/official
-# Reports Location
-# CDCmaxdelay flow generated report:
- /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pd/tiles/CHIP_feint_CDC_NLC_TileBuilder_Jun06_1502_39729_GUI/rpts/MergeCdcMaxResDefault/report.cdc.csv.gz
- /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pdfeint_SYNC_NLC/rpts/MergeCdcMaxResDefault/report.sync.csv.gz
-# FEINT analysis script generated unique marker-based report for VCN IP:
- /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv 
- /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/unique.report.sync.fail.vcn.csv
-# Floorplan aware analysis script generated report:
- /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
- /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
 
 
-# please find information for #2 distance based GateCDC analysis
-# HCF_VCN_FPcdcmaxdelay.pptx : ppt for fpaware CDC delay analysis
-# after CDC max delay run is done, reports are
-/proj/saw_fct_vol5/a0/fct_runs/CDCMaxdelay/run1_AIGC_NLB_sync/main/pd/tiles/hcf_aigc_aid_CDC_AIGC_NLB_TileBuilder_Aug02_1018_115633_GUI/rpts/MergeCdcMaxResDefault/reports.sync.csv.gz
-# use scripts to obtain results
-/home/akarna/gateCDC/extractor.pl
-/home/akarna/gateCDC/summarize_report_with_tiles.pl
-/home/akarna/gateCDC/modified_FP_script.pl    ; # usage: -t <module_name> -o <output_filename> -d <DEF release area dir> -h(elp) -u (prog info)
-/home/akarna/gateCDC/combine_report_with_distances.pl
-You will get a csv file with all info:
-/proj/saw_fct_vol5/a0/fct_runs/CDCMaxdelay/run1_AIGC_NLB_sync/main/pd/tiles/hcf_aigc_aid_CDC_AIGC_NLB_TileBuilder_Aug02_1018_115633_GUI/rpts/MergeCdcMaxResDefault/fpcdcmaxdelay.csv
-# if required fix value >1, those can be sent to IP to check if need changes
+
+
 
 
 # vigitpy dir: gvim git python packages; 
@@ -967,9 +985,7 @@ cpwd0__CH_ACVIO_ACV0_ret
   CGP_SE0_SPI_csdata 
 
 \\\ for web pages;
-https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/
-gc_cpf_t.gc_cpg_t/cpwd0__CPC_CH_req
-.histo  
+https://logviewer-atl.amd.com//proj/at2_til53_nobackup/zhihan/STA/Records/gc_cpf_t.gc_cpg_t/cpwd0__CPC_CH_req.histo  
 
 
 
@@ -1133,33 +1149,34 @@ cdctiming
 
 cannie xue create CDC env based on NLB , run CDC; 
 special timing; lihuan, flush flow; check error; 
-drv: soundwave drv report summary; 
-1 corner;
+drv: soundwave drv report summary; 1 corner;
 
-rpts/PtTimFuncSS0p72vtyprc0css0p72v0cReRouteSxStp/CdcTiming
-rpts/CdcMaxDefault/
-The following files are generated:
-report.cdc.summary.rpt.gz -- The summary report of the cdc timing
-report.sync. summary.rpt.gz -- The summary report of the sync cell timing
-report.sync.csv.gz -- SYNC cell paths that fails to meet one cycle (or transport delay specified in RTL) to the input D pin.
-report.cdc.csv.gz -- Paths that fails to meet the destination clock count or destination time value as determined above, through a CDCBUF* marker cell.
+
+\\ rpts/PtTimFuncSS0p72vtyprc0css0p72v0cReRouteSxStp/CdcTiming
+\\ rpts/CdcMaxDefault/
+# The following files are generated:
+report.cdc.summary.rpt.gz  -- The summary report of the cdc timing
+report.sync.summary.rpt.gz -- The summary report of the sync cell timing
+report.sync.csv.gz         -- SYNC cell paths that fails to meet one cycle (or transport delay specified in RTL) to the input D pin.
+report.cdc.csv.gz          -- Paths that fails to meet the destination clock count or destination time value as determined above, through a CDCBUF* marker cell.
 report.sync.waivers.csv.gz -- Waived SYNC cell paths.
-report.cdc.waivers.csv.gz -- Waived CDC Paths.
-report.sync.path.rpt.gz -- The detail path report for the failed sync path.
-report.cdc.path.rpt.gz -- The detail path report for the failed sync path.
+report.cdc.waivers.csv.gz  -- Waived CDC Paths.
+report.sync.path.rpt.gz    -- The detail path report for the failed sync path.
+report.cdc.path.rpt.gz     -- The detail path report for the failed sync path.
 sync.maxdelay_setting.rpt.gz -- File containing parameter value used for each SYNC* cell.
-cdc.maxdelay_setting.rpt.gz -- File containing parameter values used for each CDC* cell.
-report.multibit.csv.gz -- The raw data for multibit check.
-report.path.rpt.gz -- The detail report for the failed multibit groups.
-report.cdc.warning.rpt.gz -- The warning message generated during cdc timing
+cdc.maxdelay_setting.rpt.gz  -- File containing parameter values used for each CDC* cell.
+report.multibit.csv.gz     -- The raw data for multibit check.
+report.path.rpt.gz         -- The detail report for the failed multibit groups.
+report.cdc.warning.rpt.gz  -- The warning message generated during cdc timing
 report.sync.warning.rpt.gz -- The warning message generated during sync cell timing
 
-The flow also generates several informational and warning messages. A clean RTL (0in clean) should not have any warnings. These messages are captured in the following files (or the CdcMaxDefault? .log file in standalone mode)
+# The flow also generates several informational and warning messages. 
+# A clean RTL (0in clean) should not have any warnings. These messages are captured in the following files (or the CdcMaxDefault? .log file in standalone mode)
 
-Sync_timing.log.gz -- Messages generated while checking SYNC cell paths.
+Sync_timing.log.gz    -- Messages generated while checking SYNC cell paths.
 Sync_timing.si.log.gz -- Same as above but generated during the timing using si run.
-Cdc_timing.log.gz -- Messages generated while checking CDCBUF cell paths.
-Cdc_timing.si.log.gz -- Same as above but generated during the timing using si run.
+Cdc_timing.log.gz     -- Messages generated while checking CDCBUF cell paths.
+Cdc_timing.si.log.gz  -- Same as above but generated during the timing using si run.
 
 ~/soc/rpts/cdc_rel_0105/CdcTiming/
 
@@ -1171,9 +1188,8 @@ Cdc_timing.si.log.gz -- Same as above but generated during the timing using si r
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.waivers.csv.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.sync.warning.rpt.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz
-# CDCEFPM  : cdc enhanced flipflop with metastability;
-# set maxdelay = max (CdcDestSetup, DestClkCnt * the period of its fastest fanout clocks)
-# NA /proj/canis_pd_gfx_fct04/fct_release/FCT0105_20250211_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_ReRoute_LSB10_NoRDL/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
+# gc_gdfll_t/gdfll/udfll_dft_gasket/dfll_v2p0_dft_gasket_bc1500_ctrl_inst/genblk60_aeb_dec_en_cdc_57/u_tis_cdcefpm/uefpm_0_/genblk1_genblk1_genblk1_d0nt_CDCEFPM_HC0_C0_D_20000_/A, 20000, , , , 20000, Module:gc_gdfll_t_techind_cdcefpm_single_driveSel3_DestClkCnt0_CdcDestSetup20000_HoldCheck0_SrcPath0_19_0, MAX_DELAY parameter value(20000) is higher than DstClk period(0)
+# CDCEFPM  : cdc enhanced flipflop with metastability;  # set maxdelay = max (CdcDestSetup, DestClkCnt * the period of its fastest fanout clocks)
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz.header
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.techind_delay_inst.rpt.gz
 # DestClkCnt 
@@ -1181,7 +1197,6 @@ Cdc_timing.si.log.gz -- Same as above but generated during the timing using si r
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.zerodelay_inst.rpt.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdcmax.json
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdcmultibit.json
-~/soc/rpts/cdc_rel_0105/
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.csv.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.path.rpt.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.cdc.summary.rpt.gz
@@ -1197,11 +1212,16 @@ Cdc_timing.si.log.gz -- Same as above but generated during the timing using si r
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.multibit.path.rpt.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/report.multibit_sync.path.rpt.gz
 
-sync.maxdelay_setting.rpt.gz
-sync.maxdelay_setting.rpt.gz.header
-sync.relaxed_delay_inst.rpt.gz
+~/soc/rpts/cdc_rel_0105/CdcTiming/
+~/soc/rpts/cdc_rel_0105/CdcTiming/sync.maxdelay_setting.rpt.gz
+# gc_rts_0_t0110/bpm/dyn_rm_se_for_compiled_mem_udyn_rm_se_v/rm_valid_synchronizer/genblk1_usync_0_/s3_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync3msfqxss1us_d0nt_sync_HC0_C40_D_0_/D, , 40.000000, GC_GFXCLK, 495.000000, 19800.0, TransportCycle from Instance_Name Last field, 
+~/soc/rpts/cdc_rel_0105/CdcTiming/sync.maxdelay_setting.rpt.gz.header
+~/soc/rpts/cdc_rel_0105/CdcTiming/sync.relaxed_delay_inst.rpt.gz
 sync.techind_delay_inst.rpt.gz
 sync.waived_inst.rpt.gz
+
+
+
 
 \\\\\\\\ canis  drv
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/

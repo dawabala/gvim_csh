@@ -1,11 +1,36 @@
 \\\\\\\\\\\\\\\\\\\\\\\\
 
 find *rel
+
+\\\\ cdc_rel_0105
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz
 # CDCEFPM  : cdc enhanced flipflop with metastability;
 # set maxdelay = max (CdcDestSetup, DestClkCnt * the period of its fastest fanout clocks)
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.relaxed_delay_inst.rpt.gz
 ~/soc/rpts/cdc_rel_0105/CdcTiming/
+~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz
+
+
+\\\\ cdc_rel_0143
+/proj/canis_pd_gfx_fct04/fct_release/FCT0143_20250310_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_Place_NLC
+
+\\\\ cdc_0p6v_rel_0143
+~/soc/rpts/cdc_0p6v_rel_0143/CdcTiming/report.cdc.summary.rpt.gz
+~/soc/rpts/cdc_0p6v_rel_0143/CdcTiming/report.sync.summary.rpt.gz
+~/soc/rpts/cdc_0p6v_rel_0143/CdcTiming/
+\\\\ cdc_0p65v_rel_0143
+~/soc/rpts/cdc_0p65v_rel_0143/CdcTiming/report.cdc.summary.rpt.gz
+~/soc/rpts/cdc_0p65v_rel_0143/CdcTiming/report.sync.summary.rpt.gz
+~/soc/rpts/cdc_0p65v_rel_0143/CdcTiming/
+\\\\ cdc_0p9v_rel_0143
+~/soc/rpts/cdc_0p9v_rel_0143/CdcTiming/report.cdc.summary.rpt.gz
+~/soc/rpts/cdc_0p9v_rel_0143/CdcTiming/report.sync.summary.rpt.gz
+~/soc/rpts/cdc_0p9v_rel_0143/CdcTiming/
+
+gvimdiff ~/soc/rpts/cdc_0p*_rel*/CdcTiming/report.sync.summary.rpt.gz
+gvimdiff ~/soc/rpts/cdc_0p*_rel*/CdcTiming/report.cdc.summary.rpt.gz
+
+~/soc/canis31.csh
 
 
 \\\\\\\\ timing verification CDC SOC .doc
@@ -2415,3 +2440,75 @@ GateCDC and GCA targets can be enabled using the following commands:
 run_gca({type=>"tile", runtype=>"stp", libcorner=>"$OPTIMIZATION_SETUP_LIB", sdc_mode=>"PrePhysical", sortgrp=>"Feint", preroute=>"0", stage_name=>"pretiming", si_type=>"No", ext_rpts=>"0"});
 run_edc({type=>"tile", runtype=>"cdcrace", libcorner=>"$OPTIMIZATION_SETUP_LIB", sdc_mode=>"PrePhysical", stage_name=>"pretiming", extract=>""});
 run_edc({type=>"tile", runtype=>"cdcnonunate", libcorner=>"$OPTIMIZATION_SETUP_LIB", sdc_mode=>"PrePhysical", stage_name=>"pretiming", extract=>""});
+
+\\\\\\\\\\\\\\
+# cdc isbella wang FEINT team, perl script;
+
+# NA /proj/mi400_hcf_vol3/user/jialwang/fcnlconstraints_hcfvcn2/main/pd/tiles/CHIP_MID/constraints/process_scripts/cdc_analysis;
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/ToF_calculator_polygon.pl ./
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/combine_report_with_distances.pl ./
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/extractor.pl ./
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/summarize_report_with_tiles.pl
+cp -pr /home/jialwang/hcf_vcn/fp_analysis/README
+
+# please find information for #2 distance based GateCDC analysis
+# HCF_VCN_FPcdcmaxdelay.pptx : ppt for fpaware CDC delay analysis
+# after CDC max delay run is done, reports are
+/proj/saw_fct_vol5/a0/fct_runs/CDCMaxdelay/run1_AIGC_NLB_sync/main/pd/tiles/hcf_aigc_aid_CDC_AIGC_NLB_TileBuilder_Aug02_1018_115633_GUI/rpts/MergeCdcMaxResDefault/reports.sync.csv.gz
+# use scripts to obtain results
+/home/akarna/gateCDC/extractor.pl
+/home/akarna/gateCDC/summarize_report_with_tiles.pl
+/home/akarna/gateCDC/modified_FP_script.pl    ; # usage: -t <module_name> -o <output_filename> -d <DEF release area dir> -h(elp) -u (prog info)
+/home/akarna/gateCDC/combine_report_with_distances.pl
+# You will get a csv file with all info:
+/proj/saw_fct_vol5/a0/fct_runs/CDCMaxdelay/run1_AIGC_NLB_sync/main/pd/tiles/hcf_aigc_aid_CDC_AIGC_NLB_TileBuilder_Aug02_1018_115633_GUI/rpts/MergeCdcMaxResDefault/fpcdcmaxdelay.csv
+# if required fix value >1, those can be sent to IP to check if need changes
+
+
+
+
+# requirement on reports/logs files;
+
+# CDC report csv
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
+#NA # SYNC report csv 
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/unique.report.sync.fail.vcn.csv
+#NA /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
+
+
+# CDCmaxdelay flow generated report FEINT analysis:
+report.cdc.csv.gz 
+report.sync.csv.gz
+#  FEINT analysis script generated unique marker-based report per IP (please start here for script testing as it has a smaller data set)
+VCN cdc:  unique.report.cdc.fail.vcn.csv
+VCN sync: unique.report.sync.fail.vcn.csv
+# Running Floorplan Aware Analysis Scripts
+perl ToF_calculator_polygon.pl        //calculates the longest distance within one tile and between two tiles, requires top def and tile def files under the run directory
+perl extractor.pl                     //extract all the required  information from the provided report unique.report.cdc.fail.vcn.csv
+perl summarize_report_with_tiles.pl   //adding tile information into the data extracted in the previous step
+perl combine_report_with_distances.pl <#ToFmm required to calculate ToF> //combines all the information we need to together
+
+# Run Reports
+#NA # HCF VCN NLBp8 Top Level DEF Location
+#NA /proj/cmb_release_vol1/a0/rapid_fcfp_meta_data/hcf_vcn_mid/rel_NLC/hcf_vcn_mid/rapid_fcfp_01/hcf_vcn_mid.def.gz
+#NA /proj/cmb_release_vol1/a0/rapid_fcfp_meta_data/hcf_vcn_mid/rel_NLC/vcn_*_0_t/rapid_fcfp_01/vcn_*_0_t.def.gz
+
+# Scripts Location:
+/proj/saw_fe_vol5/user/jialwang/fp_script/official
+# Reports Location
+
+
+
+# CDCmaxdelay flow generated report:
+ /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pd/tiles/CHIP_feint_CDC_NLC_TileBuilder_Jun06_1502_39729_GUI/rpts/MergeCdcMaxResDefault/report.cdc.csv.gz
+ /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pdfeint_SYNC_NLC/rpts/MergeCdcMaxResDefault/report.sync.csv.gz
+# FEINT analysis script generated unique marker-based report for VCN IP:
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/unique.report.cdc.fail.vcn.csv 
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/unique.report.sync.fail.vcn.csv
+# Floorplan aware analysis script generated report:
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/cdc_test/vcn/floorplan_analysis/fpcdcmaxdelay_vcn.csv
+ /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
+
+
+
