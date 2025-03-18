@@ -2,6 +2,10 @@
 
 find *rel
 
+perl /home/sdhe/refine_analyze_cdc.pl -input /proj/canis_pd_gfx_fct04/fct_release/FCT0143_20250310_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_CDC_Place_NLC \
+     -output /proj/canis_pd_gfx_fct01/jiaguo12/cdc_check/cdc_report -corner tt0p9 -from jia.guo@amd.com -to jia.guo@amd.com \
+     -config /home/jianswan/navi48_backup/csh.back/CDC/list_ownermail
+
 \\\\ cdc_rel_0105
 ~/soc/rpts/cdc_rel_0105/CdcTiming/cdc.maxdelay_setting.rpt.gz
 # CDCEFPM  : cdc enhanced flipflop with metastability;
@@ -2499,7 +2503,6 @@ perl combine_report_with_distances.pl <#ToFmm required to calculate ToF> //combi
 # Reports Location
 
 
-
 # CDCmaxdelay flow generated report:
  /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pd/tiles/CHIP_feint_CDC_NLC_TileBuilder_Jun06_1502_39729_GUI/rpts/MergeCdcMaxResDefault/report.cdc.csv.gz
  /proj/saw_fe_vol5/user/jialwang/supra_vcn/main/pdfeint_SYNC_NLC/rpts/MergeCdcMaxResDefault/report.sync.csv.gz
@@ -2511,4 +2514,478 @@ perl combine_report_with_distances.pl <#ToFmm required to calculate ToF> //combi
  /proj/saw_fe_vol5/user/jialwang/supra_hcfvcn/analysis/NLC/tt0p65/feint/sdc0001/sync/vcn/floorplan_analysis/fpsyncmaxdelay_vcn.csv
 
 
+
+\\\\\  /home/sdhe/refine_analyze_cdc.pl 
+
+#!/tool/aticad/1.0/bin/perl
+use strict;
+use warnings;
+use Getopt::Long;
+use File::Find;
+use JSON; # For generating JSON output
+use Data::Dumper; # For debugging purposes
+use POSIX qw(strftime); # For date formatting
+use File::Path qw(make_path); # For recursive directory creation
+use File::Basename; # For file path manipulation
+
+# Define global variables
+my @dfx_clocks = qw(GC_DFX_SCAN_SHIFT_CLK GC_DFX_SCAN_SHIFT_CLK2 GC_MTAP_Wrck GC_SMS_GFXCLK_WRCK);
+my @dfx_fields = qw(tile_dfx dfx DFT DFX sms dtc edt_scan_out_ compactor);
+
+# Define command-line options
+my ($input_path, @corners, @analysis_types, $num_rounds, $generate_report, $email_from, @email_to, $config_file, $output_dir);
+GetOptions(
+    'input_path=s'      => \$input_path,       # Path to the report
+    'corner=s{1,}'      => \@corners,         # Analysis corners (one or more)
+    'type=s{1,}'        => \@analysis_types,  # Analysis types (cdc, sync, or both)
+    'num_rounds=i'      => \$num_rounds,      # Number of comparison rounds
+    'generate_report'   => \$generate_report, # Flag to generate a report
+    'from=s'            => \$email_from,      # Email sender
+    'to=s{1,}'          => \@email_to,        # Email recipients (one or more)
+    'config=s'          => \$config_file,     # Configuration file for owner mapping
+    'output=s'          => \$output_dir,      # Output directory
+);
+
+# Validate required arguments
+unless ($input_path) {
+    die "Usage: $0 --input_path <path> [--corner <corner1> ...] [--type <cdc|sync> ...] [--num_rounds <rounds>] [--generate_report] [--from <sender>] [--to <recipient1> ...] [--config <config_file>] [--output <output_dir>]\n";
+}
+
+# Default analysis types if not provided
+@analysis_types = ('cdc', 'sync') unless @analysis_types;
+
+# If output directory is not provided, use a default directory
+unless ($output_dir) {
+    $output_dir = "./output";
+}
+
+# Create a directory with the current date (YYYYMMDD format)
+my $date_dir = strftime("%Y%m%d", localtime);
+my $final_output_dir = "$output_dir/$date_dir";
+
+# Create the output directory if it doesn't exist
+unless (-d $final_output_dir) {
+    make_path($final_output_dir) or die "Could not create directory '$final_output_dir': $!";
+}
+
+# Create the 'report' directory inside the date directory
+my $report_dir = "$final_output_dir/report";
+unless (-d $report_dir) {
+    make_path($report_dir) or die "Could not create directory '$report_dir': $!";
+}
+
+# Read the configuration file and store it in a hash
+my %config;
+if ($config_file) {
+    open(my $fh, '<', $config_file) or die "Could not open config file '$config_file': $!";
+    while (my $line = <$fh>) {
+        chomp $line;
+        my @columns = split(/\s+/, $line);
+        if (@columns >= 2) {
+            my ($startpoint_field, $owner) = @columns[0, -1];
+            $config{$startpoint_field} = $owner;
+        } else {
+            warn "Line does not have enough columns: $line\n";
+        }
+    }
+    close($fh);
+}
+print Dumper(\%config);
+
+# Function to find corners dynamically if not provided
+sub find_corners {
+    my ($input_path) = @_;
+    my @corners;
+
+    # Search for directories matching the pattern
+    my $search_path = "$input_path/rpts/PtGfxFunc*StpTiming/CdcTiming";
+    my @matching_dirs = glob($search_path);
+
+    foreach my $dir (@matching_dirs) {
+        # Extract the corner from the second-to-last level of the directory path
+        my @parts = split('/', $dir);
+        if (@parts >= 2) {
+            my $corner = $parts[-2]; # Second-to-last part
+            push @corners, $corner;
+        }
+    }
+
+    return @corners;
+}
+
+# Function to filter corners based on input
+sub filter_corners {
+    my ($corners_ref, $input_corners_ref) = @_;
+    my @corners = @$corners_ref;
+    my @input_corners = @$input_corners_ref;
+
+    # If no input corners, return all found corners
+    return @corners unless @input_corners;
+
+    # Filter corners that match any of the input corners
+    my @filtered_corners;
+    foreach my $corner (@corners) {
+        foreach my $input_corner (@input_corners) {
+            if ($corner =~ /\Q$input_corner\E/i) { # Case-insensitive match
+                push @filtered_corners, $corner;
+                last;
+            }
+        }
+    }
+
+    return @filtered_corners;
+}
+
+# Function to classify a path based on the new criteria
+sub classify_path {
+    my ($path, $analysis_type) = @_;
+
+    if ($analysis_type eq 'cdc') {
+        # Rule 1: Check if StartClocks is one of the specified values
+        if (grep { $_ eq $path->{StartClocks} } @dfx_clocks) {
+            return 'DFX';
+        }
+
+        # Rule 2: Check if the second level of hierarchy in Startpoint is one of the specified values
+        my @startpoint_parts = split('/', $path->{Startpoint});
+        if (@startpoint_parts >= 2) {
+            my $second_level = $startpoint_parts[1];
+            if (grep { $_ eq $second_level } @dfx_fields) {
+                return 'DFX';
+            }
+
+            # For non-DFX paths, use the second level directly as the category
+            return $second_level;
+        }
+
+        # Rule 3: If Startpoint has less than 2 levels, check Endpoint
+        my @endpoint_parts = split('/', $path->{Endpoint});
+        if (@endpoint_parts >= 2) {
+            my $second_level = $endpoint_parts[1];
+            if (grep { $_ eq $second_level } @dfx_fields) {
+                return 'DFX';
+            }
+
+            # For non-DFX paths, use the second level directly as the category
+            return $second_level;
+        }
+    } elsif ($analysis_type eq 'sync') {
+        # For sync, classify based on the first level of Endpoint
+        my @endpoint_parts = split('/', $path->{Endpoint});
+        if (@endpoint_parts >= 1) {
+            return $endpoint_parts[1];
+        }
+    }
+
+    return 'others'; # Default classification
+}
+
+# Function to process the report incrementally
+sub process_report_incrementally {
+    my ($input_path, $report_dir, $corner, $analysis_type) = @_;
+
+    # Open the gzipped report file
+    my $report_file = "$input_path/rpts/$corner/CdcTiming/report.$analysis_type.path.rpt.gz";
+    open(my $fh, '-|', 'gzip', '-dc', $report_file) or die "Could not open file '$report_file': $!";
+
+    my $current_path = {};
+    my $capture_path = 0;
+    my $path_content = '';
+    my %category_files;
+    my %summary = (
+        total_violations => 0,
+        waived_paths => 0,
+    );
+    my %categories;
+
+    while (my $line = <$fh>) {
+        # Extract StartClocks
+        if ($line =~ /StartClocks\s*:\s*(.+)/) {
+            $current_path->{StartClocks} = $1;
+        }
+        # Extract EndClock
+        if ($line =~ /EndClock\s*:\s*(.+)/) {
+            $current_path->{EndClock} = $1;
+        }
+        # Extract Slack
+        if ($line =~ /Slack\s*:\s*([\d\.e+-]+)/) {
+            $current_path->{Slack} = $1;
+        }
+        # Extract Startpoint
+        if ($line =~ /Startpoint\s*:\s*(.+)/) {
+            $current_path->{Startpoint} = $1;
+        }
+        # Extract Endpoint
+        if ($line =~ /Endpoint\s*:\s*(.+)/) {
+            $current_path->{Endpoint} = $1;
+        }
+        # Extract CDC/Sync Path through pins
+        # SYNC Path through
+        if ($line =~ /^\s*(CDC|SYNC)\s+Path\s+through/) {
+            $capture_path = 1; # Start capturing the entire path
+            $path_content = $line; # Initialize with the current line
+        }
+        # Capture the entire path
+        if ($capture_path) {
+            $path_content .= $line;
+            if ($line =~ /^\s+slack\s+\(VIOLATED\)/) { # Stop capturing at an empty line
+                $capture_path = 0;
+                $current_path->{Full_Path} = $path_content;
+
+                if ($line =~ /^\s+slack\s+\(VIOLATED\)\s+([\d\.e+-]+)/) { # Stop capturing at an empty line
+                    $current_path->{Slack} = $1;
+                    $current_path->{Slack} = sprintf("%.2f", $current_path->{Slack});
+                }
+
+                # Classify the path
+                my $category = classify_path($current_path, $analysis_type);
+                unless ($category) {
+                    warn "Undefined category for path: " . Dumper($current_path);
+                    $category = 'others'; # Default to 'others' if classification fails
+                }
+
+                # Open the category-specific report file if not already open
+                unless (exists $category_files{$category}) {
+                    my $category_file = "$report_dir/$analysis_type.$corner.$category.rpt";
+                    open($category_files{$category}, '>', $category_file) or die "Could not open file '$category_file': $!";
+                }
+
+                # Write the path to the category-specific report
+                my $fh = $category_files{$category};
+                print $fh "Path $summary{total_violations}:\n";
+                print $fh "  Full Path:\n$current_path->{Full_Path}\n\n";
+
+                # Update summary and category counts
+                $summary{total_violations}++;
+                $categories{$category}{count}++;
+                if (defined $current_path->{Slack} && (!exists $categories{$category}{max_violation} || $current_path->{Slack} > $categories{$category}{max_violation})) {
+                    $categories{$category}{max_violation} = $current_path->{Slack};
+                }
+
+                # Reset for the next path
+                $current_path = {};
+                $path_content = '';
+            }
+        }
+    }
+
+    close($fh);
+
+    # Close all category-specific report files
+    foreach my $fh (values %category_files) {
+        close($fh);
+    }
+
+    return (\%summary, \%categories);
+}
+
+# Function to generate JSON report
+sub generate_json_report {
+    my ($summary_ref, $categories_ref, $final_output_dir, $corner, $analysis_type) = @_;
+    my %summary = %$summary_ref;
+    my %categories = %$categories_ref;
+
+    # Prepare JSON data
+    my %json_data = (
+        summary => \%summary,
+        categories => \%categories,
+    );
+
+    # Add file paths to JSON
+    foreach my $category (keys %categories) {
+        my $file_path = "$report_dir/$analysis_type.$corner.$category.rpt";
+        $json_data{categories}{$category}{file_path} = "https://logviewer-atl.amd.com/$file_path";
+    }
+
+    # Add owner and jira information
+    foreach my $category (keys %categories) {
+        # Owner from config
+        $json_data{categories}{$category}{owner} = $config{$category} // '';
+
+        # Jira from file
+        my $jira_file = "$final_output_dir/$analysis_type.$category.jira";
+        if (-e $jira_file) {
+            open(my $fh, '<', $jira_file) or die "Could not open file '$jira_file': $!";
+            my $jira_content = do { local $/; <$fh> };
+            close($fh);
+            $json_data{categories}{$category}{jira} = $jira_content;
+        } else {
+            $json_data{categories}{$category}{jira} = '';
+        }
+    }
+
+    # Generate JSON file
+    my $json_file = "$final_output_dir/$analysis_type.$corner.json";
+    open(my $fh, '>', $json_file) or die "Could not open file '$json_file': $!";
+    print $fh JSON->new->pretty->encode(\%json_data);
+    close($fh);
+
+    print "JSON report generated: $json_file\n";
+}
+
+# Function to generate HTML report
+sub generate_html_report {
+    my ($final_output_dir, $corner_data_ref, $analysis_type) = @_;
+    my %corner_data = %$corner_data_ref;
+
+    # Generate HTML
+    my $html_file = "$final_output_dir/$analysis_type.report.html";
+    open(my $html_fh, '>', $html_file) or die "Could not open file '$html_file': $!";
+
+    print $html_fh "<!DOCTYPE html>\n";
+    print $html_fh "<html>\n";
+    print $html_fh "<head>\n";
+    print $html_fh "<title>$analysis_type Report</title>\n";
+    print $html_fh "<style>\n";
+    print $html_fh "table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }\n";
+    print $html_fh "th, td { border: 1px solid black; padding: 8px; text-align: left; }\n";
+    print $html_fh "th { background-color: #f2f2f2; }\n";
+    print $html_fh "a { text-decoration: none; color: blue; }\n";
+    print $html_fh "a:hover { text-decoration: underline; }\n";
+    print $html_fh "</style>\n";
+    print $html_fh "</head>\n";
+    print $html_fh "<body>\n";
+    print $html_fh "<h1>$analysis_type Report</h1>\n";
+
+    # Generate a table for each corner
+    foreach my $corner (keys %corner_data) {
+        my $json_data = $corner_data{$corner};
+
+        print $html_fh "<h2>$corner $analysis_type Summary</h2>\n";
+        print $html_fh "<table>\n";
+        print $html_fh "<tr><th>Index</th><th>Comment</th><th>Owner</th><th>Jira</th><th>Category</th><th>NVP</th><th>WNS</th></tr>\n";
+
+        my $owner;
+        my $index = 1;
+        foreach my $category (keys %{$json_data->{categories}}) {
+            $owner = ""; 
+            print "Cat is $category\n";
+            my $comment = $json_data->{categories}{$category}{file_path};
+            my $jira = $json_data->{categories}{$category}{jira};
+            my $nvp = $json_data->{categories}{$category}{count};
+            my $wns = $json_data->{categories}{$category}{max_violation} // 'N/A';
+
+            # Make Category a hyperlink to the file path
+            my $category_link = "<a href=\"$comment\" target=\"_blank\">$category</a>";
+
+            print $html_fh "<tr>\n";
+            print $html_fh "<td>$index</td>\n";
+            print $html_fh "<td></td>\n";
+            $owner = $config{$category} if defined $config{$category};
+            print $html_fh "<td>$owner</td>\n";
+            print $html_fh "<td>$jira</td>\n";
+            print $html_fh "<td>$category_link</td>\n";
+            print $html_fh "<td>$nvp</td>\n";
+            print $html_fh "<td>$wns</td>\n";
+            print $html_fh "</tr>\n";
+
+            $index++;
+        }
+
+        print $html_fh "</table>\n";
+    }
+
+    print $html_fh "</body>\n";
+    print $html_fh "</html>\n";
+
+    close($html_fh);
+
+    print "HTML report generated: $html_file\n";
+}
+
+# Function to send email using sendmail
+sub send_email {
+    my ($from, $to_ref, $subject, $final_output_dir) = @_;
+    my @to = @$to_ref;
+
+    # Read the CDC HTML content
+    my $cdc_html_file = "$final_output_dir/cdc.report.html";
+    open(my $cdc_fh, '<', $cdc_html_file) or die "Could not open file '$cdc_html_file': $!";
+    my $cdc_html_content = do { local $/; <$cdc_fh> };
+    close($cdc_fh);
+
+    # Read the Sync HTML content
+    my $sync_html_file = "$final_output_dir/sync.report.html";
+    open(my $sync_fh, '<', $sync_html_file) or die "Could not open file '$sync_html_file': $!";
+    my $sync_html_content = do { local $/; <$sync_fh> };
+    close($sync_fh);
+
+    # Combine CDC and Sync HTML content
+    my $combined_html_content = <<"END_EMAIL";
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Combined CDC and Sync Report</title>
+  <style>
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    a { text-decoration: none; color: blue; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>CDC Report</h1>
+  $cdc_html_content
+  <h1>Sync Report</h1>
+  $sync_html_content
+</body>
+</html>
+END_EMAIL
+
+    # Prepare the email headers and body
+    my $email_content = <<"END_EMAIL";
+From: $from
+To: @to
+Subject: $subject
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+$combined_html_content
+END_EMAIL
+
+    # Send the email using sendmail
+    open(my $sendmail, '| /usr/sbin/sendmail -t') or die "Could not open sendmail: $!";
+    print $sendmail $email_content;
+    close($sendmail);
+
+    print "Email sent to: " . join(', ', @to) . "\n";
+}
+
+# Main program
+my @found_corners = find_corners($input_path);
+my @filtered_corners = filter_corners(\@found_corners, \@corners);
+
+unless (@filtered_corners) {
+    die "No matching corners found.\n";
+}
+
+# Process the report incrementally for each corner and analysis type
+my %all_corner_data;
+foreach my $analysis_type (@analysis_types) {
+    my %corner_data;
+    foreach my $corner (@filtered_corners) {
+        my ($summary, $categories) = process_report_incrementally($input_path, $report_dir, $corner, $analysis_type);
+
+        # Generate JSON report
+        generate_json_report($summary, $categories, $final_output_dir, $corner, $analysis_type);
+
+        # Store corner data for HTML report
+        $corner_data{$corner} = {
+            summary => $summary,
+            categories => $categories,
+        };
+    }
+
+    # Generate a single HTML report for all corners of this analysis type
+    generate_html_report($final_output_dir, \%corner_data, $analysis_type);
+
+    # Store corner data for all analysis types
+    $all_corner_data{$analysis_type} = \%corner_data;
+}
+
+# Send email if -from and -to are provided
+if ($email_from && @email_to) {
+    send_email($email_from, \@email_to, "Canis CDC and Sync Timing Check", $final_output_dir);
+}
 

@@ -105,11 +105,11 @@ alias fct1 'cd /proj/canis_pd_gfx_fct01/'
 
 # alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=32000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
 # alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
-# alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=12000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
+# alias pf "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py  &' "
 
-alias pf    "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py &' "
-alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer ./ &' "
-alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=16000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ' "
+alias pf    "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/src/zoo/SCBU_PD/TSG/pathform/scripts/pathform.py &' "
+alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer ./ &' "
+alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ./ &' "
 
 # xterm 200G 
 alias term200 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
@@ -362,4 +362,12 @@ alias p4syncd   'source ~/p4syncd.tsh'
 if (-r ~$USER/.trees.aliases) then
     source ~$USER/.trees.aliases
 endif
+
+
+#### clean firefox mozilla cache 
+alias cleanff 'du1 ~/mozilla ~/firefox; cd ~/.cache; rm *; cd ~/.mozilla/firefox; rm *default*;'
+:r! du2 ~/.cache/mozilla ~/.mozilla/firefox/
+cd ~/.cache/mozilla/firefox/*default-release*/cache2/entries;sleep 1 ; du1 ; rm [0-9]* ; rm [A-Z]* ;
+cd ~/.cache/mozilla/firefox/29853v3s.default-release/cache2/entries; sleep 1 ; du1 ; rm [0-9]* ; rm [A-Z]* ;
+cd ~/.mozilla/firefox/*default-release*; du1;
 

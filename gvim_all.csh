@@ -114,14 +114,20 @@ qa<...>q
 @a;
 6@a;
 
-#### editing files
+#### edit/open/list files & buffers;
 gf; # edit files under cursor;
 :ls  :buffers  :files    # file list in current buffer
-:e :edit  # edit current file
+:e  :edit   # edit current file
 :e #1     # edit 1th file in buffers
 :e #8     # edit 8th file in buffers
 ### insert/append/newline/cut/substitute
 iIaAoOxs
+
+#### read/cat/list/echo/grep/sort/search/head/tail  files & dirs into current opend files;
+:r! ls; # list files, and insert into current gvim-opened files ;
+:r! cat a.txt; # cat a.txt, then copy/insert/paste into current gvim-opened files;
+:r! cat a.xt | head -2 tail -3
+:r! zgrep -Ei "Error|Faio" fch*nld/logs/ShGetData* | sort
 
 ###
 delete/yank
@@ -204,9 +210,17 @@ g/^/m 0           # revert all lines;
 :%s/<pattern>/ng
 :%s///ng; # search first match, then count all matched pattern;
 
-# search/grep file under cursor, and count
+# search/grep file under cursor, and count;
+# expand("<file>') must be used with :execute;
 :command! -nargs=1 Grepc execute ':!grep <args> ' . expand('<cfile>')
 :Grepc "EQ 0"  | wc -l; ctrl-c;
+# do with current file under cursor: find, list, grep; 
+: ! "find " . <cfile>
+: ! ls -al    <cfile>
+: ! grep ldo  <cfile>;
+:r! cat <cfile>; # cat files under cursor, copy/insert/paste into current gvim-opened files;
+# do with current word under cursor
+: ! grep -r  <cword> *;
 
 ### record/replay
 qaq, @a, 20@a;

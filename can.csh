@@ -12,14 +12,14 @@ cip_nbif_t/tile_dfx/scan_cntl/te_gater_ff_reg/CP,BP_BP[3],DFX_SCAN_SHIFT_CLK,395
 secip_art_t/tile_dfx/scan_cntl/async_rst_gater_ff_reg/CP,cip_nbif_t/tile_dfx/dft_clk_cntl_Cpl_SOCCLK/dft_clk_cntl_ono/dft_clk_cntl_status_tdr/reg_DFT_CLK_CNTL_STATUS/data/q_int_reg_0_/D,DFX_SCAN_SHIFT_CLK,3951,,SDFRPQSXGD4BWP143M286H3P48CPDLVT,MTAP_Wrck,15805,,DFQTXGD1BWP143M169H3P48CPDLVT,10.393300,47522.648438,47417.039064,,,Min delay of secip_art_t/sib_32_art_soc/sib_32_art_soc_rot_rst_top/d0nt_CDCBUF_ROT_SOC_PWROKRAW/u_techind_cdcfpm/ufpm_0_/genblk1_genblk1_d0nt_CDCFPM_C0_D_50000_/A BUFFCDCD2AMDBWP143M117H3P48CPDLVT (Module:secip_art_t_techind_cdcfpm_single_applyParams0_CdcDestSetup50000_DestClkCnt0_driveSel3_mode010_BufMetaWaiveMode2_SrcPath0_1_0:CdcDestSetup:50000.000000) ; cip_nbif_t/tile_dfx/dft_clk_cntl_Cpl_SOCCLK/dft_clk_cntl_ono/I_cdc_ext_clk_stop/u_tis_cdcefpm/uefpm_0_/genblk1_genblk1_genblk1_d0nt_CDCEFPM_HC0_C3_D_0_/A ND2CDCD2AMDBWP143M169H3P48CPDLVT (Module:cip_nbif_t_techind_cdcefpm_single_driveSel3_DestClkCnt3_CdcDestSetup0_HoldCheck0_SrcPath0_7_0:DestClkCnt:3.000000*15805.679688) ,,-116.002674,FAIL
 
 /proj/canis_pd_fct01/prateedk/SYNC_rpts/NLC_PLACE/SYNC_check_paths_only_DF_all_data_detail.rpt.gz;
-    SYNC Path through
-    	df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D
+    SYNC Path through: df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D
     StartClocks      : virtual_pad_clk
     EndClock         : FCLK {Period: 827}
     Other EndClocks  : 
     Path Delay       : 6.8e+04
     Reqd Max Delay   : 5e+04
     MaxDelay setting : Min delay of df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT (TransportDelay from Instance_Name Last field:TransportDelay:50000.000000) 
+
 /proj/canis_pd_fct01/prateedk/SYNC_rpts/NLC_PLACE/SYNC_check_paths_only_DF_all_data_csv.rpt;  # DECANPD-417;
     StartPoint,EndPoint,StartClock,StartClockPeriod,StartClockLatency,StartType,EndClock,EndClockPeriod,EndClockLatency,EndType,SetupTime,PathDelay,ReqdDelay,ReqdMaxDelay,ReqdDestCycles,Markers,Group,Slack,Result
     BP_CLKIN_NOSS_L,df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D,AMD_SYNC_VIRTCLK,1,,port,FCLK,826,,SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT,6.418407,282275.09375,50000.0,,,Min delay of df_pie_t/pie/pie_main/df_pie_dbg/CrossTrigInSync0/genblk1_usync_0_/s4_u_1__genblk1_u/genblk1_genblk1_genblk1_hdsync4msfqxss1us_d0nt_sync_HC0_C0_D_50000_/D SDFSYNC4QD1AMDBWP143M455H3P48CPDULVT (TransportDelay from Instance_Name Last field:TransportDelay:50000.000000) ,,-232281.512157,FAIL
@@ -27,32 +27,32 @@ secip_art_t/tile_dfx/scan_cntl/async_rst_gater_ff_reg/CP,cip_nbif_t/tile_dfx/dft
 
 csh> less report.cdc.path.rpt.gz | filter_pt.pl -s 'CDC Path through' -r "tile_dfx" | less
 
-\\\\\\\\ clock no-route list;
+\\\\\\\\ clock no-route list; # clock list, gfxclk acvclk, acv_clk, acv_clock;
 Please check NLCp1 initial clock no-route list as below:
 Clock no-route file: 
 /proj/canis_pd_clk01/release/NLCp1/GFX/clk_noroute.list
 
 # This is initial NLCp1 clock implementation plan for GFX.
-Net	       source_tile	Num_of_tile_sinks	Manhhattan_length	implementation	Comment
-Cpl_GFXCLK	gc_gdfll_t	125	                  15554.53	         Mesh	 
-Cpl_ACVCLK	SOC	4	3543.12	Balance-multi-terminal	 
-gpu_dldo_LONO_clkout_cg	gc_dldo_t	9	5467.246	Balance-multi-terminal	 
-gpu_dldo_ONO_0_clkout_cg	gc_dldo_t	107	15385.504	Balance-multi-terminal	 
-Cpl_VDDCR_SOC_SMNCLK	SOC	3	6551.05	RDL only	Before entering GFX need BUF/INV to push (RDL)
-Cpl_VDDCR_SOC_GAP_REFCLK	SOC	2	6215.28	RDL only	Before entering GFX need BUF/INV to push (RDL)
-Cpl_VDDCR_SOC_REFCLK_100	SOC	3	6302.224	RDL only	Before entering GFX need BUF/INV to push (RDL)
-DFX_TARG_Shift_Clk_group4	SOC	3	6927.856	RDL only	Big Invx32/BUFx15 ~1600um unbal port place at mid RDL only net near boundary to SOC
-Cpl_DLDOCLK_SOC_400	SOC	3	6577.648	RDL only	~800um #Freq quite high
-BC1500_Wrck	SOC	1	5848.048	RDL only	 
-Cpl_FCLK_vdci_gc_df_ch0_t	SOC	1	5560.1475	RDL only	 
-Cpl_FCLK_vdci_gc_df_ch1_t	SOC	1	5397.128	RDL only	 
-Cpl_FCLK_vdci_gc_df_ch2_t	SOC	1	5350.1565	RDL only	 
-Cpl_FCLK_vdci_gc_df_ch3_t	SOC	1	5513.176	RDL only	 
-Cpl_FCLK_vdci_gc_df_ch4_t	SOC	1	7626.562	RDL only	 
-Cpl_FCLK_vdci_gc_df_ch5_t	SOC	1	7874.626	RDL only	 
-Cpl_FCLK_vdci_gc_dfcrest_t	SOC	1	6423.066	RDL only	 
-Cpl_SOCCLK	SOC	1	6215.28	RDL only	For SOC shielding need near boudnary
-DFX_TARG_Shift_Clk	SOC	1	6001.264	RDL only	 
+Net	                        source_tile	Num_of_tile_sinks	Manhhattan_length	implementation	Comment
+Cpl_GFXCLK                 	gc_gdfll_t	125	                  15554.53	        Mesh	 
+Cpl_ACVCLK                 	SOC	        4	                  3543.12	        Balance-multi-terminal	 
+gpu_dldo_LONO_clkout_cg	    gc_dldo_t	9                     5467.246	        Balance-multi-terminal	 
+gpu_dldo_ONO_0_clkout_cg	gc_dldo_t	107                   15385.504	        Balance-multi-terminal	 
+Cpl_VDDCR_SOC_SMNCLK    	SOC	        3                     6551.05	        RDL only	Before entering GFX need BUF/INV to push (RDL)
+Cpl_VDDCR_SOC_GAP_REFCLK	SOC	        2                     6215.28	        RDL only	Before entering GFX need BUF/INV to push (RDL)
+Cpl_VDDCR_SOC_REFCLK_100	SOC	        3                     6302.224	        RDL only	Before entering GFX need BUF/INV to push (RDL)
+DFX_TARG_Shift_Clk_group4	SOC	        3                     6927.856	        RDL only	Big Invx32/BUFx15 ~1600um unbal port place at mid RDL only net near boundary to SOC
+Cpl_DLDOCLK_SOC_400	        SOC	        3                     6577.648	        RDL only	~800um; # Freq quite high
+BC1500_Wrck	                SOC	        1                     5848.048	        RDL only	 
+Cpl_FCLK_vdci_gc_df_ch0_t	SOC	        1                     5560.1475	        RDL only	 
+Cpl_FCLK_vdci_gc_df_ch1_t	SOC	        1                     5397.128	        RDL only	 
+Cpl_FCLK_vdci_gc_df_ch2_t	SOC	        1                     5350.1565	        RDL only	 
+Cpl_FCLK_vdci_gc_df_ch3_t	SOC	        1                     5513.176	        RDL only	 
+Cpl_FCLK_vdci_gc_df_ch4_t	SOC	        1                     7626.562	        RDL only	 
+Cpl_FCLK_vdci_gc_df_ch5_t	SOC	        1                     7874.626	        RDL only	 
+Cpl_FCLK_vdci_gc_dfcrest_t	SOC	        1                     6423.066	        RDL only	 
+Cpl_SOCCLK                	SOC	        1                     6215.28	        RDL only	For SOC shielding need near boudnary
+DFX_TARG_Shift_Clk          SOC	        1                     6001.264	        RDL only	 
 vdci_gc_syshub_t_xover_vddSOC_Cpl_GFXCLK_Bypass	SOC	1	5848.048	RDL only	 
 DFX_TARG_Shift_Clk_group1	SOC	2	5560.1475	RDL only	 
 DFX_TARG_Shift_Clk_group2	SOC	2	5513.176	RDL only	 
@@ -80,13 +80,20 @@ vdci_s5_soc_t_xover_vddSOC_MtapStac_Wrck_vddS5	/	/	/	/	Floating port same case t
 
 
 
+\\\\\\\\\ 
+# vi_git_py dir: gvim git python packages; 
+jdon:   git add python.all.csh (with py310 download links);  
+guojia: install gvim,git,py310; chatgpt: outlook mails save into can_mail.csh;
 
 
-
-
-# vigitpy dir: gvim git python packages; 
-jdon: git add pythonall.csh(with py310 download links);  
-guojia: install gvim, git,py310; chatgpt: outlook mails save into can_mail.csh;
+\\\\\\\\\ 0315 rel_0147 acvclk pathform
+~/git/aliases
+/proj/canis_pd_gfx_fct04/fct_release/FCT0147_20250312_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC/
+~/soc/rpts/rel_0147/
+~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.gc_acv_sp_sq_t.gc_acvi_t.sorted.gz
+~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.gc_acvi_t.gc_acv_lds_t.sorted.gz
+~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.gc_acvi_t.gc_acv_sp_sq_t.sorted.gz
+~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.vdci_gc_acv_t.gc_acvi_t.sorted.gz
 
 
 ~/soc/rpts/rpts.csh
@@ -94,11 +101,6 @@ guojia: install gvim, git,py310; chatgpt: outlook mails save into can_mail.csh;
 ~/soc/rpts/cts66.csh
 ~/soc/rpts/route80.csh
 ~/soc/rpts/timing.061.csh
-
-zdiff cts_withrdl cts_nordl;
-zdiff place_0p65v place_0p75v;
-zdiff place_0p6v  place_0p9v;
-zdiff cts_0p6v    cts_0p9v;
 
 # include  clock mesh design;
 # 0066_cts_0p75v_2t_withrdl
@@ -108,12 +110,11 @@ zdiff cts_0p6v    cts_0p9v;
 # pt session; 
 timing report not in it, timing path; 
 # sudong bsub ptsession;
-
 bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm & ; # sudong
 # zgrep PT_SHELL ./logs/PtGfxFuncTT0p75v*.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
 csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
-~/git/aliases
 # module load primetime/2022.03-SP5-2-T-20230819;
+~/git/aliases
 csh> source ~sdhe/.cshrc; module load primetime/2023.12-SP5
 csh> pt_shell; 
 pt_shell> restore_session rpts/PtGfxFuncTT0p75v*/ptsession
@@ -224,7 +225,7 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/tune_budget/
 /tools/aticad/1.0/src/zoo/azmohamm/scripts/
 arrange_reps.py*
 buf2inv.pl*
-fct_tile_status.pl*
+/tools/aticad/1.0/src/zoo/azmohamm/scripts/fct_tile_status.pl*; # check fix_drv, datatrans, clocktrns, datacaps;
 gen_early_trace.py*
 gen_rel_pos.py*
 histo.pl*
@@ -593,13 +594,15 @@ Hi Su Dong, Currently there 3 tasks:
 
 \\\\ 0225 special timing check
 https://confluence.amd.com/display/TSG/Check+special+timing
-~/soc/special_timing_check/p4sync_soc15.csh
+~/soc/special_timing_check/special_timing.csh
 ~/soc/special_timing_check/dfx.tcl
 
-
 \\ jianshu p4 sync tcl files;
+~/git/gvim_all.csh
 
 /proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/LaunchScript/
+/proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/NLC/DFX/
+
 /proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/NLC/GFX/gfx_dldo_chargeInj_skew_check.tcl
 /proj/canis_pd_gfx_fct01/jiaguo12/special_timing_check/main/pd/tiles/CHIP/NLC/GFX/
 
@@ -612,7 +615,6 @@ module load primetime/2023.12-SP5 ; cd ~/soc/rpts/runs_0115;
 bsub -Ip -q regr_high -n 8 -P canis-pd -R 'rusage[mem=255000] select[(csbatch||gb32||gb64||gb128||gb256||gb512||gb1024||type==RHEL7_64||type==RHEL6_64)]' 'pt_shell ' &;
 cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession;
 pt_shell> set_host_options -max_cores 8 ;restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession;
-
 
 
 # Launch script :
@@ -674,7 +676,6 @@ DFX Script File Name Purpose IP owner/content reviewer MV Run Run Order Update_T
    Min scanchannel skew check; zegrep -v FAIL scanchannel.out.min.skew.rpt scanchannel.in.min.skew.rpt 
   //soc15/canis/main/pd/tiles/CHIP/special_timing/NLC/DFX/scanchannel.skew.min.tcl#1
 
-
 \\ special_timing_check copied from xls file; 
 
 /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
@@ -715,7 +716,6 @@ CHARZ.csv
 
 
 \\\\ 0218 meeting
-
 
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_spi_s_bci0_cac_t0.sorted.gz
@@ -1139,9 +1139,6 @@ gc__cpwd0__CHC1_CAC_1_active, EQ 0, pd=0;
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/rpts/sort_rpts/SortPtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.GC_GFXCLK.gc_sc_bci1_t0.gc_spi_s_bci0_cac_t0.sorted.gz
 
-# drv : fly hu does not summarize DRV report for soundwave yet, 
-# open pt_drv session; enable pt drv running;
-
 
 \\\\ 0211 meeting
 cdctiming 
@@ -1224,6 +1221,9 @@ sync.waived_inst.rpt.gz
 
 
 \\\\\\\\ canis  drv
+\\\\\\\\\ drv check;
+# drv : fly hu does not summarize DRV report for soundwave yet, 
+# open pt_drv session; enable pt drv running;
 /proj/canis_pd_gfx_fct04/fct_release/FCT0109_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL/
 
 /proj/canis_pd_gfx_fct04/fct_release/FCT0110_20250213_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ApplyMvtRoute_LSB10_WithRDL/
@@ -1292,8 +1292,9 @@ Script to summarize DRV: developed by Feng1, Jian1
 /tools/pandora/bin/python3.9  /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py -instMap inst_tile.map
                               /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/drv/fix_drv.py
 /tools/pandora/bin/python3.9  /home/jiaguo12/soc/drv/fix_drv.py -instMap inst_tile.map
-
+0122: drv
 cd /proj/canis_pd_gfx_fct04/fct_release/FCT0122_20250225_SOC_FUNCSCAN_GFX_HDM_GFX_ONLY_DRV_ReRoute_LSB10_WithRDL;
+
 
 
 /tools/pandora/bin/python3.9  ~/soc/drv/fix_drv.py
@@ -1903,29 +1904,30 @@ Under Directory: $pwd/ Trace: o Initial trace file is trace_fp which reads in th
 
 
 #### canis tasks & owners; 
-Task	Original owner	Owner	Comments
+Task	            Original owner	Owner	Comments
 Special timing	 	Guo, Jia/Ong, JoeHuei	 
-CDC Check	 	Guo, Jia/Ong, JoeHuei	 
+CDC Check	        Guo, Jia/Ong, JoeHuei	 
 MV Timing/ACVCLK	Kyle, Wang	Guo, Jia	 
 Repeater trace flow report analysis	Kyle, Wang	Kyle, Wang/Ling, Joanne	 
-GFX Flow	Michael	Michael	 
+GFX Flow            Michael	Michael	 
 
 # gfx/dft timing;
 gfx owner: non-er tiles kyle, er tiles joan;
 dft owner: non-er tiles ding, er tiles joehuei,
 # gfx clocks group
-gfx clock: 
-gc_gfxclk: 
-dldoclock: fanout to all tiles
+gfxclk; 
 gfxclk_1 : same as  gfxclk
+gc_gfxclk: 
+dldo_clock: fanout to all tiles
 socclk: fanout low
 qspiclk: fanout low
-wrck
+wrck;
 # 4 tiles mv timing
 mv timing: acv settings to be setup; fct mv flow: to be done.
-mv_tile_list: gc_acv_sp_sq_t gc_acv_lds_t vdci_gc_  gc_d
+mv_tile_list: gc_acv_sp_sq_t gc_acv_lds_t gc_acv_t gc_acvi_t
+
 repeater timing:
-# DRV 
+# DRV fix_drv.py 
 si, double_switch
 # pt sessions;
 pt timing: no-clock, timing loop, non-constraint; compare with tile-level pt session;
@@ -2197,3 +2199,2465 @@ csh> pt_shell;
 csh>  ps -w `whoami`
 csh>  ps -u jiaguo12
 csh>  top; ps aux; jobs -l ;ps aux | grep find;
+
+\\\\\\\\ fix_drv.py
+/tools/pandora/bin/python3.9  /home/jiaguo12/soc/drv/fix_drv.py -instMap inst_tile.map
+
+#! /tool/pandora/bin/python3.9
+# please note since si_data_tran, data_tran, and si_clock_tran/clock_tran may have overlap,   you'd better sort related eco in case add_buffer twice.
+import os
+import re
+import shutil
+import argparse
+from datetime import datetime
+import pandas as pd
+
+def shell(cmd):
+    return os.popen(cmd).read().rstrip()
+
+
+current_date = datetime.now()
+month        = current_date.strftime("%m")
+day          = current_date.strftime("%d")
+current_date = f"{month}{day}"
+
+# argument
+parser = argparse.ArgumentParser()
+parser.add_argument('--nonsi',        action='store_true', help='enable nonsi option to fix nonsi drv')
+parser.add_argument('--si',           action='store_true', help='enable si option to fix si drv')
+parser.add_argument('--rc',           action='store_true', help='check rc011 and rc012 violation')
+# parser.add_argument('-instMap',     default='/home/jiafeng1/proj/Murano/drv/Tile.map', help='inst map file')
+parser.add_argument('-instMap',       default='inst_tile.map', help='inst map file')
+parser.add_argument('-fix',           default='all', help='violation to fix')
+# parser.add_argument('-fix',           default='illegalck', help='illegalck to fix')
+parser.add_argument('-lib_cell_file', default='/home/jiafeng1/proj/Murano/drv/Use_setup_lvt_ulvt', help='inst lib cells which can be used when fix drv')
+parser.add_argument('-waiver',        default='/home/jiafeng1/proj/Murano/drv/waiver.rpt', help='add waiver when fixing drv')
+args           = parser.parse_args()
+tileMapfile    = args.instMap
+violation_item = args.fix
+lib_cell_file  = args.lib_cell_file
+waiver_list    = args.waiver
+
+if hasattr(args, 'h') and args.h:
+    parser.print_help()
+
+# get inst map
+tileMap = {}
+with open(tileMapfile) as f:
+    rows = f.readlines()
+    for row in rows:
+        tile_name = row.split()[0]
+        tile_ref = row.split()[1]
+        tileMap[tile_name] = tile_ref
+
+# lib cell available
+lib_cells = []
+with open(lib_cell_file) as f:
+    rows = f.readlines()
+    for row in rows:
+        if '#' not in row:
+            lib_cells.append(row.strip())
+
+# global waiver
+data_tran_global_waiver = 0
+data_cap_global_waiver = 0
+ck_tran_global_waiver = 0
+si_data_tran_global_waiver = 0
+si_cktran_global_waiver = 0
+si_noise_height_global_waiver = 0
+si_noise_area_global_waiver = 0
+si_bottleneck_global_waiver = 0
+si_clock_noise_height_global_waiver = 0
+si_clock_noise_area_global_waiver = 0
+si_clock_double_switching_global_waiver = 0
+clock_si_global_waiver = 0
+
+# special waiver:
+data_tran_special_waiver = []
+data_cap_special_waiver = []
+clock_tran_special_waiver = []
+si_data_tran_special_waiver = []
+si_cktran_special_waiver = []
+si_noise_height_special_waiver = []
+si_noise_area_special_waiver = []
+si_bottleneck_special_waiver = []
+si_clock_noise_height_special_waiver = []
+si_clock_noise_area_apecial_waiver = []
+si_clock_double_switching_special_waiver = []
+clock_si_special_waiver = []
+
+
+with open(waiver_list) as f:
+    rows = f.readlines()
+    for row in rows:
+        if 'data tran waiver' in row and '#' not in row:
+            data_tran_special_waiver = data_tran_special_waiver.append(row.split()[0])
+        if 'data cap waiver' in row and '#' not in row:
+            data_cap_special_waiver = data_cap_special_waiver.append(row.split()[0])
+        if 'clock tran waiver' in row and '#' not in row:
+            clock_tran_special_waiver = clock_tran_special_waiver.append(row.split()[0])
+        if 'si_data_tran waiver' in row and '#' not in row:
+            si_data_tran_special_waiver = si_data_tran_special_waiver.append(row.split()[0])
+        if 'si_clock_tran waiver' in row and '#' not in row:
+            si_clock_tran_special_waiver = si_clock_tran_special_waiver.append(row.split()[0])
+        if 'si noise height waiver' in row and '#' not in row:
+            si_noise_height_special_waiver = si_noise_height_special_waiver.append(row.split()[0])
+        if 'si noise area waiver' in row and '#' not in row:
+            si_noise_area_special_waiver = si_noise_area_special_waiver.append(row.split()[0])
+        if 'si bottleneck waiver' in row and '#' not in row:
+            si_bottleneck_special_waiver = si_bottleneck_special_waiver.append(row.split()[0])
+        if 'si clock noise height waiver' in row and '#' not in row:
+            si_clock_noise_height_special_waiver = si_clock_noise_height_special_waiver.append(row.split()[0])
+        if 'si clock noise area waiver' in row and '#' not in row:
+            si_clock_noise_area_special_waiver = si_clock_noise_area_special_waiver.append(row.split()[0])
+        if 'si clock double switch waiver' in row and '#' not in row:
+            si_clock_double_switch_special_waiver = si_clock_double_switch_special_waiver.append(row.split()[0])
+        if 'clock si waiver' in row and '#' not in row:
+            clock_si_special_waiver = clock_si_special_waiver.append(row.split()[0])
+
+
+if not os.path.exists('fix_drv'):
+    os.mkdir('fix_drv')
+
+
+def find_tile_ref(pin, tileMap):
+    names = pin.split('/')
+    if names[0] in tileMap.keys():
+        tileName = names[0]
+        tileRef = tileMap[names[0]]
+    elif len(names) > 2 and "/".join(names[:1]) in tileMap.keys():
+        tileName = "/".join(names[:1])
+        tileRef = tileMap["/".join(names[:1])]
+    elif len(names) > 3 and "/".join(names[:2]) in tileMap.keys():
+        tileName = "/".join(names[:2])
+        tileRef = tileMap["/".join(names[:2])]
+    elif len(names) > 4 and "/".join(names[:3]) in tileMap.keys():
+        tileName = "/".join(names[:3])
+        tileRef = tileMap["/".join(names[:3])]
+    elif len(names) > 5 and "/".join(names[:4]) in tileMap.keys():
+        tileName = "/".join(names[:4])
+        tileRef = tileMap["/".join(names[:4])]
+    else:
+        tileRef = "chip"
+        tileName = ""
+    return (tileName, tileRef)
+
+
+def cell_swap(driver, driverPin):
+    matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", driverPin)
+    vt = matchall.group(4)
+    if vt == "LVTLL":
+        tmp_driverPin = f"{matchall.group(1)}{matchall.group(2)}{matchall.group(3)}LVT"
+        ratio = 1.4
+    elif vt == "LVT":
+        tmp_driverPin = f"{matchall.group(1)}{matchall.group(2)}{matchall.group(3)}ULVTLL"
+        ratio = 1.4
+    elif vt == "ULVTLL":
+        tmp_driverPin = f"{matchall.group(1)}{matchall.group(2)}{matchall.group(3)}ULVT"
+        ratio = 1.4
+    else:
+        tmp_driverPin = driverPin
+        ratio = 1
+    if tmp_driverPin not in lib_cells:
+        tmp_driverPin = driverPin
+        ratio = 1
+    return(driver, tmp_driverPin, ratio)
+
+
+def cell_size(driver, driverPin, ratio, target_ratio):
+    matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", driverPin)
+    ori_size = matchall.group(2)
+    tmp_driverPin = driverPin
+    if int(ori_size) >= 8:
+        tmp_driverPin = driverPin
+        new_ratio = ratio
+    else:
+        for i in [1, 2, 3, 4, 5, 6, 8]:
+            new_ratio = float(i) / float(ori_size) * float(ratio)
+            if i < float(ori_size):
+                continue
+            elif float(new_ratio) < float(target_ratio) and float(i) < 8:
+                continue
+            else:
+                tmp_size = i
+                tmp_driverPin = f"{matchall.group(1)}{tmp_size}{matchall.group(3)}{matchall.group(4)}"
+                # break
+    if tmp_driverPin not in lib_cells:
+        tmp_driverPin = driverPin
+        new_ratio = 1
+    return(driver, tmp_driverPin, new_ratio)
+
+
+def write_eco(path, eco_size_cell, eco_add_buf):
+    l_bracket = '{'
+    r_bracket = '}'
+    item = path.split('/')[-1]
+    prefix = f'FCECO_{current_date}_{item}'
+    if os.path.exists(f'{path}/chip.eco'):
+        os.remove(f'{path}/chip.eco')
+    with open(f'{path}/chip.eco', 'a') as f:
+        for driver in eco_size_cell.keys():
+            f.write(f'catch {l_bracket} size_cell [get_cells -of_objects [get_pins {driver}]] {eco_size_cell[driver]} {r_bracket} \n')
+        for pin in eco_add_buf.keys():
+            f.write(f'catch {l_bracket} add_buffer_on_route [get_nets -quiet -top -seg -of_objects [get_pins {pin}]] {eco_add_buf[pin][0]} -net_prefix {prefix} -cell_prefix {prefix} -first_distance_length_ratio {eco_add_buf[pin][1]} -repeater_distance_length_ratio 0.9 -no_legalize -punch_port -dont_allow_insertion_over_cell [all_macro_cells] {r_bracket}\n')
+            # if 'ck' in path:
+            #     f.write(f'catch {l_bracket} add_buffer_on_route [get_nets -quiet -top -seg -of_objects [get_pins {driver}] CKBD5AMDBWP210H6P51CNODULVT -net_prefix {prefix} -cell_prefix {prefix} -repeater_distance_length_ratio 0.5 -no_legalize -punch_port -dont_allow_insertion_over_cell [all_macro_cells] {r_bracket}\n')
+            # else:
+            #     f.write(f'catch {l_bracket} add_buffer_on_route [get_nets -quiet -top -seg -of_objects [get_pins {driver}] BUFFD6BWP210H6P51CNODULVTLL -net_prefix {prefix} -cell_prefix {prefix} -repeater_distance_length_ratio 0.5 -no_legalize -punch_port -dont_allow_insertion_over_cell [all_macro_cells] {r_bracket}\n')
+
+    if os.path.exists(f'{path}/tile_eco'):
+        shutil.rmtree(f'{path}/tile_eco')
+    else:
+        os.mkdir(f'{path}/tile_eco')
+    tileEco = {}
+    with open(f'{path}/chip.eco') as fN:
+        rows = fN.readlines()
+        for row in rows:
+            driver = row.split('get_pins ')[1].split()[0].strip('] ')
+            tileName, tileRef = find_tile_ref(driver, tileMap)
+            if tileName:
+                cmd1 = row.split(f'{tileName}/')[0]
+                cmd2 = row.split(f'{tileName}/')[1]
+                cmd = f'{cmd1} {cmd2}'
+                if tileRef in tileEco.keys():
+                    if cmd not in tileEco[tileRef]:
+                        tileEco[tileRef].append(cmd)
+                else:
+                    tileEco[tileRef] = [cmd]
+            else:
+                row = row.replace('first_distance_length_ratio 0.8', 'first_distance_length_ratio 0.5')
+                if 'chip' in tileEco.keys():
+                    if row not in tileEco['chip']:
+                        tileEco['chip'].append(row)
+                else:
+                    tileEco['chip'] = [row]
+        for tile in tileEco.keys():
+            with open(f'{path}/tile_eco/{tile}.eco', 'a') as fw:
+                for cmd in tileEco[tile]:
+                    fw.write(cmd)
+
+
+count_violation = {}
+violation_rpt = {}
+net_info = {}
+
+
+def fix_data_tran():
+    data_tran_rpts = shell('ls ./rpts/PtGfxDrv*Stp*/data_trans.rpt.gz')
+    if data_tran_rpts == '':
+        print('missing data_tran rpt, check if ./rpts/PtGfxDrv*Stp*/data_trans.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/data_tran'):
+            shell('rm -rf fix_drv/data_tran/*')
+        else:
+            os.mkdir('fix_drv/data_tran')
+
+        # get 2 tile data tran rpt
+        for rpt in data_tran_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/data_tran/all_data_tran.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/data_tran/all_data_tran.rpt'
+            shell(cmd)
+        flag = 0
+        data_tran_vio_number = 0
+        with open('fix_drv/data_tran/all_data_tran.rpt') as f:
+            for line in f.readlines():
+                if 'data_trans.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    data_tran_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/data_tran/2tile_data_tran", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+            os.remove(f'fix_drv/data_tran/all_data_tran.rpt')
+
+        # variable
+        valid_data_tran = []
+        invalid_data_tran = []
+        waive_nets = []
+        data_tran_violation = {}
+        data_tran_unconstrain_number = 0
+        data_tran_waive_number = 0
+        data_tran_fixed_number = 0
+        data_tran_violation_rpt = []
+        net_info['data_tran'] = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+
+        if os.path.exists('fix_drv/data_tran/2tile_data_tran'):
+            with open('fix_drv/data_tran/2tile_data_tran') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    # get unconstrain rpt
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_data_tran.append(content)
+                    elif 'Net' in content:
+                        invalid_data_tran.append(content)
+                    # get all vio rpt
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}:\t{sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        data_tran_violation_list = [net, driver, sink, slack, corner]
+                        data_tran_violation_rpt.append(data_tran_violation_list)
+                violation_rpt['data_tran'] = data_tran_violation_rpt
+
+                # put unconstrain rpt
+                if invalid_data_tran:
+                    with open('fix_drv/data_tran/unconstrain.rpt', 'a') as f:
+                        for invalid_content in invalid_data_tran:
+                            data_tran_unconstrain_number += 1
+                            f.write(invalid_content)
+                            net = invalid_content.split('# Net: ')[1].split()[0]
+                            net_info['data_tran'][net] = 'unconstrain net'
+
+                # deal with vaild rpt
+                if valid_data_tran:
+                    for valid_content in valid_data_tran:
+                        net = valid_content.split('# Net: ')[1].split()[0]
+                        tran = valid_content.split('Trans: ')[1].split()[0]
+                        limit = valid_content.split('Limit: ')[1].split()[0]
+                        slack = valid_content.split('Slack: ')[1].split()[0]
+                        target_ratio = float(tran) / float(limit)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['data_tran'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['data_tran'][net] = 'check why add eco buffer cell not fixed data tran'
+                        elif float(slack) > float(data_tran_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['data_tran'][net] = 'waive by global waiver'
+                        elif net in data_tran_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['data_tran'][net] = 'waive by special waiver'
+                        elif float(slack) < -1000:
+                            waive_nets.append(valid_content)
+                            net_info['data_tran'][net] = 'big slack - need check'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['data_tran'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            data_tran_violation[driver] = [driverPin, sink, target_ratio, net]
+
+            with open('fix_drv/data_tran/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    data_tran_waive_number += 1
+                    f.write(content)
+
+            for driver in data_tran_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", data_tran_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, data_tran_violation[driver][0])
+                    if new_ratio >= data_tran_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, data_tran_violation[driver][2])
+                        if new_ratio >= data_tran_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.8
+                        elif 'FCECO' in driver and 'FCECO' not in data_tran_violation[driver][1]:
+                            eco_add_buf[data_tran_violation[driver][1]] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.2
+                    data_tran_fixed_number += 1
+                    net_info['data_tran'][data_tran_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data tran: driver:{driver} net:{data_tran_violation[driver][2]}')
+                    net_info['data_tran'][data_tran_violation[driver][-1]] = 'check strange driver cell'
+
+            write_eco('fix_drv/data_tran', eco_size_cell, eco_add_buf)
+            count_violation['data_tran'] = data_tran_vio_number, data_tran_unconstrain_number, data_tran_waive_number, data_tran_fixed_number
+        else:
+            print('2 tile data tran clean!')
+
+
+def fix_data_cap():
+    data_cap_rpts = shell('ls ./rpts/PtGfxDrv*Stp*/data_cap.rpt.gz')
+    if data_cap_rpts == '':
+        print('missing data_cap rpt, check if ./rpts/PtGfxDrv*Stp*/data_cap.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/data_cap'):
+            shell('rm -rf fix_drv/data_cap/*')
+        else:
+            os.mkdir('fix_drv/data_cap')
+        for rpt in data_cap_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/data_cap/all_data_cap.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/data_cap/all_data_cap.rpt'
+            shell(cmd)
+        flag = 0
+        data_cap_vio_number = 0
+        with open('fix_drv/data_cap/all_data_cap.rpt') as f:
+            for line in f.readlines():
+                if 'data_cap.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    data_cap_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/data_cap/2tile_data_cap", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+        os.remove("fix_drv/data_cap/all_data_cap.rpt")
+
+        valid_data_cap = []
+        invalid_data_cap = []
+        waive_nets = []
+        data_cap_violation = {}
+        data_cap_unconstrain_number = 0
+        data_cap_waive_number = 0
+        data_cap_fix_number = 0
+        data_cap_violation_rpt = []
+        net_info['data_cap'] = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+
+        if os.path.exists('fix_drv/data_cap/2tile_data_cap'):
+            with open('fix_drv/data_cap/2tile_data_cap') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_data_cap.append(content)
+                    elif 'Net' in content:
+                        invalid_data_cap.append(content)
+
+                    # get all vio
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}: {sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        data_cap_violation_list = [net, driver, sink, slack, corner]
+                        data_cap_violation_rpt.append(data_cap_violation_list)
+                violation_rpt['data_cap'] = data_cap_violation_rpt
+
+                if invalid_data_cap:
+                    with open('fix_drv/data_cap/unconstrain.rpt', 'a') as f:
+                        for invalid_content in invalid_data_cap:
+                            data_cap_unconstrain_number += 1
+                            f.write(invalid_content)
+                            net = invalid_content.split('# Net: ')[1].split()[0]
+                            net_info['data_cap'][net] = 'unconstrain net'
+
+                if valid_data_cap:
+                    for valid_content in valid_data_cap:
+                        net = valid_content.split('# Net: ')[1].split()[0]
+                        cap = valid_content.split('Cap: ')[1].split()[0]
+                        limit = valid_content.split('Limit: ')[1].split()[0]
+                        slack = valid_content.split('Slack: ')[1].split()[0]
+                        target_ratio = float(cap) / float(limit)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['data_cap'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['data_cap'][net] = 'check why add eco buffer cell not fixed data cap'
+                        elif float(slack) > float(data_cap_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['data_cap'][net] = 'waive by global waiver'
+                        elif net in data_cap_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['data_cap'][net] = 'waive by special waiver'
+                        elif float(slack) < -1000:
+                            waive_nets.append(valid_content)
+                            net_info['data_cap'][net] = 'big slack - need check'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['data_cap'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            data_cap_violation[driver] = [driverPin, sink, target_ratio, net]
+
+            with open('fix_drv/data_cap/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    data_cap_waive_number += 1
+                    f.write(content)
+
+            for driver in data_cap_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", data_cap_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, data_cap_violation[driver][0])
+                    if new_ratio >= data_cap_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, data_cap_violation[driver][2])
+                        if new_ratio >= data_cap_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.8
+                        elif 'FCECO' in driver and 'FCECO' not in data_cap_violation[driver][1]:
+                            eco_add_buf[data_cap_violation[driver][1]] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.2
+                    data_cap_fix_number += 1
+                    net_info['data_cap'][data_cap_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data cap: driver:{driver} net:{data_cap_violation[driver][2]}')
+                    net_info['data_cap'][data_cap_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/data_cap', eco_size_cell, eco_add_buf)
+            count_violation['data_cap'] = data_cap_vio_number, data_cap_unconstrain_number, data_cap_waive_number, data_cap_fix_number
+        else:
+            print('2 tile data cap clean!')
+
+
+def fix_cktran():
+    ck_tran_rpts = shell('ls ./rpts/PtGfxDrv*Stp*/clock_trans.rpt.gz')
+    if ck_tran_rpts == '':
+        print('missing ck_tran rpt, check if ./rpts/PtGfxDrv*Stp*/clock_trans.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/ck_tran'):
+            shell('rm -rf fix_drv/ck_tran/*')
+        else:
+            os.mkdir('fix_drv/ck_tran')
+        for rpt in ck_tran_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/ck_tran/all_ck_tran.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/ck_tran/all_ck_tran.rpt'
+            shell(cmd)
+
+        flag = 0
+        ck_tran_vio_number = 0
+        with open('fix_drv/ck_tran/all_ck_tran.rpt') as f:
+            for line in f.readlines():
+                if 'clock_trans.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    ck_tran_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/ck_tran/2tile_ck_tran", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+        os.remove('fix_drv/ck_tran/all_ck_tran.rpt')
+
+        # variable
+        valid_ck_tran = []
+        invalid_ck_tran = []
+        waive_nets = []
+        ck_tran_violation = {}
+        ck_tran_unconstrain_number = 0
+        ck_tran_waive_number = 0
+        ck_tran_fix_number = 0
+        ck_tran_violation_rpt = []
+        net_info['ck_tran'] = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+
+        if os.path.exists('fix_drv/ck_tran/2tile_ck_tran'):
+            with open('fix_drv/ck_tran/2tile_ck_tran') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_ck_tran.append(content)
+                    elif 'Net' in content:
+                        invalid_ck_tran.append(content)
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}: {sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        ck_tran_violation_list = [net, driver, sink, slack, corner]
+                        ck_tran_violation_rpt.append(ck_tran_violation_list)
+                violation_rpt['ck_tran'] = ck_tran_violation_rpt
+
+                if invalid_ck_tran:
+                    with open('fix_drv/ck_tran/unconstrain.rpt', 'a') as f:
+                        for invalid_content in invalid_ck_tran:
+                            ck_tran_unconstrain_number += 1
+                            f.write(invalid_content)
+                            net = invalid_content.split('# Net: ')[1].split()[0]
+                            net_info['ck_tran'][net] = 'unconstrain net'
+
+                if valid_ck_tran:
+                    for valid_content in valid_ck_tran:
+                        net = valid_content.split('# Net: ')[1].split()[0]
+                        trans = valid_content.split('Trans: ')[1].split()[0]
+                        limit = valid_content.split('Limit: ')[1].split()[0]
+                        slack = valid_content.split('Slack: ')[1].split()[0]
+                        target_ratio = float(trans) / float(limit)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 't5tmac' in valid_content:
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'waive tmac cell'
+                        elif 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'check why add eco buffer cell not fixed ck tran'
+                        elif float(slack) < -1000:
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'big slack - need check'
+                        elif float(slack) > float(ck_tran_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'waive by global waiver'
+                        elif net in clock_tran_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'waive by special waiver'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['ck_tran'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            ck_tran_violation[driver] = [driverPin, sink, target_ratio, net]
+
+            with open('fix_drv/ck_tran/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    ck_tran_waive_number += 1
+                    f.write(content)
+
+            for driver in ck_tran_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", ck_tran_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, ck_tran_violation[driver][0])
+                    if new_ratio >= ck_tran_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, ck_tran_violation[driver][2])
+                        if new_ratio >= ck_tran_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.8
+                        elif 'FCECO' in driver and 'FCECO' not in ck_tran_violation[driver][1]:
+                            eco_add_buf[ck_tran_violation[driver][1]] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.2
+                    ck_tran_fix_number += 1
+                    net_info['ck_tran'][ck_tran_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in ck tran: driver:{driver} net:{ck_tran_violation[driver][2]}')
+                    net_info['ck_tran'][ck_tran_violation[driver][-1]] = 'check strange buffer'
+            write_eco('fix_drv/ck_tran', eco_size_cell, eco_add_buf)
+            count_violation['ck_tran'] = ck_tran_vio_number, ck_tran_unconstrain_number, ck_tran_waive_number, ck_tran_fix_number
+        else:
+            print('2 tile clock tran clean!')
+
+
+def fix_illegalck():
+    illegalck_cell_rpts = shell('ls ./rpts/Pt*/check_clock_cells.rpt.gz')
+    if illegalck_cell_rpts == '':
+        print('missing illegalck_cell rpt, check ./rpts/Pt*/check_clock_cells.rpt.gz')
+    else:
+        if os.path.exists('fix_drv/illegal_ck'):
+            shell('rm -rf fix_drv/illegal_ck/*')
+        else:
+            os.mkdir('fix_drv/illegal_ck')
+        shell('zcat ./rpts/Pt*/check_clock_cells.rpt.gz > fix_drv/illegal_ck/illegalck.rpt')
+
+        illegalck = {}
+        illegalck_fix_list = []
+        illegalck_waive_list = []
+
+        with open('fix_drv/illegal_ck/illegalck.rpt') as f:
+            for line in f.readlines():
+                if "# Type: Buffers" in line:
+                    is_illegal_ck = 1
+                elif "# Type" in line:
+                    is_illegal_ck = 0
+
+                match = re.match('\s\t*(\S*) \((\w*)\)', line)
+                if match and is_illegal_ck:
+                    illegalck[match.group(1)] = match.group(2)
+        os.remove('fix_drv/illegal_ck/illegalck.rpt')
+
+        with open('fix_drv/illegal_ck/illegalck_vio.rpt', 'w') as f:
+            for k,v in illegalck.items():
+                f.write(f'{k} {v}\n')
+
+        regex1 = re.compile('BUFFD([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        regex2 = re.compile('INVD([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        regex3 = re.compile('INV[A-Z]+D([0-9P]+)AMD([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        for k, v in illegalck.items():
+            illegalck_waive_list.append(k)
+            if 'htree_root' in k or 'tmac' in k or 'MESH' in k:
+                continue
+            elif 'MRKCK' in k or 'MRKINV' in k or 'MRKBUF' in k:
+                continue
+            elif 'ISO' in k:
+                continue
+
+            if regex1.match(v):
+                driver_strength = int(regex1.match(v).group(1))
+                if driver_strength == 1 or driver_strength ==2 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    # illegalck[k] = f"CKBD{regex1.match(v).group(1)}{regex1.match(v).group(2)}ULVT"
+                    illegalck[k] = f"CKBD{driver_strength}AMDBWP210H6P51CNODULVT"
+                    illegalck_fix_list.append(k)
+                    illegalck_waive_list.remove(k)
+                elif driver_strength == 3 or driver_strength == 4 or driver_strength == 6:
+                    illegalck[k] = f'CKBNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT'
+                    illegalck_fix_list.append(k)
+                    illegalck_waive_list.remove(k)
+            elif regex2.match(v):
+                driver_strength = int(regex2.match(v).group(1))
+                if driver_strength == 1 or driver_strength == 2 or driver_strength == 3 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    illegalck[k] =f"CKINVD{driver_strength}AMDBWP210H6P51CNODULVT"
+                    illegalck_fix_list.append(k)
+                    illegalck_waive_list.remove(k)
+                elif driver_strength == 4 or driver_strength == 6:
+                    illegalck[k] =f"CKINVNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT"
+                    illegalck_fix_list.append(k)
+                    illegalck_waive_list.remove(k)
+            elif regex3.match(v):
+                driver_strength = int(regex3.match(v).group(1))
+                if driver_strength == 1 or driver_strength ==2 or driver_strength == 3 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    illegalck[k] =f"CKINVD{driver_strength}AMDBWP210H6P51CNODULVT"
+                    illegalck_fix_list.append(k)
+                    illegalck_waive_list.remove(k)
+                elif driver_strength == 4 or driver_strength == 6:
+                    illegalck[k] =f"CKINVNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT"
+                    illegalck_fix_list.append(k)
+                    illegalck_waive_list.remove(k)
+            elif "DEL" in v:
+                illegalck[k] = 'CKBD1AMDBWP210H6P51CNODULVT'
+                illegalck_fix_list.append(k)
+                illegalck_waive_list.remove(k)
+
+        with open('fix_drv/illegal_ck/illegalck_waive.rpt', 'a') as f:
+            for k in illegalck_waive_list:
+                f.write(f'{k}\t{illegalck[k]}\n')
+
+        with open('fix_drv/illegal_ck/chip.eco', 'a') as f:
+            for k in illegalck_fix_list :
+                l_brackets = '{'
+                r_brackets = '}'
+                f.write(f'catch {l_brackets} size_cell {k} {illegalck[k]} {r_brackets}\n')
+
+        tileEco = {}
+        with open(f'fix_drv/illegal_ck/chip.eco') as fN:
+            rows = fN.readlines()
+            for row in rows:
+                driver = row.split('size_cell ')[1].split()[0].strip()
+                tileName, tileRef = find_tile_ref(driver, tileMap)
+                if tileName:
+                    cmd1 = row.split(f'{tileName}')[0]
+                    cmd2 = row.split(f'{tileName}/')[1]
+                    cmd = f'{cmd1} {cmd2}'
+                    if tileRef in tileEco.keys():
+                        if cmd not in tileEco[tileRef]:
+                            tileEco[tileRef].append(cmd)
+                    else:
+                        tileEco[tileRef] = [cmd]
+                else:
+                    if 'chip' in tileEco.keys():
+                        if row not in tileEco['chip']:
+                            tileEco['chip'].append(row)
+                    else:
+                        tileEco['chip'] = [row]
+        if os.path.exists(f'fix_drv/illegal_ck/tile_eco'):
+            shutil.rmtree(f'fix_drv/illegal_ck/tile_eco')
+        else:
+            os.mkdir(f'fix_drv/illegal_ck/tile_eco')
+        for tile in tileEco.keys():
+            with open(f'fix_drv/illegal_ck/tile_eco/{tile}.eco', 'a') as fw:
+                for cmd in tileEco[tile]:
+                    fw.write(cmd)
+
+
+def fix_violation_ck_cell():
+    violation_ck_cell_rpts = shell('ls ./rpts/Pt*/check_clock_cells.rpt.gz')
+    if violation_ck_cell_rpts == '':
+        print('missing violation_ck_cell rpt, check ./rpts/Pt*/check_clock_cells.rpt.gz')
+    else:
+        if os.path.exists('fix_drv/violation_ck_cell'):
+            shell('rm -rf fix_drv/violation_ck_cell/*')
+        else:
+            os.mkdir('fix_drv/violation_ck_cell')
+        shell('zcat ./rpts/Pt*/check_clock_cells.rpt.gz > fix_drv/violation_ck_cell/all_violation.rpt')
+
+        violation_ck_cell = {}
+        violation_ck_cell_fix_list = {}
+        violation_ck_cell_waive_list = {}
+
+        with open('fix_drv/violation_ck_cell/all_violation.rpt') as f:
+            for line in f.readlines():
+                if "(" in line and "#" not in line:
+                    match = re.match('\s\t*(\S*) \((\w*)\)', line)
+                    violation_ck_cell[match.group(1)] = match.group(2)
+                    if "BUF" in line or "INV" in line or "DEL" in line or 'CKB' in line or 'CKINV' in line:
+                        if 'htree_root' in line or 'tmac' in line or 'MESH' in line or 'MRK' in line or 'ISO' in line or 'LVL' in line:
+                            violation_ck_cell_waive_list[match.group(1)] = match.group(2)
+                        else:
+                            violation_ck_cell_fix_list[match.group(1)] = match.group(2)
+                    else:
+                        violation_ck_cell_waive_list[match.group(1)] = match.group(2)
+        os.remove('fix_drv/violation_ck_cell/all_violation.rpt')
+
+        with open('fix_drv/violation_ck_cell/violation_ck_cell.rpt', 'a') as f:
+            for k, v in violation_ck_cell.items():
+                f.write(f'{k}\t{v}\n')
+
+        with open('fix_drv/violation_ck_cell/violation_ck_cell_waive_list.rpt', 'a') as f:
+            for k, v in violation_ck_cell_waive_list.items():
+                f.write(f'{k}\t{v}\n')
+
+        with open('fix_drv/violation_ck_cell/violation_ck_cell_fix_list.rpt', 'a') as f:
+            for k, v in violation_ck_cell_fix_list.items():
+                f.write(f'{k}\t{v}\n')
+
+        regex1 = re.compile('BUFFD([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        regex2 = re.compile('INVD([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        regex3 = re.compile('INV[A-Z]+D([0-9P]+)AMD([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        regex4 = re.compile('CKBD([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        regex5 = re.compile('CKINVD([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)')
+        for k, v in violation_ck_cell_fix_list.items():
+            if regex1.match(v):
+                driver_strength = int(regex1.match(v).group(1))
+                if driver_strength == 1 or driver_strength ==2 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    violation_ck_cell_fix_list[k] = f"CKBD{driver_strength}AMDBWP210H6P51CNODULVT"
+                elif driver_strength == 3 or driver_strength == 4 or driver_strength == 6:
+                    violation_ck_cell_fix_list[k] = f'CKBNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT'
+                else:
+                    print(f'1.check {k} with abnormal {v} cell.')
+            elif regex2.match(v):
+                driver_strength = int(regex2.match(v).group(1))
+                if driver_strength == 1 or driver_strength == 2 or driver_strength == 3 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    violation_ck_cell_fix_list[k] =f"CKINVD{driver_strength}AMDBWP210H6P51CNODULVT"
+                elif driver_strength == 4 or driver_strength == 6:
+                    violation_ck_cell_fix_list[k] =f"CKINVNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT"
+                else:
+                    print(f'2.check {k} with abnormal {v} cell.')
+            elif regex3.match(v):
+                driver_strength = int(regex3.match(v).group(1))
+                if driver_strength == 1 or driver_strength ==2 or driver_strength == 3 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    violation_ck_cell_fix_list[k] =f"CKINVD{driver_strength}AMDBWP210H6P51CNODULVT"
+                elif driver_strength == 4 or driver_strength == 6:
+                    violation_ck_cell_fix_list[k] =f"CKINVNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT"
+                else:
+                    print(f'3.check {k} with abnormal {v} cell.\n')
+            elif regex4.match(v):
+                driver_strength = int(regex4.match(v).group(1))
+                if driver_strength == 1 or driver_strength ==2 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    violation_ck_cell_fix_list[k] = f"CKBD{driver_strength}AMDBWP210H6P51CNODULVT"
+                elif driver_strength == 3 or driver_strength == 4 or driver_strength == 6:
+                    violation_ck_cell_fix_list[k] = f'CKBNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT'
+                else:
+                    print(f'4.check {k} with abnormal {v} cell.')
+            elif regex5.match(v):
+                driver_strength = int(regex5.match(v).group(1))
+                if driver_strength == 1 or driver_strength ==2 or driver_strength == 3 or driver_strength == 5 or driver_strength == 7 or driver_strength == 8 or driver_strength == 9:
+                    violation_ck_cell_fix_list[k] =f"CKINVD{driver_strength}AMDBWP210H6P51CNODULVT"
+                elif driver_strength == 4 or driver_strength == 6:
+                    violation_ck_cell_fix_list[k] =f"CKINVNOMSAD{driver_strength}AMDBWP210H6P51CNODULVT"
+                else:
+                    print(f'5.check {k} with abnormal {v} cell.\n')
+            elif "DEL" in v:
+                violation_ck_cell_fix_list[k] = 'CKBD2AMDBWP210H6P51CNODULVT'
+            else:
+                print(f'6.check {k} with abnormal {v} cell.')
+
+
+        with open('fix_drv/violation_ck_cell/chip.eco', 'a') as f:
+            for k in violation_ck_cell_fix_list:
+                l_brackets = '{'
+                r_brackets = '}'
+                f.write(f'catch {l_brackets} size_cell {k} {violation_ck_cell_fix_list[k]} {r_brackets}\n')
+
+        tileEco = {}
+        with open(f'fix_drv/violation_ck_cell/chip.eco') as fN:
+            rows = fN.readlines()
+            for row in rows:
+                driver = row.split('size_cell ')[1].split()[0].strip()
+                tileName, tileRef = find_tile_ref(driver, tileMap)
+                if tileName:
+                    cmd1 = row.split(f'{tileName}')[0]
+                    cmd2 = row.split(f'{tileName}/')[1]
+                    cmd = f'{cmd1} {cmd2}'
+                    if tileRef in tileEco.keys():
+                        if cmd not in tileEco[tileRef]:
+                            tileEco[tileRef].append(cmd)
+                    else:
+                        tileEco[tileRef] = [cmd]
+                else:
+                    if 'chip' in tileEco.keys():
+                        if row not in tileEco['chip']:
+                            tileEco['chip'].append(row)
+                    else:
+                        tileEco['chip'] = [row]
+        if os.path.exists(f'fix_drv/violation_ck_cell/tile_eco'):
+            shutil.rmtree(f'fix_drv/violation_ck_cell/tile_eco')
+        else:
+            os.mkdir(f'fix_drv/violation_ck_cell/tile_eco')
+        for tile in tileEco.keys():
+            with open(f'fix_drv/violation_ck_cell/tile_eco/{tile}.eco', 'a') as fw:
+                for cmd in tileEco[tile]:
+                    fw.write(cmd)
+                    
+                    
+def fix_tie_fanout():
+    tie_fanout_rpts = shell('ls ./rpts/PtGfxDrv*Stp*/tie_fanout.rpt.gz')
+    if tie_fanout_rpts == '':
+        print('missing tie_fanout rpt, check if ./rpts/PtGfxDrv*Stp*/tie_fanout.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/tie_fanout'):
+            shell('rm -rf fix_drv/tie_fanout/*')
+        else:
+            os.mkdir('fix_drv/tie_fanout')
+        for rpt in tie_fanout_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/tie_fanout/all_tie_fanout.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/tie_fanout/all_tie_fanout.rpt'
+            shell(cmd)
+
+        flag = 0
+        tie_fanout_vio_number = 0
+        with open('fix_drv/tie_fanout/all_tie_fanout.rpt') as f:
+            for line in f.readlines():
+                if 'tie_fanout.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/"not in line:
+                    flag = 1
+                    tie_fanout_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/tie_fanout/2tile_tie_fanout", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+            os.remove(f'fix_drv/tie_fanout/all_tie_fanout.rpt')
+
+        tie_fanout_violation_number = 0
+        tie_fanout_fixed_number = 0
+        tie_fanout_violation_rpt = []
+        net_info['tie_fanout'] = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+
+        if os.path.exists('fix_drv/tie_fanout/2tile_tie_fanout'):
+            with open('fix_drv/tie_fanout/2tile_tie_fanout') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}:\t{sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+
+                        tie_fanout_violation_list = [net, driver, sink, slack, corner]
+                        tie_fanout_violation_rpt.append(tie_fanout_violation_list)
+                        net_info['tie_fanout'][net] = 'fixed'
+
+                        tie_fanout_violation_number += 1
+                        eco_add_buf[driver] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.5
+
+            write_eco('fix_drv/tie_fanout', eco_size_cell, eco_add_buf)
+            tie_fanout_fixed_number = len(eco_add_buf.keys())
+            count_violation['tie_fanout'] = tie_fanout_violation_number, 0, 0, tie_fanout_fixed_number
+            violation_rpt['tie_fanout'] = tie_fanout_violation_rpt
+        else:
+            print('2 tile tie fanout clean!')
+
+
+def fix_si_data_tran():
+    si_data_tran_rpts = shell('ls ./rpts/Pt*Func*Stp*/si_data_trans.rpt.gz')
+    if si_data_tran_rpts == '':
+        print('missing si_data_tran rpt, check if ./rpts/Pt*Func*Stp*/si_data_trans.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/si_data_tran'):
+            shell('rm -rf fix_drv/si_data_tran/*')
+        else:
+            os.mkdir('fix_drv/si_data_tran')
+        for rpt in si_data_tran_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/si_data_tran/all_si_data_tran.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/si_data_tran/all_si_data_tran.rpt'
+            shell(cmd)
+
+        flag = 0
+        si_data_tran_vio_number = 0
+        with open('fix_drv/si_data_tran/all_si_data_tran.rpt') as f:
+            for line in f.readlines():
+                if 'si_data_trans.rpt.gz' in line and 'original' not in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    si_data_tran_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/si_data_tran/2tile_si_data_tran", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+            os.remove(f'fix_drv/si_data_tran/all_si_data_tran.rpt')
+
+        # variable
+        valid_si_data_tran = []
+        invalid_si_data_tran = []
+        waive_nets = []
+        si_data_tran_violation = {}
+        si_data_tran_unconstrain_number = 0
+        si_data_tran_waive_number = 0
+        si_data_tran_fixed_number = 0
+        si_data_tran_violation_rpt = []
+        net_info['si_data_tran'] = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+
+        if os.path.exists('fix_drv/si_data_tran/2tile_si_data_tran'):
+            with open('fix_drv/si_data_tran/2tile_si_data_tran') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    # get unconstrain rpt
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_si_data_tran.append(content)
+                    elif 'Net' in content:
+                        invalid_si_data_tran.append(content)
+
+                    # get all vio rpt
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}:\t{sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        si_data_tran_violation_list = [net, driver, sink, slack, corner]
+                        si_data_tran_violation_rpt.append(si_data_tran_violation_list)
+                violation_rpt['si_data_tran'] = si_data_tran_violation_rpt
+
+                # put unconstrain rpt
+                if invalid_si_data_tran:
+                    with open('fix_drv/si_data_tran/unconstrain.rpt', 'a') as f:
+                        for invalid_content in invalid_si_data_tran:
+                            si_data_tran_unconstrain_number += 1
+                            f.write(invalid_content)
+                            net = invalid_content.split('# Net: ')[1].split()[0]
+                            net_info['si_data_tran'][net] = 'unconstrain net'
+
+                # deal with vaild rpt
+                if valid_si_data_tran:
+                    for valid_content in valid_si_data_tran:
+                        net = valid_content.split('# Net: ')[1].split()[0]
+                        tran = valid_content.split('Trans: ')[1].split()[0]
+                        limit = valid_content.split('Limit: ')[1].split()[0]
+                        slack = valid_content.split('Slack: ')[1].split()[0]
+                        target_ratio = float(tran) / float(limit)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['si_data_tran'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['si_data_tran'][net] = 'check why add eco buffer cell not fixed si_data_tran'
+                        elif float(slack) > float(si_data_tran_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['si_data_tran'][net] = 'waive by global waiver'
+                        elif net in si_data_tran_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['si_data_tran'][net] = 'waive by special waiver'
+                        elif float(slack) < -1000:
+                            waive_nets.append(valid_content)
+                            net_info['si_data_tran'][net] = 'big slack - need check'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['si_data_tran'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            si_data_tran_violation[driver] = [driverPin, sink, target_ratio, net]
+            with open('fix_drv/si_data_tran/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    si_data_tran_waive_number += 1
+                    f.write(content)
+
+            for driver in si_data_tran_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", si_data_tran_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, si_data_tran_violation[driver][0])
+                    if new_ratio >= si_data_tran_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, si_data_tran_violation[driver][2])
+                        if new_ratio >= si_data_tran_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.8
+                        elif 'FCECO' in driver and 'FCECO' not in si_data_tran_violation[driver][1]:
+                            eco_add_buf[si_data_tran_violation[driver][1]] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.2
+                    si_data_tran_fixed_number += 1
+                    net_info['si_data_tran'][si_data_tran_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data tran: driver:{driver} net:{si_data_tran_violation[driver][-1]}')
+                    net_info['si_data_tran'][si_data_tran_violation[driver][-1]] = 'check strange buffer'
+            write_eco('fix_drv/si_data_tran', eco_size_cell, eco_add_buf)
+            count_violation['si_data_tran'] = si_data_tran_vio_number, si_data_tran_unconstrain_number, si_data_tran_waive_number, si_data_tran_fixed_number
+        else:
+            print('2 tile si_data_tran clean.\n')
+
+
+def fix_si_noise():
+    si_noise_rpts = shell('ls ./rpts/Pt*/si_noise_height.rpt.gz ./rpts/Pt*/si_noise_area.rpt.gz')
+    if si_noise_rpts == '':
+        print('missing si_noise rpt, check if ./rpts/Pt*/si_noise_height.rpt.gz ./rpts/Pt*/si_noise_area.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/si_noise'):
+            shell('rm -rf fix_drv/si_noise/*')
+        else:
+            os.mkdir('fix_drv/si_noise')
+
+        for rpt in si_noise_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/si_noise/all_si_noise.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/si_noise/all_si_noise.rpt'
+            shell(cmd)
+
+        # count si noise height/area vio number
+        flag = 0
+        si_noise_vio_number = 0
+        with open('fix_drv/si_noise/all_si_noise.rpt') as f:
+            for line in f.readlines():
+                if '.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    si_noise_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/si_noise/2tile_si_noise.rpt", 'a') as fN:
+                        if '# Net' in line:
+                            line = line.split('\n')[0]
+                            fN.write(f'{line}\t#{corner}\n')
+                        else:
+                            fN.write(line)
+        os.remove('fix_drv/si_noise/all_si_noise.rpt')
+
+        valid_si_noise = []
+        invalid_si_noise = []
+        waive_nets = []
+        si_noise_violation = {}
+        si_noise_unconstrain_number = 0
+        si_noise_waive_number = 0
+        si_noise_fixed_number = 0
+        si_noise_violation_rpt = []
+        net_info['si_noise'] = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+
+        if os.path.exists('fix_drv/si_noise/2tile_si_noise.rpt'):
+            with open('fix_drv/si_noise/2tile_si_noise.rpt') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_si_noise.append(content)
+                    elif 'Net' in content:
+                        invalid_si_noise.append(content)
+
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}:\t{sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        si_noise_violation_list = [net, driver, sink, slack, corner]
+                        si_noise_violation_rpt.append(si_noise_violation_list)
+                violation_rpt['si_noise'] = si_noise_violation_rpt
+
+            if invalid_si_noise:
+                with open('fix_drv/si_noise/unconstrain.rpt', 'a') as f:
+                    for invalid_content in invalid_si_noise:
+                        f.write(invalid_content)
+                        net = invalid_content.split('# Net: ')[1].split()[0]
+                        si_noise_unconstrain_number += 1
+                        net_info['si_noise'][net] = 'unconstrain net'
+
+            if valid_si_noise:
+                for valid_content in valid_si_noise:
+                    net = valid_content.split('# Net: ')[1].split()[0]
+                    if 'Height:' in valid_content:
+                        value = valid_content.split('Height:')[1].split()[0]
+                        type = 'si_noise_height'
+                    else:
+                        value = valid_content.split('Area:')[1].split()[0]
+                        type = 'si_noise_area'
+                    limit = valid_content.split('Limit: ')[1].split()[0]
+                    slack = valid_content.split('Slack: ')[1].split()[0]
+                    if float(limit) == 0:
+                        print(f'{net} {type} limit is 0, check reason.\n')
+                        target_ratio = 1
+                    else:
+                        target_ratio = float(value) / float(limit)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'special driver cell - need check'
+                        elif type == 'si_noise_height' and float(slack) > float(si_noise_height_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'waive si noise height by global waiver'
+                        elif type == 'si_noise_area' and float(slack) > float(si_noise_area_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'waive si noise area by global waiver'
+                        elif type == 'si_noise_height' and net in si_noise_height_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'waive si noise height by special waiver'
+                        elif type == 'si_noise_area' and net in si_noise_area_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'waive si noise area by special waiver'
+                        elif float(slack) < -1000:
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'big slack - need check'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['si_noise'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            si_noise_violation[driver] = [driverPin, sink, target_ratio, net]
+
+            with open('fix_drv/si_noise/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    si_noise_waive_number += 1
+                    f.write(content)
+
+            for driver in si_noise_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", si_noise_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, si_noise_violation[driver][0])
+                    if new_ratio >= si_noise_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, si_noise_violation[driver][2])
+                        if new_ratio >= si_noise_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.5
+                        elif 'FCECO' in driver and 'FCECO' not in si_noise_violation[driver][1]:
+                            eco_add_buf[si_noise_violation[driver][1]] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.5
+                    si_noise_fixed_number += 1
+                    net_info['si_noise'][si_noise_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data tran: driver:{driver} net:{si_noise_violation[driver][2]}')
+                    net_info['si_noise'][si_noise_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/si_noise', eco_size_cell, eco_add_buf)
+            count_violation['si_noise'] = si_noise_vio_number, si_noise_unconstrain_number, si_noise_waive_number, si_noise_fixed_number
+        else:
+            print('2 tile si_noise clean.\n')
+
+
+def fix_si_bottleneck():
+    si_bottleneck_rpts = shell('ls ./rpts/Pt*Stp*/si_bottleneck_nets_cells_for_eco.rpt')
+    if si_bottleneck_rpts == '':
+        print('missing si_bottleneck_nets_cells_for_eco rpt')
+    else:
+        if os.path.exists('fix_drv/si_bottleneck'):
+            shell('rm -rf fix_drv/si_bottleneck/*')
+        else:
+            os.mkdir('fix_drv/si_bottleneck')
+
+        # get 2 tile data tran rpt
+        for rpt in si_bottleneck_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/si_bottleneck/all_si_bottleneck.rpt'
+            shell(cmd)
+            cmd = f'cat {rpt} >> fix_drv/si_bottleneck/all_si_bottleneck.rpt'
+            shell(cmd)
+
+        flag = 0
+        si_bottleneck_vio_number = 0
+        with open('fix_drv/si_bottleneck/all_si_bottleneck.rpt') as f:
+            for line in f.readlines():
+                if 'si_bottleneck_nets_cells_for_eco' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    si_bottleneck_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/si_bottleneck/2tile_si_bottleneck", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+            os.remove(f'fix_drv/si_bottleneck/all_si_bottleneck.rpt')
+
+        # variable
+        waive_nets = []
+        si_bottleneck_violation = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+        si_bottleneck_waive_number = 0
+        si_bottleneck_fixed_number = 0
+        si_bottleneck_violation_rpt = []
+        net_info['si_bottleneck'] = {}
+
+        if os.path.exists('fix_drv/si_bottleneck/2tile_si_bottleneck'):
+            with open('fix_drv/si_bottleneck/2tile_si_bottleneck') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        limit = content.split('Limit: ')[1].split()[0]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        Cost = content.split('Cost: ')[1].split()[0]
+                        target_ratio = float(Cost) / float(limit)
+                        driver = content.split('Driver: ')[1].split()[0]
+                        driver_cell = content.split('Driver: ')[1].split(')')[0]
+                        si_bottleneck_violation_list = [net, driver, 'None', slack, corner]
+                        si_bottleneck_violation_rpt.append(si_bottleneck_violation_list)
+
+                        if 'FCECO' in driver or 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(content)
+                            net_info['si_bottleneck'][net] = 'special driver cell - need check'
+                        elif float(slack) > float(si_bottleneck_global_waiver):
+                            waive_nets.append(content)
+                            net_info['si_bottleneck'][net] = 'waive by global waiver'
+                        elif net in si_bottleneck_special_waiver:
+                            waive_nets.append(content)
+                            net_info['si_bottleneck'][net] = 'waive by special waiver'
+                        elif float(slack) < -1000:
+                            waive_nets.append(content)
+                            net_info['si_bottleneck'][net] = 'big slack - need check'
+                        elif 'port' in driver_cell:
+                            waive_nets.append(content)
+                            net_info['si_bottleneck'][net] = 'waive port related net'
+                        else:
+                            driver = content.split('Driver: ')[1].split()[0]
+                            driverPin = content.split('Driver: ')[1].split()[1].strip('()')
+                            si_bottleneck_violation[driver] = [driverPin, 'None', target_ratio, net]
+                violation_rpt['si_bottleneck'] = si_bottleneck_violation_rpt
+
+            with open('fix_drv/si_bottleneck/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    si_bottleneck_waive_number += 1
+                    f.write(content)
+
+            for driver in si_bottleneck_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", si_bottleneck_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, si_bottleneck_violation[driver][0])
+                    if new_ratio >= si_bottleneck_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, si_bottleneck_violation[driver][2])
+                        if new_ratio >= si_bottleneck_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'BUFFD6BWP210H6P51CNODULVTLL', 0.5
+                    si_bottleneck_fixed_number += 1
+                    net_info['si_bottleneck'][si_bottleneck_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data tran: driver:{driver} net:{si_bottleneck_violation[driver][2]}')
+                    net_info['si_bottleneck'][si_bottleneck_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/si_bottleneck', eco_size_cell, eco_add_buf)
+            count_violation['si_bottleneck'] = si_bottleneck_vio_number, 'None', si_bottleneck_waive_number, si_bottleneck_fixed_number
+        else:
+            print('2 tile si_bottleneck clean.\n')
+
+
+def fix_si_cktran():
+    si_cktran_rpts = shell('ls ./rpts/Pt*Func*Stp*/si_clock_trans.rpt.gz')
+    if si_cktran_rpts == '':
+        print('missing si_clock_tran rpt, chcek if ./rpts/Pt*Func*Stp*/si_clock_trans.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/si_cktran'):
+            shell('rm -rf fix_drv/si_cktran/*')
+        else:
+            os.mkdir('fix_drv/si_cktran')
+        for rpt in si_cktran_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/si_cktran/all_si_cktran.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/si_cktran/all_si_cktran.rpt'
+            shell(cmd)
+
+        flag = 0
+        si_cktran_vio_number = 0
+        with open('fix_drv/si_cktran/all_si_cktran.rpt') as f:
+            for line in f.readlines():
+                if 'si_clock_trans.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/"not in line:
+                    flag = 1
+                    si_cktran_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/si_cktran/2tile_si_cktran", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+        os.remove('fix_drv/si_cktran/all_si_cktran.rpt')
+
+        # variable
+        valid_si_cktran = []
+        invalid_si_cktran = []
+        waive_nets = []
+        si_cktran_violation = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+        si_cktran_unconstrain_number = 0
+        si_cktran_waive_number = 0
+        si_cktran_fix_number = 0
+        si_cktran_violation_rpt = []
+        net_info['si_cktran'] = {}
+
+        if os.path.exists('fix_drv/si_cktran/2tile_si_cktran'):
+            with open('fix_drv/si_cktran/2tile_si_cktran') as f:
+                contents = f.read().split(';')
+                for content in contents:
+
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_si_cktran.append(content)
+                    elif 'Net' in content:
+                        invalid_si_cktran.append(content)
+
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}: {sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        si_cktran_violation_list = [net, driver, sink, slack, corner]
+                        si_cktran_violation_rpt.append(si_cktran_violation_list)
+                violation_rpt['si_cktran'] = si_cktran_violation_rpt
+
+                if invalid_si_cktran:
+                    with open('fix_drv/si_cktran/unconstrain.rpt', 'a') as f:
+                        for invalid_content in invalid_si_cktran:
+                            si_cktran_unconstrain_number += 1
+                            f.write(invalid_content)
+                            net = invalid_content.split('# Net: ')[1].split()[0]
+                            net_info['si_cktran'][net] = 'unconstrain net'
+
+                if valid_si_cktran:
+                    for valid_content in valid_si_cktran:
+                        net = valid_content.split('# Net: ')[1].split()[0]
+                        trans = valid_content.split('Trans: ')[1].split()[0]
+                        limit = valid_content.split('Limit: ')[1].split()[0]
+                        slack = valid_content.split('Slack: ')[1].split()[0]
+                        if float(limit):
+                            target_ratio = float(trans) / float(limit)
+                        else:
+                            target_ratio = float(trans)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 't5tmac' in valid_content:
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'waive tmac cell'
+                        elif 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'check why add eco buffer cell not fixed si_cktran'
+                        elif float(slack) < -100:
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'big slack - need check'
+                        elif float(slack) > float(si_cktran_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'waive by global waiver'
+                        elif net in si_cktran_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'waive by special waiver'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['si_cktran'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            si_cktran_violation[driver] = [driverPin, sink, target_ratio, net]
+
+            with open('fix_drv/si_cktran/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    si_cktran_waive_number += 1
+                    f.write(content)
+
+            for driver in si_cktran_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", si_cktran_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, si_cktran_violation[driver][0])
+                    if new_ratio >= si_cktran_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, si_cktran_violation[driver][2])
+                        if new_ratio >= si_cktran_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.8
+                        elif 'FCECO' in driver and 'FCECO' not in si_cktran_violation[driver][1]:
+                            eco_add_buf[si_cktran_violation[driver][1]] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.2
+                    si_cktran_fix_number += 1
+                    net_info['si_cktran'][si_cktran_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in ck tran: driver:{driver} net:{si_cktran_violation[driver][2]}')
+                    net_info['si_cktran'][si_cktran_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/si_cktran', eco_size_cell, eco_add_buf)
+            count_violation['si_cktran'] = si_cktran_vio_number, si_cktran_unconstrain_number, si_cktran_waive_number, si_cktran_fix_number
+        else:
+            print('2 tile si_cktran violation clean.\n')
+
+
+def fix_si_ck_noise():
+    si_ck_noise_rpts = shell('ls ./rpts/Pt*/si_clock_noise_height.rpt.gz ./rpts/Pt*/si_clock_noise_area.rpt.gz')
+    if si_ck_noise_rpts == '':
+        print('missing si_ck_noise rpt')
+    else:
+        if os.path.exists('fix_drv/si_ck_noise'):
+            shell('rm -rf fix_drv/si_ck_noise/*')
+        else:
+            os.mkdir('fix_drv/si_ck_noise')
+
+        for rpt in si_ck_noise_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/si_ck_noise/all_si_ck_noise.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/si_ck_noise/all_si_ck_noise.rpt'
+            shell(cmd)
+
+        # count si noise height/area vio number
+        flag = 0
+        si_ck_noise_vio_number = 0
+        with open('fix_drv/si_ck_noise/all_si_ck_noise.rpt') as f:
+            for line in f.readlines():
+                if '.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/"not in line:
+                    flag = 1
+                    si_ck_noise_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/si_ck_noise/2tile_si_ck_noise.rpt", 'a') as fN:
+                        if '# Net' in line:
+                            line = line.split('\n')[0]
+                            fN.write(f'{line}\t#{corner}\n')
+                        else:
+                            fN.write(line)
+        os.remove('fix_drv/si_ck_noise/all_si_ck_noise.rpt')
+
+        valid_si_ck_noise = []
+        invalid_si_ck_noise = []
+        waive_nets = []
+        si_ck_noise_violation = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+        si_ck_noise_unconstrain_number = 0
+        si_ck_noise_waive_number = 0
+        si_ck_noise_fixed_number = 0
+        si_ck_noise_violation_rpt = []
+        net_info['si_ck_noise'] = {}
+
+        if os.path.exists('fix_drv/si_ck_noise/2tile_si_ck_noise.rpt'):
+            with open('fix_drv/si_ck_noise/2tile_si_ck_noise.rpt') as f:
+                contents = f.read().split(';')
+            for content in contents:
+                Driver = content.split('Driver:')[1].split('(')[0]
+                Sink = content.split('Sink:')[1].split('(')[1]
+                if Driver and Sink:
+                    valid_si_ck_noise.append(content)
+                elif 'Net' in content:
+                    invalid_si_ck_noise.append(content)
+
+                if 'Net' in content:
+                    net = content.split('# Net: ')[1].split()[0]
+                    corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                    slack = content.split('Slack: ')[1].split()[0]
+                    if 'Driver' in content:
+                        driver = content.split('Driver: ')[1].split()[0]
+                    else:
+                        driver = 'None'
+
+                    if 'Sink' in content:
+                        sink = content.split('Sink: ')[1].split()[0]
+                    else:
+                        sink = 'None'
+
+                    si_ck_noise_violation_list = [net, driver, sink, slack, corner]
+                    si_ck_noise_violation_rpt.append(si_ck_noise_violation_list)
+            violation_rpt['si_ck_noise'] = si_ck_noise_violation_rpt
+
+            if invalid_si_ck_noise:
+                with open('fix_drv/si_ck_noise/unconstrain.rpt', 'a') as f:
+                    for invalid_content in invalid_si_ck_noise:
+                        f.write(invalid_content)
+                        net = invalid_content.split('# Net: ')[1].split()[0]
+                        si_ck_noise_unconstrain_number += 1
+                        net_info['si_ck_noise'][net] = 'unconstrain net'
+
+            if valid_si_ck_noise:
+                for valid_content in valid_si_ck_noise:
+                    net = valid_content.split('# Net: ')[1].split()[0]
+                    if 'Height:' in valid_content:
+                        value = valid_content.split('Height:')[1].split()[0]
+                        type = 'si_ck_noise_height'
+                    else:
+                        value = valid_content.split('Area:')[1].split()[0]
+                        type = 'si_ck_noise_area'
+                    limit = valid_content.split('Limit: ')[1].split()[0]
+                    slack = valid_content.split('Slack: ')[1].split()[0]
+                    target_ratio = float(value) / float(limit)
+                    driver = valid_content.split('Driver: ')[1].split()[0]
+                    driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                    sink = valid_content.split('Sink: ')[1].split()[0]
+                    sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                    if 'BoundBUF' in driver or 'ISO' in driver:
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'special driver cell - need check'
+                    if 'FCECO' in driver and 'FCECO' in sink:
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'special driver cell - need check'
+                    elif type == 'si_ck_noise_height' and float(slack) > float(si_clock_noise_height_global_waiver):
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'waive si noise hight by global waiver'
+                    elif type == 'si_ck_noise_area' and float(slack) > float(si_clock_noise_area_global_waiver):
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'waive si noise area by global waiver'
+                    elif type == 'si_ck_noise_height' and net in si_clock_noise_height_special_waiver:
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'waive si noise height by special waiver'
+                    elif type == 'si_ck_noise_area' and net in si_clock_noise_area_special_waiver:
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'waive si noise area by special waiver'
+                    elif float(slack) < -1000:
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'big slack - need check'
+                    elif 'port' in driver_cell or 'port' in sink_cell:
+                        waive_nets.append(valid_content)
+                        net_info['si_ck_noise'][net] = 'waive port related net'
+                    else:
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        si_ck_noise_violation[driver] = [driverPin, sink, target_ratio, net]
+
+            with open('fix_drv/si_ck_noise/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    si_ck_noise_waive_number += 1
+                    f.write(content)
+
+            for driver in si_ck_noise_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", si_ck_noise_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, si_ck_noise_violation[driver][0])
+                    if new_ratio >= si_ck_noise_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, si_ck_noise_violation[driver][2])
+                        if new_ratio >= si_ck_noise_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.5
+                        elif 'FCECO' in driver and 'FCECO' not in si_ck_noise_violation[driver][1]:
+                            eco_add_buf[si_ck_noise_violation[driver][1]] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.5
+                    si_ck_noise_fixed_number += 1
+                    net_info['si_ck_noise'][si_ck_noise_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data tran: driver:{driver} net:{si_ck_noise_violation[driver][2]}')
+                    net_info['si_ck_noise'][si_ck_noise_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/si_ck_noise', eco_size_cell, eco_add_buf)
+            count_violation['si_ck_noise'] = si_ck_noise_vio_number, si_ck_noise_unconstrain_number, si_ck_noise_waive_number, si_ck_noise_fixed_number
+        else:
+            print('2 tile si_ck_noise clean.\n')
+
+
+def fix_si_clock_double_switching():
+    si_clock_double_switching_rpts = shell('ls ./rpts/Pt*/si_clock_double_switching.rpt.gz')
+    if si_clock_double_switching_rpts == '':
+        print('missing si_clock_double_switching rpt')
+    else:
+        if os.path.exists('fix_drv/si_clock_double_switching'):
+            shell('rm -rf fix_drv/si_clock_double_switching/*')
+        else:
+            os.mkdir('fix_drv/si_clock_double_switching')
+
+        for rpt in si_clock_double_switching_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/si_clock_double_switching/all_si_clock_double_switching.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/si_clock_double_switching/all_si_clock_double_switching.rpt'
+            shell(cmd)
+
+            flag = 0
+            si_clock_double_switching_vio_number = 0
+            with open('fix_drv/si_clock_double_switching/all_si_clock_double_switching.rpt') as f:
+                for line in f.readlines():
+                    if 'si_clock_double_switching.rpt.gz' in line:
+                        corner = line.split('/')[2]
+                    if "# Net" in line and "/" not in line:
+                        flag = 1
+                        si_clock_double_switching_vio_number += 1
+                    elif "# Net" in line:
+                        flag = 0
+
+                    if flag == 1:
+                        with open("fix_drv/si_clock_double_switching/2tile_si_clock_double_switching", 'a') as fN:
+                            if "# Net" in line:
+                                line = line.split('\n')[0]
+                                fN.write(f"{line}\t# {corner}\n")
+                            else:
+                                fN.write(line)
+        os.remove(f'fix_drv/si_clock_double_switching/all_si_clock_double_switching.rpt')
+
+        # variable
+        waive_nets = []
+        si_clock_double_switching_violation = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+        si_clock_double_switching_waive_number = 0
+        si_clock_double_switching_fixed_number = 0
+        si_clock_double_switching_violation_rpt = []
+        net_info['si_clock_double_switching'] = {}
+
+        if os.path.exists('fix_drv/si_clock_double_switching/2tile_si_clock_double_switching'):
+            with open('fix_drv/si_clock_double_switching/2tile_si_clock_double_switching') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        limit = content.split('Limit: ')[1].split()[0]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        Bump = content.split('Bump: ')[1].split()[0]
+                        target_ratio = float(Bump) / float(limit)
+                        driver = content.split('Driver: ')[1].split()[0]
+                        driver_cell = content.split('Driver: ')[1].split(')')[0]
+                        si_clock_double_switching_violation_list = [net, driver, slack, corner]
+                        si_clock_double_switching_violation_rpt.append(si_clock_double_switching_violation_list)
+
+                        if 'FCECO' in driver or 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(content)
+                            net_info['si_clock_double_switching'][net] = 'special driver cell - need check'
+                        elif float(slack) > float(si_clock_double_switching_global_waiver):
+                            waive_nets.append(content)
+                            net_info['si_clock_double_switching'][net] = 'waive by global waiver'
+                        elif net in si_clock_double_switching_special_waiver:
+                            waive_nets.append(content)
+                            net_info['si_clock_double_switching'][net] = 'waive by special waiver'
+                        elif float(slack) < -1000:
+                            waive_nets.append(content)
+                            net_info['si_clock_double_switching'][net] = 'big slack - need check'
+                        elif 'port' in driver_cell:
+                            waive_nets.append(content)
+                            net_info['si_clock_double_switching'][net] = 'waive port related net'
+                        else:
+                            driver = content.split('Driver: ')[1].split()[0]
+                            driverPin = content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = content.split('Sink: ')[1].split()[0]
+                            si_clock_double_switching_violation[driver] = [driverPin, sink, target_ratio, net]
+                violation_rpt['si_clock_double_switching'] = si_clock_double_switching_violation_rpt
+
+            with open('fix_drv/si_clock_double_switching/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    si_clock_double_switching_waive_number += 1
+                    f.write(content)
+
+            for driver in si_clock_double_switching_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", si_clock_double_switching_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, si_clock_double_switching_violation[driver][0])
+                    if new_ratio >= si_clock_double_switching_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, si_clock_double_switching_violation[driver][2])
+                        if new_ratio >= si_clock_double_switching_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.5
+                        elif 'FCECO' in driver and 'FCECO' not in si_clock_double_switching_violation[driver][1]:
+                            eco_add_buf[si_clock_double_switching_violation[driver][1]] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.5
+                    si_clock_double_switching_fixed_number += 1
+                    net_info['si_clock_double_switching'][si_clock_double_switching_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in data tran: driver:{driver} net:{si_clock_double_switching_violation[driver][2]}')
+                    net_info['si_bottleneck'][si_clock_double_switching_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/si_clock_double_switching', eco_size_cell, eco_add_buf)
+            count_violation['si_clock_double_switching'] = si_clock_double_switching_vio_number, 'None', si_clock_double_switching_waive_number, si_clock_double_switching_fixed_number
+        else:
+            print('2 tile si_clock_double_switching clean.\n')
+
+
+def fix_clock_si():
+    clock_si_rpts = shell('ls ./rpts/Pt*/clock_si.rpt.gz')
+    if clock_si_rpts == '':
+        print('missing clock_si rpt, check if ./rpts/Pt*/clock_si.rpt.gz exist!\n')
+    else:
+        if os.path.exists('fix_drv/clock_si'):
+            shell('rm -rf fix_drv/clock_si/*')
+        else:
+            os.mkdir('fix_drv/clock_si')
+
+        for rpt in clock_si_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/clock_si/all_clock_si.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/clock_si/all_clock_si.rpt'
+            shell(cmd)
+
+        flag = 0
+        clock_si_vio_number = 0
+        with open('fix_drv/clock_si/all_clock_si.rpt') as f:
+            for line in f.readlines():
+                if 'clock_si.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Net" in line and "/" not in line:
+                    flag = 1
+                    clock_si_vio_number += 1
+                elif "# Net" in line:
+                    flag = 0
+
+                if flag == 1:
+                    with open("fix_drv/clock_si/2tile_clock_si", 'a') as fN:
+                        if "# Net" in line:
+                            line = line.split('\n')[0]
+                            fN.write(f"{line}\t# {corner}\n")
+                        else:
+                            fN.write(line)
+        os.remove('fix_drv/clock_si/all_clock_si.rpt')
+
+        # variable
+        valid_clock_si = []
+        invalid_clock_si = []
+        waive_nets = []
+        clock_si_violation = {}
+        eco_size_cell = {}
+        eco_add_buf = {}
+        clock_si_unconstrain_number = 0
+        clock_si_waive_number = 0
+        clock_si_fix_number = 0
+        clock_si_violation_rpt = []
+        net_info['clock_si'] = {}
+
+        if os.path.exists('fix_drv/clock_si/2tile_clock_si'):
+            with open('fix_drv/clock_si/2tile_clock_si') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if 'Driver' in content and 'Sink' in content:
+                        valid_clock_si.append(content)
+                    elif 'Net' in content:
+                        invalid_clock_si.append(content)
+
+                    if 'Net' in content:
+                        net = content.split('# Net: ')[1].split()[0]
+                        corner = content.split('# Net: ')[1].split('\n')[0].split()[-1]
+                        slack = content.split('Slack: ')[1].split()[0]
+                        if 'Driver' in content:
+                            driver = content.split('Driver: ')[1].split()[0]
+                        else:
+                            driver = 'None'
+                        if 'Sink' in content:
+                            sink = ''
+                            sink_rows = content.split('Sink: ')
+                            for sink_row in sink_rows:
+                                if 'Net:' not in sink_row:
+                                    if sink:
+                                        sink = f'{sink}: {sink_row.split()[0]}'
+                                    else:
+                                        sink = sink_row.split()[0]
+                        else:
+                            sink = 'None'
+                        clock_si_violation_list = [net, driver, sink, slack, corner]
+                        clock_si_violation_rpt.append(clock_si_violation_list)
+                violation_rpt['clock_si'] = clock_si_violation_rpt
+
+                if invalid_clock_si:
+                    with open('fix_drv/clock_si/unconstrain.rpt', 'a') as f:
+                        for invalid_content in invalid_clock_si:
+                            clock_si_unconstrain_number += 1
+                            f.write(invalid_content)
+                            net = invalid_content.split('# Net: ')[1].split()[0]
+                            net_info['clock_si'][net] = 'unconstrain net'
+
+                if valid_clock_si:
+                    for valid_content in valid_clock_si:
+                        net = valid_content.split('# Net: ')[1].split()[0]
+                        value = valid_content.split('Delta: ')[1].split()[0]
+                        limit = valid_content.split('Limit: ')[1].split()[0]
+                        slack = valid_content.split('Slack: ')[1].split()[0]
+                        if float(limit) == 0:
+                            print(f'{net} clock_si limit is 0, check reason.\n')
+                            target_ratio = 1
+                        else:
+                            target_ratio = float(value) / float(limit)
+                        driver = valid_content.split('Driver: ')[1].split()[0]
+                        driver_cell = valid_content.split('Driver: ')[1].split(')')[0]
+                        sink = valid_content.split('Sink: ')[1].split()[0]
+                        sink_cell = valid_content.split('Sink: ')[1].split(')')[0]
+                        if 't5tmac' in valid_content:
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'waive tmac cell'
+                        elif 'BoundBUF' in driver or 'ISO' in driver:
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'special driver cell - need check'
+                        elif 'FCECO' in driver and 'FCECO' in sink:
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'special driver cell - need check'
+                        elif float(slack) < -100:
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'big slack - need check'
+                        elif float(slack) > float(clock_si_global_waiver):
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'waive by global waiver'
+                        elif net in clock_si_special_waiver:
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'waive by special waiver'
+                        elif 'port' in driver_cell or 'port' in sink_cell:
+                            waive_nets.append(valid_content)
+                            net_info['clock_si'][net] = 'waive port related net'
+                        else:
+                            driver = valid_content.split('Driver: ')[1].split()[0]
+                            driverPin = valid_content.split('Driver: ')[1].split()[1].strip('()')
+                            sink = valid_content.split('Sink: ')[1].split()[0]
+                            clock_si_violation[driver] = [driverPin, sink, target_ratio, net]
+
+
+            with open('fix_drv/clock_si/waive_net.rpt', 'a') as f:
+                for content in waive_nets:
+                    clock_si_waive_number += 1
+                    f.write(content)
+
+            for driver in clock_si_violation.keys():
+                matchall = re.match(r"(.*?D)([0-9P]+)([A-Z]?[A-Z]?[A-Z]?BWP.*?CNOD)(.*)", clock_si_violation[driver][0])
+                if matchall:
+                    driver, tmp_driverPin, new_ratio = cell_swap(driver, clock_si_violation[driver][0])
+                    if new_ratio >= clock_si_violation[driver][2]:
+                        eco_size_cell[driver] = tmp_driverPin
+                    else:
+                        driver, tmp_driverPin, new_ratio = cell_size(driver, tmp_driverPin, new_ratio, clock_si_violation[driver][2])
+                        if new_ratio >= clock_si_violation[driver][2]:
+                            eco_size_cell[driver] = tmp_driverPin
+                        elif 'FCECO' not in driver:
+                            eco_add_buf[driver] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.5
+                        elif 'FCECO' in driver and 'FCECO' not in clock_si_violation[driver][1]:
+                            eco_add_buf[clock_si_violation[driver][1]] = 'CKBD5AMDBWP210H6P51CNODULVT', 0.5
+                    clock_si_fix_number += 1
+                    net_info['clock_si'][clock_si_violation[driver][-1]] = 'fixed'
+                else:
+                    # print(f'strange pin exist in ck tran: driver:{driver} net:{clock_si_violation[driver][-1]}')
+                    net_info['clock_si'][clock_si_violation[driver][-1]] = 'check strange buffer'
+
+            write_eco('fix_drv/clock_si', eco_size_cell, eco_add_buf)
+            count_violation['clock_si'] = clock_si_vio_number, clock_si_unconstrain_number, clock_si_waive_number, clock_si_fix_number
+        else:
+            print('2 tile clock_si violation clean.\n')
+
+
+def extract_rc(violation):
+    matchall = re.match(r".*\)\s(.*?)\s\(.*\)\s\[(.*)\]\s\(.*", violation)
+    cell_pin = matchall.group(1)
+    slack = matchall.group().split('rpt.gz')[1].replace(',', '.')
+    return (cell_pin, slack)
+
+
+def check_rc(type):
+    cmd = f'zgrep {type} rpts/Pt*/*update_timing.log.gz'
+    all_violation = shell(cmd)
+    if all_violation != "":
+        with open(f"{type}.rpt", 'w') as f:
+            f.write(all_violation)
+
+        err = {}
+        with open(f"{type}.rpt") as f:
+            rows = f.readlines()
+            for row in rows:
+                cell_pin, slack = extract_rc(row)
+                inst_ref, inst = find_tile_ref(cell_pin, tileMap)
+                inst_pin = cell_pin.split(f'{inst_ref}/', maxsplit=1)[1]
+                if inst in err.keys():
+                    if inst_pin not in err[inst]:
+                        err[inst].append(inst_pin)
+                    else:
+                        pass
+                else:
+                    err[inst] = [inst_pin]
+
+        inst_pointer = {}
+
+        if os.path.exists('mail_ready'):
+            with open('mail_ready') as f:
+                rows = f.readlines()
+                for row in rows:
+                    for inst in err.keys():
+                        if inst in row and 'RELEASE' in row:
+                            inst_pointer[inst] = row.split(':')[1].strip()
+                        elif inst in row and 'RELEASE' not in row:
+                            inst_pointer[inst] = 'miss pointer in mail_ready file'
+                        else:
+                            continue
+
+        else:
+            for inst in err.keys():
+                inst_pointer[inst] = 'miss mail_ready file'
+
+
+        vio_rpt = []
+        for inst in err.keys():
+            vio_rpt.append({'inst': inst, 'violation number': len(err[inst]), 'pointer': inst_pointer[inst]})
+        vio = pd.DataFrame().from_records(vio_rpt)
+        vio.to_csv(f'{type}.csv', index=False)
+
+        detail_rpt = []
+        for inst in err.keys():
+            for value in err[inst]:
+                detail_rpt.append({'inst': inst, 'cell_pin': value})
+        df = pd.DataFrame().from_records(detail_rpt)
+        df.to_csv(f'{type}.detail.csv', index=False)
+        os.remove(f'{type}.rpt')
+        print(f"\nPlease check {type} warning at {type}.csv and {type}.detail.csv.")
+    else:
+        print(f"\ncheck {type} PASS.")
+
+
+def check_rc_rpt(type):
+    if type == 'RC-012':
+        cmd = f'zgrep "({type}" rpts/Pt*/check_DRV_RC012.postwaived_fix.rpt.gz'
+        all_violation = shell(cmd)
+    if type == 'RC-011':
+        cmd = f'zgrep "({type}" rpts/Pt*/check_DRV_RC011.postwaived.rpt.gz'
+        all_violation = shell(cmd)
+
+    if all_violation != "":
+        with open(f"{type}.rpt", 'w') as f:
+            f.write(all_violation)
+
+        err = {}
+        detailvio = {}
+        with open(f"{type}.rpt") as f:
+            rows = f.readlines()
+            for row in rows:
+                cell_pin, slack = extract_rc(row)
+                inst_ref, inst = find_tile_ref(cell_pin, tileMap)
+                inst_pin = cell_pin.split(f'{inst_ref}/', maxsplit=1)[1]
+                detailvio[inst_pin] = slack
+                if inst in err.keys():
+                    if inst_pin not in err[inst]:
+                        err[inst].append(inst_pin)
+                    else:
+                        pass
+                else:
+                    err[inst] = [inst_pin]
+
+        inst_pointer = {}
+
+        if os.path.exists('mail_ready'):
+            with open('mail_ready') as f:
+                rows = f.readlines()
+                for row in rows:
+                    for inst in err.keys():
+                        if inst in row and 'RELEASE' in row:
+                            inst_pointer[inst] = row.split(':')[1].strip()
+                        elif inst in row and 'RELEASE' not in row:
+                            inst_pointer[inst] = 'miss pointer in mail_ready file'
+                        else:
+                            continue
+
+        else:
+            for inst in err.keys():
+                inst_pointer[inst] = 'miss mail_ready file'
+
+
+        vio_rpt = []
+        for inst in err.keys():
+            vio_rpt.append({'inst': inst, 'violation number': len(err[inst]), 'pointer': inst_pointer[inst]})
+        vio = pd.DataFrame().from_records(vio_rpt)
+        vio.to_csv(f'{type}.csv', index=False)
+
+        detail_rpt = []
+        for inst in err.keys():
+            for value in err[inst]:
+                detail_rpt.append({'inst': inst, 'cell_pin': value, 'detail': detailvio[value]})
+        df = pd.DataFrame().from_records(detail_rpt)
+        df.to_csv(f'{type}.detail.csv', index=False)
+        os.remove(f'{type}.rpt')
+        print(f"\nPlease check {type} warning at {type}.csv and {type}.detail.csv.")
+    else:
+        print(f"\ncheck {type} PASS.")
+
+
+def check_min_pulse_width():
+    min_pulse_width_rpts = shell('ls ./rpts/Pt*Stp*/min_pulse_width.rpt.gz')
+    if min_pulse_width_rpts == '':
+        print('missing min_pulse_width rpt, check if ./rpts/Pt*Stp*/min_pulse_width.rpt.gz exist!\n')
+    else:
+        min_pulse_width_vio = []
+        min_pulse_width_vio_number = 0
+        if os.path.exists('fix_drv/min_pulse_width'):
+            shell('rm -rf fix_drv/min_pulse_width/*')
+        else:
+            os.mkdir('fix_drv/min_pulse_width')
+
+        for rpt in min_pulse_width_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/min_pulse_width/all_min_pulse_width.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/min_pulse_width/all_min_pulse_width.rpt'
+            shell(cmd)
+
+        with open('fix_drv/min_pulse_width/all_min_pulse_width.rpt') as f:
+            for line in f.readlines():
+                if 'min_pulse_width.rpt.gz' in line:
+                    corner = line.split('/')[2]
+                if "# Pin" in line:
+                    min_pulse_width_vio_number += 1
+
+                with open("fix_drv/min_pulse_width/min_pulse_width.rpt", 'a') as fN:
+                    if "# Pin" in line:
+                        line = line.split('\n')[0]
+                        fN.write(f"{line}\t# {corner}\n")
+                    elif "# Pin" in line and 'min_pulse_width' not in line:
+                        pass
+                    else:
+                        fN.write(line)
+            os.remove(f'fix_drv/min_pulse_width/all_min_pulse_width.rpt')
+
+        if os.path.exists('fix_drv/min_pulse_width/min_pulse_width.rpt'):
+            with open('fix_drv/min_pulse_width/min_pulse_width.rpt') as f:
+                contents = f.read().split(';')
+                for content in contents:
+                    if '# Pin' in content:
+                        Pin = content.split('# Pin: ')[1].split()[0]
+                        Clock = content.split('Clock:')[1].split('Slack:')[0].strip('{}')
+                        Limit = content.split('Limit:')[1].split()[0]
+                        Slack = content.split('Slack: ')[1].split()[0]
+                        Level = content.split('Level:')[1].split()[0]
+                        Corner = content.split('# Pin:')[1].split('\n')[0].split()[-1]
+                        cmd = f'zgrep \"{Pin} (\" rpts/Pt*Stp*/min_pulse_width_verbose.rpt.gz | head -n1 '
+                        ref = shell(cmd)
+                        refPin = ref.split('(')[1].split(')')[0].strip()
+
+                        min_pulse_width = [Pin, refPin, Clock, Limit, Slack, Level, Corner]
+                        min_pulse_width_vio.append(min_pulse_width)
+
+        if min_pulse_width_vio:
+            vio_rpt = []
+            for index in range(len(min_pulse_width_vio)):
+                Pin = min_pulse_width_vio[index][0]
+                refPin = min_pulse_width_vio[index][1]
+                Clock = min_pulse_width_vio[index][2]
+                Limit = min_pulse_width_vio[index][3]
+                Slack = min_pulse_width_vio[index][4]
+                Level = min_pulse_width_vio[index][5]
+                Corner = min_pulse_width_vio[index][6]
+                vio_rpt.append({'Violation Pin': Pin, 'ref': refPin, 'Clock':Clock, 'Limit': Limit, 'Slack': Slack, 'Level': Level, 'Corner': Corner})
+
+            allVio = pd.DataFrame().from_records(vio_rpt)
+            allVio.to_csv('min_pulse_width_summary.csv', index=False)
+
+
+        print(f'total {min_pulse_width_vio_number} min_pulse_width violation!')
+
+
+def check_min_period():
+    min_period_rpts = shell('ls ./rpts/Pt*Stp*/min_period.rpt.gz')
+    if min_period_rpts == '':
+        print('missing min_period rpt, check if ./rpts/Pt*Stp*/min_period.rpt.gz exist!\n')
+    else:
+        min_period_vio = []
+        min_period_vio_number = 0
+        if os.path.exists('fix_drv/min_period'):
+            shell('rm -rf fix_drv/min_period/*')
+        else:
+            os.mkdir('fix_drv/min_period')
+
+        for rpt in min_period_rpts.split():
+            cmd = f'echo {rpt} >> fix_drv/min_period/all_min_period.rpt'
+            shell(cmd)
+            cmd = f'zcat {rpt} >> fix_drv/min_period/all_min_period.rpt'
+            shell(cmd)
+
+        with open('fix_drv/min_period/all_min_period.rpt') as f:
+            for line in f.readlines():
+                if 'min_period.rpt.gz' in line:
+                    Corner = line.split('/')[2]
+                elif "/" in line and 'min_period' in line:
+                    # print(line)
+                    min_period_vio_number += 1
+                    Pin = line.split()[0]
+                    Clock = line.split()[2]
+                    Slack = line.split()[-1]
+                    cmd = f'zgrep \"{Pin} (\" rpts/Pt*Stp*/min_period_verbose.rpt.gz | head -n1 '
+                    ref = shell(cmd)
+                    refPin = ref.split('(')[1].split(')')[0].strip()
+
+                    min_period = [Pin, refPin, Clock, Slack, Corner]
+                    min_period_vio.append(min_period)
+
+        if min_period_vio:
+            vio_rpt = []
+            for index in range(len(min_period_vio)):
+                Pin = min_period_vio[index][0]
+                refPin = min_period_vio[index][1]
+                Clock = min_period_vio[index][2]
+                # Limit = min_period_vio[index][3]
+                Slack = min_period_vio[index][3]
+                Corner = min_period_vio[index][4]
+                vio_rpt.append({'Violation Pin': Pin, 'ref': refPin, 'Clock': Clock, 'Slack': Slack, 'Corner': Corner})
+
+            allVio = pd.DataFrame().from_records(vio_rpt)
+            allVio.to_csv('min_period_summary.csv', index=False)
+
+        print(f'total {min_period_vio_number} min_period violation!')
+
+
+# option
+if args.nonsi:
+    fix_data_tran()
+    fix_data_cap()
+    fix_cktran()
+    fix_tie_fanout()
+    if count_violation:
+        vio_rpt = []
+        for item in count_violation.keys():
+            vio_rpt.append({'item': item, 'violation number': count_violation[item][0], 'unconstrain number': count_violation[item][1], 'waive number': count_violation[item][2], 'fix number(merge corner)': count_violation[item][3]})
+        vio = pd.DataFrame().from_records(vio_rpt)
+        vio.to_csv('violation_count.csv', index=False)
+        pd_reader = pd.read_csv('./violation_count.csv', index_col=False)
+        print(f'\n{pd_reader}')
+        all_violation = []
+        for item in violation_rpt.keys():
+            for index in range(len(violation_rpt[item])):
+                net = violation_rpt[item][index][0]
+                status = net_info[item][net]
+                all_violation.append({'item': item, 'net': violation_rpt[item][index][0], 'driver': violation_rpt[item][index][1], 'sink': violation_rpt[item][index][2],'slack': violation_rpt[item][index][3], 'corner': violation_rpt[item][index][4], 'status': status})
+        allVio = pd.DataFrame().from_records(all_violation)
+        allVio.to_csv('violation_summary.csv', index=False)
+    else:
+        print('No violation exist!\n')
+elif args.si:
+    fix_si_data_tran()
+    fix_si_noise()
+    fix_si_bottleneck()
+    fix_si_cktran()
+    fix_si_ck_noise()
+    fix_si_clock_double_switching()
+    fix_clock_si()
+    if count_violation:
+        vio_rpt = []
+        for item in count_violation.keys():
+            vio_rpt.append({'item': item, 'violation number': count_violation[item][0], 'unconstrain number': count_violation[item][1], 'waive number': count_violation[item][2], 'fix number(merge corner)': count_violation[item][3]})
+        vio = pd.DataFrame().from_records(vio_rpt)
+        vio.to_csv('violation_count.csv', index=False)
+        pd_reader = pd.read_csv('./violation_count.csv', index_col=False)
+        print(f'\n{pd_reader}')
+        all_violation = []
+        for item in violation_rpt.keys():
+            for index in range(len(violation_rpt[item])):
+                net = violation_rpt[item][index][0]
+                status = net_info[item][net]
+                all_violation.append({'item': item, 'net': violation_rpt[item][index][0], 'driver': violation_rpt[item][index][1], 'sink': violation_rpt[item][index][2], 'slack': violation_rpt[item][index][3], 'corner': violation_rpt[item][index][4], 'status': status})
+        allVio = pd.DataFrame().from_records(all_violation)
+        allVio.to_csv('violation_summary.csv', index=False)
+    else:
+        print('No violation exist!\n')
+elif args.fix == 'data_tran':
+    fix_data_tran()
+elif args.fix == 'data_cap':
+    fix_data_cap()
+elif args.fix == 'cktran':
+    fix_cktran()
+elif args.fix == 'tie_fanout':
+    fix_tie_fanout()
+elif args.fix == 'illegalck':
+    fix_illegalck()
+elif args.fix == 'si_data_tran':
+    fix_si_data_tran()
+elif args.fix == 'si_cktran':
+    fix_si_cktran()
+elif args.fix == 'si_noise':
+    fix_si_noise()
+elif args.fix == 'si_ck_noise':
+    fix_si_ck_noise()
+elif args.fix == 'si_bottleneck':
+    fix_si_bottleneck()
+elif args.fix == 'si_clock_double_switching':
+    fix_si_clock_double_switching()
+elif args.fix == 'clock_si':
+    fix_clock_si()
+elif args.fix == 'rc':
+    check_rc('RC-011')
+    check_rc('RC-012')
+elif args.fix == 'rc011':
+    check_rc('RC-011')
+elif args.fix == 'rc012':
+    check_rc('RC-012')
+elif args.fix == 'realrc':
+    check_rc_rpt('RC-011')
+    check_rc_rpt('RC-012')
+elif args.fix == 'realrc011':
+    check_rc_rpt('RC-011')
+elif args.fix == 'realrc012':
+    check_rc_rpt('RC-012')
+elif args.fix == 'min_period':
+    check_min_period()
+elif args.fix == 'min_pulse_width':
+    check_min_pulse_width()
+elif args.fix == 'violation_ck':
+    fix_violation_ck_cell()
+elif args.fix == 'all':
+    fix_data_tran()
+    fix_data_cap()
+    fix_cktran()
+    fix_tie_fanout()
+    fix_si_data_tran()
+    fix_si_noise()
+    fix_si_bottleneck()
+    fix_si_cktran()
+    fix_si_ck_noise()
+    fix_si_clock_double_switching()
+    fix_clock_si()
+    fix_illegalck()
+    check_rc('RC-011')
+    check_rc('RC-012')
+    check_rc_rpt('RC-011')
+    check_rc_rpt('RC-012')
+    check_min_period()
+    check_min_pulse_width()
+    fix_violation_ck_cell()
