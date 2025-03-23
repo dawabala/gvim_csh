@@ -89,9 +89,6 @@ setenv PATH      /tool/aticad/1.0/bin/:$PATH
 # setenv LD_LIBRARY_PATH /home/zhzhongl/local/lib64:/home/zhzhongl/local/lib:/home/zhzhongl/local/openssl/lib64:$LD_LIBRARY_PATH 
 # echo $LD_LIBRARY_PATH 
 
-alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL6_64]" -J term6 xterm &'
-alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm &'
-alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=1000] select[type==RHEL7_64]" -J term6 xterm &'
 
 
 # pathform: topology   top_net bundle contract: no_rep(no repeater): MCI(multicycle path); 
@@ -111,18 +108,34 @@ alias pf    "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[typ
 alias fcte  "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fct_explorer ./ &' "
 alias fcfpe "bsub -Ip -q regr_high -P canis-pd -R 'rusage[mem=20000]  select[type==RHEL7_64||type==RHEL6_64]' '/tool/aticad/1.0/bin/fcfp_explorer ./ &' "
 
-# xterm 200G 
+# xterm_oshc
+alias bjobx	  'lsf_bsub -q normal -m oshcsc12b2 -Ip xterm &'
+# xterm_20g_huashan
+alias rh6	 'bsub -q bulk -P huashan-ver -R "rusage[mem=20000] select[type==RHEL6_64]" -J term6 xterm &'
+alias rh7	 'bsub -q bulk -P huashan-ver -R "rusage[mem=20000] select[type==RHEL7_64]" -J term6 xterm &'
+alias term	 'bsub -q bulk -P huashan-ver -R "rusage[mem=20000] select[type==RHEL7_64]" -J term6 xterm &'
+# xterm_200g_at2
 alias term200 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
 alias term100 "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=100000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
+# xterm_20g_at2
+alias term20  "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=20000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
+
+# xterm_100g_canis
 alias term150 "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=100000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; " 
+# xterm_20g_canis
+# xterm_20g_canis
+
+# pt_255g_canis by michael
+bsub -Ip -q regr_high -n 8 -P canis-pd -R 'rusage[mem=255000] select[(csbatch||gb32||gb64||gb128||gb256||gb512||gb1024||type==RHEL7_64||type==RHEL6_64)]' 'pt_shell '
+
+# michael ptsession;
+# source ~sdhe/.cshrc; module load primetime/2023.12-SP5 ; cd ~/soc/rpts/runs_0115; 
+# bsub -Ip -q regr_high -n 8 -P canis-pd -R 'rusage[mem=255000] select[(csbatch||gb32||gb64||gb128||gb256||gb512||gb1024||type==RHEL7_64||type==RHEL6_64)]' pt_shell -x 'restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession' ;
+# pt_shell> set_host_options -max_cores 8; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; # michael ptsession;
 
 # sudong bsub ptsession;
-# alias xtermpt "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 )&&(csbatch||tmpshortrr||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell ; restore_session" 
-# alias ptsession "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
-#### michael bsub ptsession;
-# source ~sdhe/.cshrc; module load primetime/2023.12-SP5 ; cd ~/soc/rpts/runs_0115; # michael ptsession
-# bsub -Ip -q regr_high -n 8 -P canis-pd -R 'rusage[mem=255000] select[(csbatch||gb32||gb64||gb128||gb256||gb512||gb1024||type==RHEL7_64||type==RHEL6_64)]' 'pt_shell ' ;# michael ptsession
-# pt_shell> set host cpu 8; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession; # michael ptsession;
+# alias ptterm_200g "bsub -Is -q regr_high -n 4 -P canis-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 )&&(csbatch||tmpshortrr||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell ; restore_session" 
+# alias ptsession_200g "bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm &; module load pt; pt_shell " 
 
 alias ptsession "source ~sdhe/.cshrc; module load primetime/2023.12-SP5; which pt_shell; pt_shell; restore_session rpts/PtGfxFuncTT0p75vReRouteFlatTyprc100cTT0P75V100CStpTiming/ptsession "
 
@@ -298,7 +311,6 @@ alias bjob6	'lsf_bsub -J test -Ip -q regr_high -P sandstone-fe -R "select[(type=
 alias bjob7	'lsf_bsub -J test -Ip -q regr_high -P sbio-fe -R "select[(type==RHEL7_64)&&(csbatch||gb32||gb64||gb128||gb256) && (mem >= 50000)] rusage[mem=20000]"'
 alias bjob5	'lsf_bsub -J test -Ip -q regr_high -P kn-fe -G kn-fe -R "select[(type==RHEL5_64)&&(gb32|| gb64||gb128) && (mem >= 5000)] rusage[mem=2000]"'
 alias bjobr	  'lsf_bsub -J test -Ip -q regr_high -m oshcsc12b2'
-alias bjobx	  'lsf_bsub -q normal -m oshcsc12b2 -Ip xterm &'
 alias bjobfct 'lsf_bsub -Ip -P cz-pd -q regr_high -R " rusage[mem=15000]" "fct_explorer ./"'
 
 alias pl	'p4 filelog'
@@ -366,8 +378,8 @@ endif
 
 #### clean firefox mozilla cache 
 alias cleanff 'du1 ~/mozilla ~/firefox; cd ~/.cache; rm *; cd ~/.mozilla/firefox; rm *default*;'
-:r! du2 ~/.cache/mozilla ~/.mozilla/firefox/
-cd ~/.cache/mozilla/firefox/*default-release*/cache2/entries;sleep 1 ; du1 ; rm [0-9]* ; rm [A-Z]* ;
-cd ~/.cache/mozilla/firefox/29853v3s.default-release/cache2/entries; sleep 1 ; du1 ; rm [0-9]* ; rm [A-Z]* ;
-cd ~/.mozilla/firefox/*default-release*; du1;
+# :r! du2 ~/.cache/mozilla ~/.mozilla/firefox/
+# cd ~/.cache/mozilla/firefox/*default-release*/cache2/entries;sleep 1 ; du1 ; rm [0-9]* ; rm [A-Z]* ;
+# cd ~/.cache/mozilla/firefox/29853v3s.default-release/cache2/entries; sleep 1 ; du1 ; rm [0-9]* ; rm [A-Z]* ;
+# cd ~/.mozilla/firefox/*default-release*; du1;
 
