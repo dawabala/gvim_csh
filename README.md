@@ -74,3 +74,13 @@ ghp_Vqym0rDnNCv<*>5cjtJcnkMlBImz4LKE2<*>YvEs ;
 # * as your firstname/secondname;
 
 
+# GitHub token
+Generate a Personal Access Token on GitHub
+A personal access token on GitHub functions like an OAuth access token and authenticates the access to the GitHub API.
+1) Navigate to your Git account settings, then Developer Settings. Click the Personal access tokens menu, then click Generate new token.  
+2) Select repo as the scope. The token will be applicable for all the specified actions in your repositories.  
+3) Click Generate Token. GitHub will display the personal access token only once. Ensure that you copy the token and store it in a safe space.  
+We will use this token in the Integration function’s code, which will enable Catalyst to fetch necessary information about the repositories from GitHub.
+
+
+
