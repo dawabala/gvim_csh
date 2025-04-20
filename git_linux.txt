@@ -182,6 +182,30 @@ ps -u zhzhongl | grep vov
 2: ctrl-z; ps aux| grep find; kill -9 52340;
 3: ctrl-z; jobs -l;
 
+
+## 
+foreach psname ( `ps -u jdon | grep Web | awk '{print $1}'` )
+    ps -p $psname -v >> ~/git/ps_jdon_Web_p_v.txt
+end
+# ps_jdon_Web_p_v.txt
+# PID TTY      STAT   TIME  MAJFL   TRS   DRS   RSS %MEM COMMAND
+# 1226 pts/316  Sl     0:20  12556   879 2682228 40464  0.0
+# PID 1226, running with terminal pts/316, interruptible sleep state (S) multithread(l). 20 seconds CPU time. 12556 major page faults.  879 KiB code (TRS), 2682228 KiB  data (DRS), 
+# 40464 KiB of physical memory (RSS).  0.0% of total system memory.
+#  analysis:  multithread process, large virtual memory(2.68G) but small physical RAM(40M);
+ps -p 1226 -cmd; # identify the process
+pmap -x 1226;    # check memory allocation
+top -p 1226;     # monitor CPU/MEM usage;
+pstree -p 6490;  # process tree of firefox(PID 6490);
+
+csh> ps -p 6490 -v
+# PID TTY      STAT   TIME  MAJFL   TRS   DRS   RSS %MEM COMMAND
+# 6490 pts/316  Sl   953:54 5018871  879 14374144 886328  0.1 ./firefox
+
+# /home/jdon/Downloads/firefox/firefox-bin -contentproc -isForBrowser -prefsHandle 0 -prefsLen 37783 -prefMapHandle 1 -prefMapSize 258502 -jsInitHandle 2 -jsInitLen 234660 -parentBuildID 20241209150345 -sandboxReporter 3 -ipcHandle 4 -initialChannelId {b89bcb8d-81d7-42c6-850b-c67c3e920750} -parentPid 6490 -crashReporter 5 -greomni /home/jdon/Downloads/firefox/omni.ja -appomni /home/jdon/Downloads/firefox/browser/omni.ja -appDir /home/jdon/Downloads/firefox/browser 32051 tab
+# -parentPid 6490: parent process;
+
+
 #### cpu, perf
 ## cpu
 cat /proc/meminfo /proc/cpuinfo /proc/driver/*
