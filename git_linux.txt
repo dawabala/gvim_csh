@@ -248,6 +248,10 @@ csh> xterm -bg black -fg white &
 echo -e "\e]11;black\a"
 echo -e "\e]10;lightblue\a"
 
+####
+https://***.gov
+torproject.org
+***dotgov4sjwlzihbbgxnqg3xiyrg7so2r2o3lt5wz5ypk4sxyjstad.onion
 
 
 
