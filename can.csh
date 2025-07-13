@@ -1,6 +1,5 @@
 #### cdc script trial run
 ~/soc/cdc.csh
-
 soc CDC owner: D K, Prateek
 # use script to kick off CDC run;
 /proj/canis_pd_fct04/fct_runs/NLC_test/soc_only.flat.cdcmax.csh
@@ -27,6 +26,8 @@ secip_art_t/tile_dfx/scan_cntl/async_rst_gater_ff_reg/CP,cip_nbif_t/tile_dfx/dft
 
 csh> less report.cdc.path.rpt.gz | filter_pt.pl -s 'CDC Path through' -r "tile_dfx" | less
 
+
+~/soc/cdc.csh
 \\\\\\\\ clock no-route list; # clock list, gfxclk acvclk, acv_clk, acv_clock;
 Please check NLCp1 initial clock no-route list as below:
 Clock no-route file: 
@@ -78,23 +79,73 @@ Dfx_SCAN_SHIFT_CLK	/	/	/	/	Floating port- https://ontrack-internal.amd.com/brows
 vdci_s5_soc_t_xover_vddSOC_MtapStac_Wrck_vddS5	/	/	/	/	Floating port same case to MtapStac_Wrck - https://ontrack-internal.amd.com/browse/DECANPD-166
 
 
-
-
 \\\\\\\\\ 
 # vi_git_py dir: gvim git python packages; 
 jdon:   git add python.all.csh (with py310 download links);  
 guojia: install gvim,git,py310; chatgpt: outlook mails save into can_mail.csh;
 
-
 \\\\\\\\\ 0315 rel_0147 acvclk pathform
+
 ~/git/aliases
+~/git/can.csh
+\\\\\\\\\\\\\\\\\\\\\\\\
+https://confluence.amd.com/display/CANSOC/Common+Information
+    #  Created by Zhang, Michael(SH), last modified on Mar 17, 2025
+ # Disk Assignment
+ # Tasks Assignment
+ # FCT Dirs
+ # FCT Useful files
+Disk Assignment
+1	/proj/canis_pd_gfx_fct01	    non-er	10	Daily work (do not kick off run in this disks
+2	/proj/canis_pd_gfx_fct02	    non-er	4	FCT Runs only (non-aie related runs)
+3	/proj/canis_pd_gfx_fct03_aie_er	er-aie	10	FCT Runs only (er-aie related runs, and budgeting run)
+4	/proj/canis_pd_gfx_fct04 	    non-er	20	FCT Runs only (non-aie related runs, timing report release)
+5	/proj/canis_pd_gfx_fct05_aie_er	er-aie	20	FCT Runs only (er-aie related runs, and budgeting run)
+
+#  Note:
+#  Please do not put any other intermediate data on 'FCT Runs Only' disks!
+#  Please do not kick off any fct runs on the disk NOT listed above
+Tasks Assignment
+Budgeting	Ong, JoeHuei	Required er_aie permission
+GFX Timing (exclude SP interface)	Kyle, Wang/Guo, Jia	L2WD is now owned by Guo Jia
+GFX Timing (SP interface)	Ling, Joanne	Required er_aie permission
+DFT Timing (exclude SP interface)	Xue, Cannie	
+DFT Timing (SP interface)	Ong, JoeHuei	
+Repeater trace flow report analysis	Kyle, Wang/Ling, Joanne	
+Other Clock timing (exclude GFXCLK/ACVCLK)	Xue, Cannie	
+Special timing	Guo, Jia/Ong, JoeHuei	
+CDC Check	Guo, Jia/Ong, JoeHuei	
+DRV/Misc check	Guo, Jia/Ling, Joanne	
+MV Timing/ACVCLK	Guo, Jia	
+FCT Daily timing run	Ling, Joanne/Ong, JoeHuei	Required er_aie permission
+GFX Flow	Xue, Cannie/Michael	
+
+# FCT Dirs
+FCT linked run area	    /proj/canis/a0/fctiming/GFX/latest/fct_runs
+FCT report release dir	/proj/canis_pd_gfx_fct04/fct_release
+Tileb Server (latest)	/proj/canis_pd_gfx_fct01/FCT/tbserver/nov08
+
+# FCT Useful files
+Repeater file	        /proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/nl_repeaters.xml	Repeater xml file before repeater insertion
+Repeater file	        /proj/canis_pd_gfx_fct01/FCT/rep_xml/latest/pd_repeaters.xml	Repeater xml file after repeater insertion
+Instance mapping file	/proj/canis_pd_gfx_fct01/FCT/inst_map/latest/gc_top_t.map	
+Feedthru connect file	/proj/canis_pd_gfx_fct01/FCT/feedthru_xml/latest/feedthru_connectivity.xml	
+Exclude nets         	/proj/canis_pd_gfx_fct01/FCT/exclude_nets/latest/gc_top_t.list	
+Tile distance	        /proj/canis_pd_gfx_fct01/FCT/dist_map/latest/gc_top_t.dist	
+
+# SDC constraint files
+SDC Linked for FCT run	/proj/canis_pd_gfx_fct01/FCT/sdc/latest
+SDC synced from P4 - Func	/proj/canis_pd_gfx_fct01/FCT/sdc/sdc_release/functional
+SDC synced from P4 - Scan	/proj/canis_pd_gfx_fct01/FCT/sdc/sdc_release/scanshift
+
+# LSD reports
+/proj/canis_pd_gfx_fct04/fct_release/FCT0416_20250609_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Cts_LSD/rpts/
+/proj/canis_pd_gfx_fct04/fct_release/FCT0524_20250707_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSDp3/
 /proj/canis_pd_gfx_fct04/fct_release/FCT0147_20250312_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC/
-~/soc/rpts/rel_0147/
 ~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.gc_acv_sp_sq_t.gc_acvi_t.sorted.gz
 ~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.gc_acvi_t.gc_acv_lds_t.sorted.gz
 ~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.gc_acvi_t.gc_acv_sp_sq_t.sorted.gz
 ~/soc/rpts/rel_0147/rpts/sort_rpts/SortPtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming_2t/fullchip.Grp.ACVCLK.vdci_gc_acv_t.gc_acvi_t.sorted.gz
-
 
 ~/soc/rpts/rpts.csh
 ~/soc/rpts/place61.csh
@@ -112,25 +163,31 @@ timing report not in it, timing path;
 # sudong bsub ptsession;
 bsub -Is -q regr_high -n 4 -P at2-pd -J mdsj -R 'rusage[mem=200000] select[(type==RHEL7_64 ||type==RHEL6_64)&&(csbatch||tmpshortrr||gb32||gb64||gb128||gb256||gb512)]' xterm & ; # sudong
 # zgrep PT_SHELL ./logs/PtGfxFuncTT0p75v*.log.gz; setenv PT_SHELL_MODULE primetime/2022.03-SP5-2-T-20230819;
-csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
+# csh> cd /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/;
+csh> cd /proj/canis_pd_gfx_fct02/fct_runs/NLC_FP00/FCT0126_20250303_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC_nosp;     # rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming
+csh> cd /proj/canis_pd_gfx_fct02/fct_runs/NLC_FP00/FCT0153_20250316_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC_nosp/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
+csh> cd /proj/canis_pd_gfx_fct02/fct_runs/NLC_FP00/FCT0155_20250316_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_NLC_nosp_newcl/rpts/PtGfxFuncTT0p75vPlaceFlatTyprc100cTT0P75V100CStpTiming/ptsession
+
 # module load primetime/2022.03-SP5-2-T-20230819;
 ~/git/aliases
 csh> source ~sdhe/.cshrc; module load primetime/2023.12-SP5
 csh> pt_shell; 
 pt_shell> restore_session rpts/PtGfxFuncTT0p75v*/ptsession
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
-pt_shell> trace_clk_path -inst_map inst_tile.map; # save *.csv files into clk_trace;
+pt_shell> trace_clk_path -inst_map inst_tile.map -out_dir ./clk_trace ; # save *.csv files into clk_trace;
 # /proj/canis_pd_gfx_fct04/fct_runs/FCT0115_20250218_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_ReRoute_LSB10_WithRDL_nosp/inst_tile.map
-# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_trace/GC_GFXCLK.csv
-# /proj/canis_pd_gfx_fct04/fct_runs/FCT0062_20250113_SOC_FUNCSCAN_GFX_FLAT_GFX_ONLY_Place_LSB10_nosp/clk_sink_numbers.csv
+# clk_trace/GC_GFXCLK.csv
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/list_sink_numbers_by_clk.tcl; # save into ./clk_sink_numbers.csv
+# clk_sink_numbers.csv
 
 pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/check_clk_branches_talk.tcl
 pt_shell> check_clk_branches_talk -top_nets_list Cpl_USB_HOST_CLK ;  # check different top clock nets sinks talk information.
 
+#### /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/
+
 # fct workbook scripts
+# https://confluence.amd.com/display/TSG/FCT+Workbook
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/
-/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/
 /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/path/analyze_path_lol_length.tcl
@@ -158,7 +215,6 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/summ_to
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/top_clock_net.tcl
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/clocks/trace_clk_path.tcl
 
-
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/PT_check_design.tcl*
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_all_top_nets.tcl
@@ -167,24 +223,80 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_r
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/gen_inst_tile_map.tcl
 
 
-source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
- analysis_bundles_from_topo_side # summarize bundle timing formation combine with topology based on prelayout ptsession
-   -inst_map file         (instance and tile map file. Format: inst_name tile_name)
-   -nl_xml file           (prelayout repeater xml file.)
+# check_useful_skew_margin
+Useful skew is a method to optimize setup or hold timing.
+two kinds of useful skew: early skew and late skew.
+Early skew: make clock latency shorter. to fix setup (startpoint) and hold (endpoint).
+Late  skew: make clock latency longer.  to fix setup (endpoint) and hold (startpoint).
 
+Make sure there is enough margin for the violations you want to fix with useful skew. 
+For gating late skew, please check all sinks. 
+For reuse tiles, please check all related instances. 
+Suggest to deliver CTS tune file to do useful skew in PR flow. 
+For early skew, no larger than 1/4 of target latency.
 
+# no_rep timing estimation and co-work with SDC/FCFP
+# estimate_norep_pretiming.tcl
+Based on data: PreTim(w/o FCFP)
+no_rep nets cannot be inserted repeaters.
+Some no_rep signals cannot meet timing, which need to change design or update SDC constraints.
+normally in ReRoute stage, request to design change should be as early as possible, 
+
+needs co-work with FCFP and SDC.
+violated signals need repeaters (design issue)  : ask FCFP to follow up it.
+violated signals with constraint issue          : ask SDC to follow up it.
+violated signals need to meet timing (real path): FCT to close it with optimization.
+
+Get required inputs and check it in PreTim (w/o FCFP) ptsession.
+ask FCFP to povide inst to inst min distance table and use script to check. 
+Repeater XML file is required: get no_rep signals from it. - from FCNL team.
+
+# hmyin pt procs tcl script
+pt_shell> source /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl; 
+# :r! grep "proc " /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl;  # get procs list;
+  proc parse_inst_map   {inst_map} {
+  proc get_object_inst  {object arr lst} {
+  proc parse_nl_rep_xml {xml net_bundle bundle_constriant net_container net_clk net_orig} {
+  proc is_latch_gater   {str} {
+  proc get_annotated_nets_ratio {} {
+  proc get_cell_avg_delay       {} {
+  proc readRepeaterXML2p0_hmyin       {XMLFilename netArrayName clkArrayName operatorArrayName operandArrayName contractArrayName bundleArrayName flavorTileArrayName instFlavorArrayName flavorClkHookupArrayName repPerFlavorClkArrayName clkSdcArrayName noRepArrayName netSdcArrayName scanInstpinArrayName flavorClkPwrHookupArrayName netContainerArrayName netPdArrayName}                      {
+  proc readRepeaterXML2p0_hmyin_norep {XMLFilename netArrayName clkArrayName operatorArrayName operandArrayName contractArrayName bundleArrayName flavorTileArrayName instFlavorArrayName flavorClkHookupArrayName repPerFlavorClkArrayName clkSdcArrayName noRepArrayName netSdcArrayName scanInstpinArrayName flavorClkPwrHookupArrayName netContainerArrayName netPdArrayName noRepReasonArrayName} {
+
+pt_shell> /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/estimate_norep_pretiming.tcl
+estimate_norep_pretiming # Estimate pre-timing based on PT with prelayout ptsession and pd_repeaters.xml. It can also be used in post-PR ptsession.
+   -inst_map inst_tile.map -rep_xml pd_repeaters.xml -out_dir ./
+   [-sig_speed value]     (required for prelayout)
+   [-dist_csv file]       (inst to inst distance csv)
+
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_bundles_from_topo_side.tcl
 pt_shell> analysis_bundles_from_topo_side -inst_map ./inst_tile.map -nl_xml ./nl_repeaters.xml -dist_csv ./distance.csv -clk_lst {GC_GFXCLK} -constraints 'EQ 0'
 
+pt_shell> source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_all_top_nets.tcl
+pt_shell> analysis_all_top_nets -inst_map ./inst_tile.map -dist_csv ./distance.csv -clks {FCLK}
+pt_shell> analysis_all_top_nets # dump top signal nets with clock, timing, connectivity information. 
+    get inst_map file? source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/gen_inst_tile_map.tcl 
+    # to include proc:  parse_proc_arguments 
+    get dist_map file? ask FCFP, or /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/fx_gen_inst2inst_min_distance.tcl.
+    -inst_pattern: all instances will be checked by default.
+    output files:
+        top_nets_clk.csv: top nets clock and timing table.
+        tile_connectivity.csv: top nets connectivity table.
+        no_path_nets.list: missing flop nets.
+     
+   -inst_map file         (instance tile map file.)
+   [-dist_csv file]       (inst to inst distance csv)
+   [-inst_pattern inst]   (only to check the tile instance with keywords)
+   [-clks list]           (clocks to check. default is {*})
+   [-out_dir dir]         (output directory. default ./)
+ 
 
-source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/analysis_all_top_nets.tcl
- analysis_all_top_nets # dump top signal nets with clock, timing, connectivity information. Run it in PreTim (w/o FCFP) ptsession.
-
+pt_shell> /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/estimate_norep_pretiming.tcl
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/design/check_rlol_design_issue.tcl; # check and dump 2tile timing with large RLOL.
 # check_rlol_design_issue 
 pt_shell> mkdir ./rlol
 pt_shell> check_rlol_design_issue  -inst_map inst_tile.map -out_dir ./rlol -factor 15
-pt_shell> check_rlol_design_issue  -inst_map ../../inst_tile.map -out_dir ./rlol -factor 15
 
 # large RLOL issue.  # check and dump 2tile timing with large RLOL.
 csh> module load primetime/2023.12-SP5;
@@ -207,6 +319,21 @@ source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/pin/
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_bi_net_rep.tcl
 # /tools/aticad/1.0/src/zoo/hmyin/pt/procs.tcl
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl
+FCFP repeater paths are one cycle paths by default. Some repeater paths are half cycle. 
+FCT need to find them and remind repeater owner for planning repeater. 
+Plan with half distance for the first repeater stage.
+Normally, DFX_SCAN_SHIFT_CLK repeater are this case.  Double check it after Scan insertion.
+FCFP repeater plan work is done before PR, so FCT need to check it based on PreTim ptsession.
+# Below script can catch the half cycle bundles based on PreTim ptsession.
+/tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_bundle_cycle.tcl 
+ check_repeater_bundle_cycle 
+   -inst_map file         (instance and tile map file.)
+   -nl_xml file           (prelayout repeater xml file.)
+   [-clk_lst lst]         (clocks to check. default is all)
+   [-out_rpt file]        (default is ./rep_cycle.csv)
+   [-clk_map file]        (clock map between XML and SDC)
+   [-super_map file]      (super instance map)
+   [-check_type type]     (rep_only(default), all)
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/check_repeater_timing.tcl
 
 source /tools/aticad/1.0/src/zoo/SCBU_PD/TSG/fct_workbook/scripts/repeater/fx_gen_inst2inst_min_distance.tcl*
@@ -1281,8 +1408,8 @@ ls: cannot access ./rpts/Pt*/clock_si.rpt.gz:                          No such f
  ./rpts/Pt*/*si*; ./rpts/Pt*Stp*/si*
 
 
-Traceback (most recent call last): File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module> check_rc('RC-011')
-Traceback (most recent call last): File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module> check_rc('RC-011')
+Traceback (): File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module> check_rc('RC-011')
+Traceback (): File "/home/jiaguo12/soc/drv/fix_drv.py", line 2455, in <module> check_rc('RC-011')
   File "/home/jiaguo12/soc/drv/fix_drv.py", line 2110, in check_rc cell_pin, slack = extract_rc(row)
   File "/home/jiaguo12/soc/drv/fix_drv.py", line 2095, in extract_rc slack = matchall.group().split('rpt.gz')[1].replace(',', '.')
 
@@ -2200,7 +2327,7 @@ csh>  ps -w `whoami`
 csh>  ps -u jiaguo12
 csh>  top; ps aux; jobs -l ;ps aux | grep find;
 
-\\\\\\\\ fix_drv.py
+\\\\\\\\ ~/soc/drv/fix_drv.py
 /tools/pandora/bin/python3.9  /home/jiaguo12/soc/drv/fix_drv.py -instMap inst_tile.map
 
 #! /tool/pandora/bin/python3.9
