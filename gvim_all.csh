@@ -10,7 +10,8 @@ regedit: HKEY_LOCAL_MACHINE/software/vim/gvim,  is used by gvimext.dll;
 github.com/vim/vim-win32-installer/releases
 
 
-#### Yan Pritzker, learn to peak vim -verbs, nouns and modifiers
+#### Yan Pritzker, learn to speak vim -verbs, nouns and modifiers
+https://yanpritzker.com/learn-to-speak-vim-verbs-nouns-and-modifiers-d7bfed1f6b2d
 :help text-objects
 http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim
 https://github.com/brookhong/vimfiles
@@ -69,9 +70,6 @@ guu; gUU; # lowercase/uppercase of current line;
 787 111 222 333 787 787 
 787 111 222 333 787 787 
 787 111 222 333 787 787 
-787 
-787 
-787 
 
 ### sort 
 :sort 
@@ -101,7 +99,6 @@ g ctrl-x: decrement 2/2/2/2 to 1/0/-1/-2;
 1
 1
 1
-
 
 
 ### auto_function_name    
@@ -164,9 +161,8 @@ ctrl-v  vap vi(
 \w; [a-zA-Z0-9_]* ; [\a\d_]*; # word of any alphanumeric character or underscore
 \W; [^a-zA-Z0-9_];            # non-word character 
 \h; [\a_]*;                   # head of word character (a,b,c...z,A,B,C...Z,_) 
-\D \W \A \H ; # non-digit|word|alphabet|head
+\D \W \A \H ;                 # non-digit|word|alphabet|head
 /\(X|Y\)
-
 
 /\d\{2}            # 2+ digits  # :g /\d\{3}//d; /d\{2}        
 /\d\@<!\d\{2}\d\@! # 2 and 2 only digits; see also :help /\@!  :help /\@<!
@@ -175,13 +171,12 @@ ctrl-v  vap vi(
 ^                  # matches start of line; 
 (2021)@!           # @! is negative look ahead, after start of line; pattern shouldn't be 2021, parentheses here means a regex group.
 :g!/^2021/-j       #  ^2021 is your pattern;  -j first sets the address to the line above and then joins it with the following one.
-:g/^\_$\n\_^$/d   # merge 2+ blank lines into 1 line; dont touch 1 blank line; merge 2+ empty lines into 1 empty line;
-:% s/^\s*$\n//g   # remove empty lines;
-:%s/.*/& &/       # duplicate every line;
-/feint\|supra  /feint\&.*supra # logic or/and
-10,20g/^/mo 10    # revert lines between line 10 and line 20
-g/^/m 0           # revert all lines;
-
+:g/^\_$\n\_^$/d    # merge 2+ blank lines into 1 line; dont touch 1 blank line; merge 2+ empty lines into 1 empty line;
+:% s/^\s*$\n//g    # remove empty lines;
+:%s/.*/& &/        # duplicate every line;
+/fe\|su /fe\&.*su  # logic or/and
+10,20g/^/mo 10     # revert lines between line 10 and line 20
+g/^/m 0            # revert all lines;
 
 ### search & replace
 # sub search range pattern replace regexp current digits
@@ -234,7 +229,6 @@ qa
 q
 @a
 999@a
-
 
 ### delete blanks of line ends
 :%s/\s\t$//   / n
