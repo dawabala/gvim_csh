@@ -170,7 +170,7 @@ ctrl-v  vap vi(
 
 /\d\{2}            # 2+ digits  # :g /\d\{3}//d; /d\{2}        
 /\d\@<!\d\{2}\d\@! # 2 and 2 only digits; see also :help /\@!  :help /\@<!
-/\v^(2021)@!       # all lines with no 2021 begin  
+/\v^(2021)@!       # all lines with no 2021 begin ; without 2021, not match 2021; 
 \v                 # use magic search,see also :h \v;  
 ^                  # matches start of line; 
 (2021)@!           # @! is negative look ahead, after start of line; pattern shouldn't be 2021, parentheses here means a regex group.
