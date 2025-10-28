@@ -1,0 +1,78 @@
+Tue Oct 14 03:49:18 EDT 2025
+total 88740
+drwxrwxr-x 2 jiaguo12 asic     4096 Oct 14 03:49 .
+drwxrwx--- 4 jiaguo12 asic     4096 Oct 14 03:33 ..
+-rw-rw-r-- 1 jiaguo12 asic 12297853 Sep  2 18:39 A practical treatise on the cultivation of the grape vine on open walls (Clement Hoare) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic   898481 Sep 26 12:52 Bicycles (Robert Green,Scotford Lawrence) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic 13971313 Sep 30 14:52 Running a Ring of Spies Spycraft and Black Operations in the Real World of Espionage (Jefferson Mack) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic 28667541 Oct 14 03:36 Singapore (Peter Elphick) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic 18005500 Aug 26 07:59 Soil Science for Gardeners Working with Nature to Build Soil Health (Robert Pavlis) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  1303711 Oct  3 12:00 The Ruth Stout No-work Garden Book (Ruth Stout, Richard Vernon Clemence) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  2177492 Sep  2 18:38 The Wild Vine A Forgotten Grape and the Untold Story of American Wine (Todd Kliman) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic       29 Oct 14 03:49 files.txt
+-rw-rw-r-- 1 jiaguo12 asic 13133151 Sep 14 09:50 zhoushan_fishs.pdf
+Tue Oct 14 03:58:24 EDT 2025
+total 57040
+drwxrwxr-x 2 jiaguo12 asic     4096 Oct 14 03:54 .
+drwxrwx--- 4 jiaguo12 asic     4096 Oct 14 03:33 ..
+-rw-rw-r-- 1 jiaguo12 asic  1508343 Sep 29 16:59 Emulsion Polymerisation and Latex Applications (Anderson, C. D. Daniels, E.S.) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  5783567 Sep 21 13:35 Environmental Aspects of Dredging (R. N. Bray) (Z-Library)-1.pdf
+-rw-rw-r-- 1 jiaguo12 asic  4323071 Sep  1 10:27 From Vines to Wines the Complete Guide to Growing Grapes and Making Your Own Wine (Jeff Cox) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  3929563 Oct  8 15:11 Global Warming - A Very Short Introduction (MarkMaslin) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  5770121 Sep 30 14:55 Invisible Resistance To Tyranny - How to Lead a Secret Life of Insurgency in an Increasingly Unfree World (Jefferson Mack) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  1328978 Sep 29 08:07 The Hunt for Nazi Spies Fighting Espionage in Vichy France (Simon Kitson) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  7200390 Oct  1 12:06 The Safe House Setting Up and Running Your Own Sanctuary (Jefferson Mack) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic 12426491 Sep 10 13:01 Ultrasonic imaging seeing by sound the principles and widespread applications of image formation by sonic, ultrasonic, and… (Greguss, Pál) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  1918186 Aug 24 15:23 Vatican II Renewal within Tradition (Matthew L Lamb, Matthew Levering) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  5584350 Sep  1 10:24 Vines for Wines A Wine Lovers Guide to the Top Wine Grape Varieties (George Kerridge, Angela Gackle) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  8329437 Sep 30 13:35 Where There Is No Dentist - updated ed. (Murray Dickson) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic     1254 Oct 14 03:58 files.txt
+Tue Oct 14 04:10:02 EDT 2025
+#	deleted:    edmund_hillary_everest/High Adventure Our Ascent of the Everest (Sir Edmund Hillary) (Z-Library).pdf
+#	deleted:    edmund_hillary_everest/Sir Edmund Hillary (Great Explorers) (Samuel Willard Crompton) (Z-Library).pdf
+#	deleted:    edmund_hillary_everest/The Crossing Of Antarctica (Sir Vivian Fuchs, Sir Edmund Hillary) (Z-Library).pdf
+#
+Tue Oct 14 04:39:24 EDT 2025
+total 64540
+drwxrwxr-x 2 jiaguo12 asic     4096 Oct 14 04:38 .
+drwxrwx--- 4 jiaguo12 asic     4096 Oct 14 03:33 ..
+-rw-rw-r-- 1 jiaguo12 asic  1508343 Oct 14 04:26 Emulsion Polymerisation and Latex Applications (Anderson, C. D. Daniels, E.S.) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  5783567 Oct 14 04:27 Environmental Aspects of Dredging (R. N. Bray) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  7640320 Oct 14 04:28 From Vines to Wines The Complete Guide to Growing Grapes and Making Your Own Wine (Jeff Cox Tim Mondavi) (Z-Library).epub
+-rw-rw-r-- 1 jiaguo12 asic  4323071 Oct 14 04:28 From Vines to Wines the Complete Guide to Growing Grapes and Making Your Own Wine (Jeff Cox) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  3929563 Oct 14 04:29 Global Warming - A Very Short Introduction (MarkMaslin) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  5770121 Oct 14 04:30 Invisible Resistance To Tyranny - How to Lead a Secret Life of Insurgency in an Increasingly Unfree World (Jefferson Mack) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  1328978 Oct 14 04:31 The Hunt for Nazi Spies Fighting Espionage in Vichy France (Simon Kitson) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  7200390 Oct 14 04:32 The Safe House Setting Up and Running Your Own Sanctuary (Jefferson Mack) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic 12426491 Oct 14 04:33 Ultrasonic imaging seeing by sound the principles and widespread applications of image formation by sonic, ultrasonic, and… (Greguss, Pál) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  1918186 Oct 14 04:34 Vatican II Renewal within Tradition (Matthew L Lamb, Matthew Levering) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  5584350 Oct 14 04:34 Vines for Wines A Wine Lovers Guide to the Top Wine Grape Varieties (George Kerridge, Angela Gackle) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic  8329437 Oct 14 04:35 Where There Is No Dentist - updated ed. (Murray Dickson) (Z-Library).pdf
+-rw-rw-r-- 1 jiaguo12 asic     3473 Oct 14 04:39 files.txt
+
+
+Fri Oct 24 23:29:40 EDT 2025
+
+>git push origin main
+Counting objects: 11, done.
+error: unable to unpack c29f8eccd22d9457e3d6751367a3516670bb3c69 header
+error: inflateEnd: stream consistency error (no message)
+Delta compression using up to 128 threads.
+Compressing objects: 100% (8/8), done.
+fatal: loose object c29f8eccd22d9457e3d6751367a3516670bb3c69 
+(stored in .git/objects/c2/9f8eccd22d9457e3d6751367a3516670bb3c69) is corrupt
+fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
+fatal: write error: Bad file descriptor
+
+  1308	23:06	cd c2
+  1310	23:06	chmod +rwx *
+  1311	23:06	echo "" > 7e7ef996e68770f68747ea8384d13dde2a1e77
+  1312	23:06	echo "" > 9f8eccd22d9457e3d6751367a3516670bb3c69
+  1319	23:07	git commit -m "orchard.mobi, pdfs:bicycle"
+  1321	23:26	git push origin main
+  1327	23:31	history 200 | grep 9f8e
+  1329	23:46	history 35 >> files.txt
+
+# ds recommend: 
+git reset --hard HEAD
